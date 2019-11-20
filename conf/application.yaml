@@ -1,0 +1,5 @@
+kafka:
+  brokers:
+    - "localhost:9092"
+  input-topic: "input-topic"
+  result-topic: "result-topic"

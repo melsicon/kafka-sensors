@@ -1,0 +1,15 @@
+protoc:
+  version: 3.10.1
+
+lint:
+  group: uber2
+  rules:
+    remove:
+      - FILE_OPTIONS_REQUIRE_CSHARP_NAMESPACE
+      - FILE_OPTIONS_REQUIRE_OBJC_CLASS_PREFIX
+      - FILE_OPTIONS_REQUIRE_PHP_NAMESPACE
+  java_package_prefix: de
+
+break:
+  include_beta: true
+  allow_beta_deps: false

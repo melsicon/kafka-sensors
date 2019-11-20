@@ -1,0 +1,9 @@
+.*
+!/.bazelrc
+!/.bazelversion
+!/.envrc
+!/.gitattributes
+!/.gitignore
+!/.yamllint
+# project specific
+/bazel-*

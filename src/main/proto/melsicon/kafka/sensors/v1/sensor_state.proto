@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package melsicon.kafka.sensors.v1;
+
+option go_package = "sensorsv1";
+option java_multiple_files = true;
+option java_outer_classname = "SensorStateProto";
+option java_package = "de.melsicon.kafka.sensors.v1";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+// State change of a sensor.
+message SensorState {
+  string id = 1;
+  google.protobuf.Timestamp time = 2;
+  // New state of the sensor.
+  enum State {
+    STATE_INVALID = 0;
+    STATE_OFF = 1;
+    STATE_ON = 2;
+  }
+  State state = 3;
+}
+
+// Duration a sensor was in this state.
+message SensorStateWithDuration {
+  SensorState event = 1;
+  google.protobuf.Duration duration = 2;
+}

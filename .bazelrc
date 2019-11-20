@@ -1,0 +1,4 @@
+build --java_toolchain=//toolchain:toolchain_java11
+build --host_force_python=PY2
+test --host_force_python=PY2
+run --host_force_python=PY2

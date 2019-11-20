@@ -1,0 +1,164 @@
+= Melsicon Kafka Streams Playground
+:toc: macro
+
+toc::[]
+
+== Purpose
+
+This source demonstrates how to process a stream of sensor data using
+https://kafka.apache.org/documentation/streams/[Kafka Streams].
+
+The sensors produce a stream of records, including sensor ID, a timestamp and the current state (on
+or off). The desired result is a stream of records enriched with the duration the sensor has been in
+this state.
+
+=== Example
+
+For example, a stream
+
+.Sensor Data
+|===
+|Name|Timestamp|State
+
+|Sensor 1
+|0s
+|off
+
+|Sensor 1
+|10s
+|off
+
+|Sensor 1
+|30s
+|on
+
+|Sensor 1
+|90s
+|off
+|===
+
+should produce
+
+.Enriched Data
+|===
+|Name|Timestamp|State|Duration
+
+|Sensor 1
+|0s
+|off
+|10s
+
+|Sensor 1
+|0s
+|off
+|30s
+
+|Sensor 1
+|30s
+|on
+|60s
+|===
+
+Which tells us that “Sensor 1” was “off” from 0 for 30 seconds and “on” from 30 for 60 seconds.
+
+Note that the second “off” reading produced an intermediate result.
+
+=== Design decisions
+
+Duplicate readings of the same state generate intermediate results, and delayed readings (timestamps
+preceding previously seen values) are treated as errors.
+
+These are deliberate choices and can easily be changed.
+
+=== Implementation of Business Logic
+
+Care has been taken to keep the business logic independent of implementation details like
+serialization formats.
+
+The data model is in the link:src/main/java/de/melsicon/kafka/model[model directory], the business
+logic in link:src/main/java/de/melsicon/kafka/topology[topology].
+
+The link:src/test/java/de/melsicon/kafka/topology[tests] test the topology with three different
+(de-)serializers, https://developers.google.com/protocol-buffers/[protocol buffers],
+https://json.org[JSON] and the Confluent variant of
+http://avro.apache.org/docs/current/[Apache Avro]. Since the example needs an input format, a result
+format and a format for the state store we have nine different combinations which are all tested.
+
+While this abstraction might not be necessary in practice, it demonstrates two important design
+considerations:
+
+* The business logic should only depend on a data model, not capabilities of the serialization
+mechanism.
++
+We can simply use
+https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/Duration.html#between(java.time.temporal.Temporal,java.time.temporal.Temporal)[Duration::between`],
+which is a simple call and easy to understand and test, instead of cluttering our logic with`
+conversions and unnecessary error-prone calculations.
+* The choice of (de-)serializers should depend on the requirements, not on what is just at hand.
++
+While internal processing pipelines tend (but don't have) to use one serialization mechanism, it
+perfectly valid and a good design decision to use different mechanisms for parts interfacing with
+external components.
+
+Since the business logic is independent of the serialization mechanism, changing it is simple and
+normally does not require retesting. Be aware of subtle pitfalls tough, while our Java code uses
+nanosecond precision, which are correctly handled with protocol buffers and JSON, Avro truncates the
+time stamps to milliseconds. We would not catch these in our tests since we use only second steps
+for testing, but this would show up when using real world data and comparing with `equals`.
+
+== Running
+
+=== Prerequisites
+
+You need https://github.com/bazelbuild/bazelisk[Bazelisk] installed, with https://brew.sh[HomeBrew]
+just use [source,shell]`brew install bazelbuild/tap/bazelisk`.
+
+Also, Java needs to be https://adoptopenjdk.net/installation.html[installed].
+
+=== Tests
+
+To run all tests, use
+
+[source,shell]
+----
+bazel test //...
+----
+
+To run a single test, use
+
+[source,shell]
+----
+bazel test //src/test/java/de/melsicon/kafka/topology:all
+----
+
+The tests run with an embedded Kafka and mock schema registry, when necessary.
+
+=== Main App
+
+The main app needs Kafka running at localhost, port 9092 (see
+link:conf/application.yaml[application.yaml]). Start it with
+[source,shell]
+----
+bazel run //:kafka-sensors
+----
+
+Watch the results with
+[source,shell]
+----
+kafka-console-consumer --bootstrap-server localhost:9092 --topic result-topic
+----
+
+and publish sensor values with
+[source,shell]
+----
+kafka-console-producer --broker-list localhost:9092 --topic input-topic
+----
+
+The main app runs with JSON in- and output, so you can use sample sensor values like
+[source,json]
+----
+{"id":"7331","time":443634300.0,"state":"off"}
+{"id":"7331","time":443634310.0,"state":"off"}
+{"id":"7331","time":443634330.0,"state":"on"}
+{"id":"7331","time":443634390.0,"state":"off"}
+----
