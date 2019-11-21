@@ -15,6 +15,14 @@ public abstract class SensorStateMapper {
     return new SensorStateMapperImpl();
   }
 
+  protected static Duration millis2Duration(long millis) {
+    return Duration.ofMillis(millis);
+  }
+
+  protected static long duration2Millis(Duration duration) {
+    return duration.toMillis();
+  }
+
   public abstract SensorState map(de.melsicon.kafka.sensors.avro.SensorState sensorState);
 
   public abstract de.melsicon.kafka.sensors.avro.SensorState unmap(SensorState sensorState);
@@ -25,12 +33,4 @@ public abstract class SensorStateMapper {
   @Mapping(ignore = true, target = "eventBuilder")
   public abstract de.melsicon.kafka.sensors.avro.SensorStateWithDuration unmap2(
       SensorStateWithDuration sensorState);
-
-  protected Duration long2Duration(long millis) {
-    return Duration.ofMillis(millis);
-  }
-
-  protected long duration2Long(Duration duration) {
-    return duration.toMillis();
-  }
 }
