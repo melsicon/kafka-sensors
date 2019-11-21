@@ -1,20 +1,23 @@
 package de.melsicon.kafka.topology;
 
+import com.google.common.annotations.VisibleForTesting;
 import de.melsicon.annotation.Initializer;
 import de.melsicon.annotation.Nullable;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import java.time.Duration;
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import org.apache.kafka.streams.kstream.ValueTransformer;
 import org.apache.kafka.streams.processor.ProcessorContext;
-import org.apache.kafka.streams.state.KeyValueStore;
 
 public final class DurationProcessor
     implements ValueTransformer<@Nullable SensorState, @Nullable SensorStateWithDuration> {
   public static final String SENSOR_STATES = "SensorStates";
 
-  private KeyValueStore<String, SensorState> store;
+  private Function<String, SensorState> get;
+  private BiConsumer<String, SensorState> put;
 
   /**
    * Wrap the old state with a duration how log it lasted.
@@ -42,10 +45,18 @@ public final class DurationProcessor
     return oldState == null || oldState.getState() != sensorState.getState();
   }
 
-  @Override
+  @VisibleForTesting
   @Initializer
+  /* package */ void initStore(
+      Function<String, /* @Nullable */ SensorState> get, BiConsumer<String, SensorState> put) {
+    this.get = get;
+    this.put = put;
+  }
+
+  @Override
   public void init(ProcessorContext context) {
-    this.store = StoreHelper.stateStore(context, SENSOR_STATES);
+    var store = StoreHelper.<String, SensorState>stateStore(context, SENSOR_STATES);
+    initStore(store::get, store::put);
   }
 
   @Override
@@ -73,10 +84,10 @@ public final class DurationProcessor
     var index = sensorState.getId();
 
     // Get the historical state (might be null)
-    var oldState = store.get(index);
+    var oldState = get.apply(index);
     if (neetToUpdate(oldState, sensorState)) {
       // Update the state store to the new state
-      store.put(index, sensorState);
+      put.accept(index, sensorState);
     }
     return Optional.ofNullable(oldState);
   }

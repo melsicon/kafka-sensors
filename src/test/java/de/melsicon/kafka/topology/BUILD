@@ -34,6 +34,14 @@ java_library(
 )
 
 java_test(
+    name = "ProcessorTest",
+    size = "small",
+    runtime_deps = [
+        ":tests",
+    ],
+)
+
+java_test(
     name = "TopologyTest",
     size = "medium",
     runtime_deps = [
