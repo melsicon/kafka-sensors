@@ -9,7 +9,7 @@ java_library(
     ],
     deps = [
         "//src/main/java/de/melsicon/kafka/serde/proto",
-        "//src/main/proto/melsicon/kafka/sensors/v1:streamsv1_java_proto",
+        "//src/main/proto/melsicon/kafka/sensors/v1:sensorsv1_java_proto",
         "//toolchain:nullaway",
         "@com_google_protobuf//:protobuf_java",
         "@maven//:junit_junit",

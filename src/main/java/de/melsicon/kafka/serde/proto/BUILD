@@ -13,7 +13,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/serde/mapping",
         "//src/main/java/de/melsicon/kafka/serde/mapping/protobuf",
         "//src/main/java/de/melsicon/kafka/serde/mapping/protobuf:mapstruct",
-        "//src/main/proto/melsicon/kafka/sensors/v1:streamsv1_java_proto",
+        "//src/main/proto/melsicon/kafka/sensors/v1:sensorsv1_java_proto",
         "//toolchain:nullaway",
         "@com_google_protobuf//:protobuf_java",
         "@maven//:com_google_errorprone_error_prone_annotations",
