@@ -8,7 +8,6 @@ java_library(
         "//src/main/java/de/melsicon/kafka/configuration",
         "//src/main/java/de/melsicon/kafka/lifecycle",
         "//src/main/java/de/melsicon/kafka/model",
-        "//src/main/java/de/melsicon/kafka/serde/avro",
         "//src/main/java/de/melsicon/kafka/serde/json",
         "//src/main/java/de/melsicon/kafka/serde/proto",
         "//src/main/java/de/melsicon/kafka/streams",

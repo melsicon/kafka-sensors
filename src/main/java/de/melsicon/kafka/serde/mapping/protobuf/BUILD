@@ -7,8 +7,6 @@ java_library(
     deps = [
         "//toolchain:nullaway",
         "@com_google_protobuf//:protobuf_java",
-        "@maven//:com_google_errorprone_error_prone_annotations",
-        "@maven//:org_mapstruct_mapstruct_processor",
     ],
 )
 
@@ -18,7 +16,6 @@ java_library(
     deps = [
         "//src/main/java/de/melsicon/annotation",
         "//toolchain:autoservice",
-        "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:org_mapstruct_mapstruct_processor",
     ],
 )

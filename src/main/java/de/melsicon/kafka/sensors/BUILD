@@ -17,7 +17,6 @@ java_binary(
         "//toolchain:nullaway",
         "@maven//:com_google_flogger_flogger",
         "@maven//:info_picocli_picocli",
-        "@maven//:io_helidon_config_helidon_config",
     ],
 )
 
@@ -34,17 +33,9 @@ java_binary(
         "@maven//:org_slf4j_slf4j_jdk14",
     ],
     deps = [
-        "//src/main/avro/de/melsicon/kafka/sensors/avro",
-        "//src/main/java/de/melsicon/kafka/model",
         "//src/main/java/de/melsicon/kafka/startup",
         "//toolchain:nullaway",
-        "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:com_google_flogger_flogger",
-        "@maven//:com_google_guava_guava",
-        "@maven//:info_picocli_picocli",
         "@maven//:io_github_classgraph_classgraph",
-        "@maven//:io_helidon_config_helidon_config",
-        "@maven//:javax_inject_javax_inject",
-        "@maven//:org_apache_avro_avro",
     ],
 )
