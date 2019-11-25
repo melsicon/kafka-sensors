@@ -13,7 +13,7 @@ import org.apache.kafka.streams.state.Stores;
 
 public final class TopologyFactory {
   @Inject
-  public TopologyFactory() {}
+  /* package */ TopologyFactory() {}
 
   public Topology createTopology(
       String inputTopic,

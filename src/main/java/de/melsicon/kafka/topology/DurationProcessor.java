@@ -61,8 +61,8 @@ public final class DurationProcessor
 
   @Override
   public @Nullable SensorStateWithDuration transform(@Nullable SensorState sensorState) {
-    // Nothing to do
     if (sensorState == null) {
+      // Nothing to do
       return null;
     }
 
