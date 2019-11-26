@@ -29,9 +29,9 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "8e0e89a3670df2fbc2d9cedd76bb71b08027d806b81bf363ff434f5762520ed6",
-    strip_prefix = "protobuf-3.11.0-rc1",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.11.0-rc1.tar.gz"],
+    sha256 = "6d356a6279cc76d2d5c4dfa6541641264b59eae0bc96b852381361e3400d1f1c",
+    strip_prefix = "protobuf-3.11.0",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.11.0.tar.gz"],
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
@@ -55,7 +55,7 @@ maven_install(
         "com.fasterxml.jackson.core:jackson-annotations:2.10.1",
         "com.fasterxml.jackson.core:jackson-core:2.10.1",
         "com.fasterxml.jackson.core:jackson-databind:2.10.1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-guava::2.10.1",
+        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.10.1",
         "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.1",
         "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1",
         "com.google.auto.service:auto-service-annotations:1.0-rc6",
@@ -68,11 +68,11 @@ maven_install(
         "com.google.flogger:flogger:0.4",
         "com.salesforce.kafka.test:kafka-junit4:3.2.0",
         "com.uber.nullaway:nullaway:0.7.9",
-        "info.picocli:picocli:4.0.4",
-        "io.github.classgraph:classgraph:4.8.47",
-        "io.helidon.config:helidon-config-object-mapping:1.3.1",
-        "io.helidon.config:helidon-config-yaml:1.3.1",
-        "io.helidon.config:helidon-config:1.3.1",
+        "info.picocli:picocli:4.1.0",
+        "io.github.classgraph:classgraph:4.8.54",
+        "io.helidon.config:helidon-config-object-mapping:1.4.0",
+        "io.helidon.config:helidon-config-yaml:1.4.0",
+        "io.helidon.config:helidon-config:1.4.0",
         "io.swagger:swagger-annotations:1.5.24",
         "jakarta.annotation:jakarta.annotation-api:1.3.5",
         "junit:junit:4.13-rc-1",
@@ -85,7 +85,7 @@ maven_install(
         "org.mapstruct:mapstruct:1.3.1.Final",
         "org.slf4j:slf4j-jdk14:1.7.29",
     ] + AVRO_ARTIFACTS,
-    # fetch_sources = True,
+    fetch_sources = True,
     maven_install_json = "@de_melsicon_kafka_sensors//:maven_install.json",
     override_targets = {
         # Java EE is now Jakarta EE
