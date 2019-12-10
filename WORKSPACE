@@ -18,9 +18,9 @@ rules_pkg_dependencies()
 
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "5c1b22eab26807d5286ada7392d796cbc8425d3ef9a57d114b79c5f8ef8aca7c",
-    strip_prefix = "rules_jvm_external-2.10",
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/2.10.tar.gz",
+    sha256 = "baa842cbc67aec78408aec3e480b2e94dbdd14d6b0170d3a3ee14a0e1a5bb95f",
+    strip_prefix = "rules_jvm_external-3.0",
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/3.0.tar.gz",
 )
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
@@ -29,9 +29,9 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "6d356a6279cc76d2d5c4dfa6541641264b59eae0bc96b852381361e3400d1f1c",
-    strip_prefix = "protobuf-3.11.0",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.11.0.tar.gz"],
+    sha256 = "4f8e805825c53bbc3c9f6b6abc009b5b5679e4702bccfca1121c42ff5ec801c7",
+    strip_prefix = "protobuf-3.11.1",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.11.1.tar.gz"],
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
@@ -68,7 +68,7 @@ maven_install(
         "com.google.flogger:flogger:0.4",
         "com.salesforce.kafka.test:kafka-junit4:3.2.0",
         "com.uber.nullaway:nullaway:0.7.9",
-        "info.picocli:picocli:4.1.1",
+        "info.picocli:picocli:4.1.2",
         "io.github.classgraph:classgraph:4.8.58",
         "io.helidon.config:helidon-config-object-mapping:1.4.0",
         "io.helidon.config:helidon-config-yaml:1.4.0",
