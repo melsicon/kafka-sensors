@@ -2,13 +2,14 @@
   "type": "record",
   "name": "SensorStateWithDuration",
   "namespace": "de.melsicon.kafka.sensors.avro",
-  "doc": "State change of a sensor",
+  "doc": "Duration a sensor was in this state",
   "fields": [
     {
       "name": "event",
       "type": {
         "type": "record",
         "name": "SensorState",
+        "doc": "State change of a sensor",
         "fields": [
           {
             "name": "id",
@@ -26,6 +27,7 @@
             "type": {
               "type": "enum",
               "name": "State",
+              "doc": "New state of the sensor",
               "symbols": [
                 "OFF",
                 "ON"
