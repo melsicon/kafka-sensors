@@ -10,12 +10,12 @@ import org.apache.kafka.streams.errors.ProductionExceptionHandler;
  *     https://kafka.apache.org/documentation/streams/developer-guide/config-streams.html#default-production-exception-handler
  */
 public final class ContinueProductionExceptionHandler implements ProductionExceptionHandler {
-  private static final FluentLogger LOG = FluentLogger.forEnclosingClass();
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   @Override
   public ProductionExceptionHandlerResponse handle(
       ProducerRecord<byte[], byte[]> record, Exception exception) {
-    LOG.atWarning().withCause(exception).log("Processing error");
+    logger.atWarning().withCause(exception).log("Processing error");
     return ProductionExceptionHandlerResponse.CONTINUE;
   }
 

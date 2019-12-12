@@ -6,7 +6,7 @@ import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ResourceList.ResourceFilter;
 
 public final class ClassCheck {
-  private static final FluentLogger LOG = FluentLogger.forEnclosingClass();
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private static final ResourceFilter MY_FILTER =
       resource -> {
@@ -32,14 +32,14 @@ public final class ClassCheck {
     try (var scan = classGraph.scan();
         var resourceList = scan.getAllResources().filter(MY_FILTER)) {
       for (var duplicate : resourceList.findDuplicatePaths()) {
-        LOG.atWarning().log("Duplicate resource: %s", duplicate.getKey());
+        logger.atWarning().log("Duplicate resource: %s", duplicate.getKey());
         try (var duplicates = duplicate.getValue()) {
           for (var resource : duplicates) {
-            LOG.atWarning().log(" -> %s", resource.getURI());
+            logger.atWarning().log(" -> %s", resource.getURI());
           }
         }
       }
     }
-    LOG.atInfo().log("Check finished");
+    logger.atInfo().log("Check finished");
   }
 }

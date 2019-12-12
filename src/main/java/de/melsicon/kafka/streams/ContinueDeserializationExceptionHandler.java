@@ -12,12 +12,12 @@ import org.apache.kafka.streams.processor.ProcessorContext;
  */
 public final class ContinueDeserializationExceptionHandler
     implements DeserializationExceptionHandler {
-  private static final FluentLogger LOG = FluentLogger.forEnclosingClass();
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   @Override
   public DeserializationHandlerResponse handle(
       ProcessorContext context, ConsumerRecord<byte[], byte[]> record, Exception exception) {
-    LOG.atWarning().withCause(exception).log(
+    logger.atWarning().withCause(exception).log(
         "Deserialization error at topic %s partition %d offset %d",
         context.topic(), context.partition(), context.offset());
     return DeserializationHandlerResponse.CONTINUE;
