@@ -1,0 +1,49 @@
+[
+  {
+    "type": "record",
+    "name": "SensorState",
+    "namespace": "de.melsicon.kafka.sensors.avro",
+    "doc": "State change of a sensor",
+    "fields": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "time",
+        "type": {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      },
+      {
+        "name": "state",
+        "type": {
+          "type": "enum",
+          "name": "State",
+          "doc": "New state of the sensor",
+          "symbols": [
+            "OFF",
+            "ON"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "record",
+    "name": "SensorStateWithDuration",
+    "namespace": "de.melsicon.kafka.sensors.avro",
+    "doc": "Duration a sensor was in this state",
+    "fields": [
+      {
+        "name": "event",
+        "type": "SensorState"
+      },
+      {
+        "name": "duration",
+        "type": "long"
+      }
+    ]
+  }
+]
