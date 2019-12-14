@@ -39,7 +39,7 @@ java_library(
 )
 
 java_library(
-    name = "kafka-sensors-avro-serde",
+    name = "kafka-streams-avro-serde",
     srcs = glob(["avro-serde/src/main/java/**/*.java"]),
     visibility = ["//visibility:public"],
     deps = [

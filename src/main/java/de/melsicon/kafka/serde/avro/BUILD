@@ -15,7 +15,7 @@ java_library(
         "//toolchain:mapstruct",
         "//toolchain:nullaway",
         "@confluent_schema_registry//:kafka-avro-serializer",
-        "@confluent_schema_registry//:kafka-sensors-avro-serde",
+        "@confluent_schema_registry//:kafka-streams-avro-serde",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:javax_inject_javax_inject",
         "@maven//:org_apache_avro_avro",
