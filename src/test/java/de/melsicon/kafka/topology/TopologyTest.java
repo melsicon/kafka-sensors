@@ -6,6 +6,8 @@ import static de.melsicon.kafka.topology.TestHelper.PARTITIONS;
 import static de.melsicon.kafka.topology.TestHelper.RESULT_TOPIC;
 import static org.apache.kafka.streams.StreamsConfig.APPLICATION_ID_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG;
+import static org.apache.kafka.streams.StreamsConfig.NUM_STREAM_THREADS_CONFIG;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -24,16 +26,15 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.function.Supplier;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.Serde;
+import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.apache.kafka.streams.TestInputTopic;
+import org.apache.kafka.streams.TestOutputTopic;
 import org.apache.kafka.streams.TopologyTestDriver;
-import org.apache.kafka.streams.test.ConsumerRecordFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -52,9 +53,8 @@ public final class TopologyTest {
   @Rule public final SerdeWithRegistryRule serdeTestResource;
 
   private TopologyTestDriver testDriver;
-  private ConsumerRecordFactory<String, SensorState> recordFactory;
-
-  private Serde<SensorStateWithDuration> resultSerde;
+  private TestInputTopic<String, SensorState> inputTopic;
+  private TestOutputTopic<String, SensorStateWithDuration> outputTopic;
 
   public TopologyTest(
       String description,
@@ -88,12 +88,23 @@ public final class TopologyTest {
     return combinations;
   }
 
+  private static Properties settings() {
+    var settings = new Properties();
+    settings.put(APPLICATION_ID_CONFIG, APPLICATION_ID);
+    settings.put(BOOTSTRAP_SERVERS_CONFIG, KAFKA_TEST_RESOURCE.getKafkaConnectString());
+
+    settings.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde.class.getName());
+    settings.put(NUM_STREAM_THREADS_CONFIG, PARTITIONS);
+
+    return settings;
+  }
+
   @Before
   @Initializer
   public void before() {
     var inputSerde = serdeTestResource.createInputSerde(false);
     var storeSerde = serdeTestResource.createstoreSerde(false);
-    resultSerde = serdeTestResource.createResultSerde(false);
+    var resultSerde = serdeTestResource.createResultSerde(false);
 
     var kafkaTestUtils = KAFKA_TEST_RESOURCE.getKafkaTestUtils();
     kafkaTestUtils.createTopic(INPUT_TOPIC, PARTITIONS, TestHelper.REPLICATION_FACTOR);
@@ -103,14 +114,15 @@ public final class TopologyTest {
         new TopologyFactory()
             .createTopology(INPUT_TOPIC, RESULT_TOPIC, inputSerde, storeSerde, resultSerde);
 
-    var settings = new Properties();
-    settings.put(APPLICATION_ID_CONFIG, APPLICATION_ID);
-    settings.put(BOOTSTRAP_SERVERS_CONFIG, KAFKA_TEST_RESOURCE.getKafkaConnectString());
+    var settings = settings();
 
     testDriver = new TopologyTestDriver(topologyFactory, settings);
 
-    recordFactory =
-        new ConsumerRecordFactory<>(INPUT_TOPIC, new StringSerializer(), inputSerde.serializer());
+    inputTopic =
+        testDriver.createInputTopic(INPUT_TOPIC, new StringSerializer(), inputSerde.serializer());
+    outputTopic =
+        testDriver.createOutputTopic(
+            RESULT_TOPIC, new StringDeserializer(), resultSerde.deserializer());
   }
 
   @After
@@ -119,19 +131,11 @@ public final class TopologyTest {
   }
 
   private void pipeState(@Nullable SensorState sensorState) {
-    ConsumerRecord<byte[], byte[]> record;
     if (sensorState == null) {
-      record = recordFactory.create(sensorState);
+      inputTopic.pipeInput(sensorState);
     } else {
-      record = recordFactory.create(INPUT_TOPIC, sensorState.getId(), sensorState);
+      inputTopic.pipeInput(sensorState.getId(), sensorState);
     }
-    testDriver.pipeInput(record);
-  }
-
-  private @Nullable ProducerRecord<@Nullable String, @Nullable SensorStateWithDuration>
-      readOutput() {
-    return testDriver.readOutput(
-        RESULT_TOPIC, new StringDeserializer(), resultSerde.deserializer());
   }
 
   @Test
@@ -143,24 +147,20 @@ public final class TopologyTest {
 
     pipeState(initialState);
 
-    var result1 = readOutput();
+    var result1 = outputTopic.readKeyValue();
 
-    assertThat(result1).isNotNull();
-    assertThat(Objects.requireNonNull(result1).value()).isNull();
+    assertThat(result1.value).isNull();
 
     var next = instant.plusSeconds(30);
     var newState = SensorState.builder().setId("7331").setTime(next).setState(State.ON).build();
 
     pipeState(newState);
 
-    var result2 = readOutput();
-    assertThat(result2).isNotNull();
+    var result2 = outputTopic.readKeyValue();
 
-    var value = Objects.requireNonNull(result2).value();
-
-    assertThat(value).isNotNull();
-    assertThat(value.getEvent()).isEqualTo(initialState);
-    assertThat(value.getDuration()).isEqualTo(Duration.ofSeconds(30));
+    assertThat(result2.value).isNotNull();
+    assertThat(result2.value.getEvent()).isEqualTo(initialState);
+    assertThat(result2.value.getDuration()).isEqualTo(Duration.ofSeconds(30));
   }
 
   @Test
@@ -172,62 +172,50 @@ public final class TopologyTest {
 
     pipeState(initialState);
 
-    var result1 = readOutput();
+    var result1 = outputTopic.readKeyValue();
 
-    assertThat(result1).isNotNull();
-    assertThat(Objects.requireNonNull(result1).value()).isNull();
+    assertThat(result1.value).isNull();
 
     var next = instant.plusSeconds(30);
     var newState = SensorState.builder().setId("7331").setTime(next).setState(State.OFF).build();
 
     pipeState(newState);
 
-    var result2 = readOutput();
-    assertThat(result2).isNotNull();
+    var result2 = outputTopic.readKeyValue();
 
-    var value = Objects.requireNonNull(result2).value();
-
-    assertThat(value).isNotNull();
-    assertThat(value.getEvent()).isEqualTo(initialState);
-    assertThat(value.getDuration()).isEqualTo(Duration.ofSeconds(30));
+    assertThat(result2.value).isNotNull();
+    assertThat(result2.value.getEvent()).isEqualTo(initialState);
+    assertThat(result2.value.getDuration()).isEqualTo(Duration.ofSeconds(30));
 
     var next2 = next.plusSeconds(30);
     var newState2 = SensorState.builder().setId("7331").setTime(next2).setState(State.ON).build();
 
     pipeState(newState2);
 
-    var result3 = readOutput();
-    assertThat(result3).isNotNull();
+    var result3 = outputTopic.readKeyValue();
 
-    var value3 = Objects.requireNonNull(result3).value();
-
-    assertThat(value3).isNotNull();
-    assertThat(value3.getEvent()).isEqualTo(initialState);
-    assertThat(value3.getDuration()).isEqualTo(Duration.ofSeconds(60));
+    assertThat(result3.value).isNotNull();
+    assertThat(result3.value.getEvent()).isEqualTo(initialState);
+    assertThat(result3.value.getDuration()).isEqualTo(Duration.ofSeconds(60));
 
     var next3 = next2.plusSeconds(15);
     var newState3 = SensorState.builder().setId("7331").setTime(next3).setState(State.OFF).build();
 
     pipeState(newState3);
 
-    var result4 = readOutput();
-    assertThat(result4).isNotNull();
+    var result4 = outputTopic.readKeyValue();
 
-    var value4 = Objects.requireNonNull(result4).value();
-
-    assertThat(value4).isNotNull();
-    assertThat(value4.getEvent()).isEqualTo(newState2);
-    assertThat(value4.getDuration()).isEqualTo(Duration.ofSeconds(15));
+    assertThat(result4.value).isNotNull();
+    assertThat(result4.value.getEvent()).isEqualTo(newState2);
+    assertThat(result4.value.getDuration()).isEqualTo(Duration.ofSeconds(15));
   }
 
   @Test
   public void testTombstone() {
     assertThatCode(() -> pipeState(null)).doesNotThrowAnyException();
 
-    var result = readOutput();
-    assertThat(result).isNotNull();
+    var result = outputTopic.readKeyValue();
 
-    var value = Objects.requireNonNull(result).value();
-    assertThat(value).isNull();
+    assertThat(result.value).isNull();
   }
 }

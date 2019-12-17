@@ -30,7 +30,7 @@ java_library(
         ":kafka-schema-registry-client",
         "@confluent_common//:common-config",
         "@maven//:org_apache_avro_avro",
-        "@maven//:org_apache_kafka_kafka_2_12",
+        "@maven//:org_apache_kafka_kafka_2_13",
         "@maven//:org_apache_kafka_kafka_clients",
     ],
     javacopts = [
