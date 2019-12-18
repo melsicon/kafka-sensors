@@ -131,11 +131,8 @@ public final class TopologyTest {
   }
 
   private void pipeState(@Nullable SensorState sensorState) {
-    if (sensorState == null) {
-      inputTopic.pipeInput(sensorState);
-    } else {
-      inputTopic.pipeInput(sensorState.getId(), sensorState);
-    }
+    var key = sensorState == null ? null : sensorState.getId();
+    inputTopic.pipeInput(key, sensorState);
   }
 
   @Test

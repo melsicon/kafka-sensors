@@ -101,13 +101,12 @@ public final class SerdeTest {
 
   @Test
   public void nullHandling() {
-    SensorState sensorState = null;
     SensorState decoded;
 
     try (var serde = serdeTestResource.createInputSerde(false)) {
       byte[] encoded;
       try (var serializer = serde.serializer()) {
-        encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, sensorState);
+        encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, null);
       }
 
       assertThat(encoded).isNullOrEmpty();
