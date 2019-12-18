@@ -2,9 +2,9 @@ package de.melsicon.kafka.topology;
 
 import com.google.common.annotations.VisibleForTesting;
 import de.melsicon.annotation.Initializer;
-import de.melsicon.annotation.Nullable;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Duration;
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -13,7 +13,7 @@ import org.apache.kafka.streams.kstream.ValueTransformer;
 import org.apache.kafka.streams.processor.ProcessorContext;
 
 public final class DurationProcessor
-    implements ValueTransformer<@Nullable SensorState, @Nullable SensorStateWithDuration> {
+    implements ValueTransformer<SensorState, SensorStateWithDuration> {
   public static final String SENSOR_STATES = "SensorStates";
 
   private Function<String, SensorState> get;
@@ -48,7 +48,7 @@ public final class DurationProcessor
   @VisibleForTesting
   @Initializer
   /* package */ void initStore(
-      Function<String, /* @Nullable */ SensorState> get, BiConsumer<String, SensorState> put) {
+      Function<String, SensorState> get, BiConsumer<String, SensorState> put) {
     this.get = get;
     this.put = put;
   }
@@ -59,8 +59,9 @@ public final class DurationProcessor
     initStore(store::get, store::put);
   }
 
+  @Nullable
   @Override
-  public @Nullable SensorStateWithDuration transform(@Nullable SensorState sensorState) {
+  public SensorStateWithDuration transform(@Nullable SensorState sensorState) {
     if (sensorState == null) {
       // Nothing to do
       return null;
@@ -72,6 +73,9 @@ public final class DurationProcessor
     // When we have historical data, return duration so far. Otherwise return null
     return oldState.map(state -> addDuration(state, sensorState)).orElse(null);
   }
+
+  @Override
+  public void close() {}
 
   /**
    * Checks the state store for historical state based on sensor ID and updates it, if necessary.
@@ -91,7 +95,4 @@ public final class DurationProcessor
     }
     return Optional.ofNullable(oldState);
   }
-
-  @Override
-  public void close() {}
 }

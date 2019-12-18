@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
 import de.melsicon.annotation.Initializer;
-import de.melsicon.annotation.Nullable;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
@@ -21,6 +20,7 @@ import de.melsicon.kafka.serde.avro.AvroSerdes;
 import de.melsicon.kafka.serde.json.JsonSerdes;
 import de.melsicon.kafka.serde.proto.ProtoSerdes;
 import de.melsicon.kafka.testutil.SerdeWithRegistryRule;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;

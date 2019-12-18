@@ -58,6 +58,7 @@ maven_install(
         "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.10.1",
         "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.1",
         "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1",
+        "com.github.spotbugs:spotbugs-annotations:3.1.12",
         "com.google.auto.service:auto-service-annotations:1.0-rc6",
         "com.google.auto.service:auto-service:1.0-rc6",
         "com.google.auto.value:auto-value-annotations:1.7",

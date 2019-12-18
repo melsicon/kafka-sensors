@@ -5,6 +5,7 @@ java_library(
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
+        "//src/main/java/de/melsicon/annotation",
         "//src/main/java/de/melsicon/kafka/model",
         "//toolchain:nullaway",
         "@maven//:com_google_errorprone_error_prone_annotations",

@@ -1,4 +1,6 @@
 /** */
 @com.google.errorprone.annotations.CheckReturnValue
-@de.melsicon.annotation.NonNullApi
+@edu.umd.cs.findbugs.annotations.DefaultAnnotationForParameters(
+    edu.umd.cs.findbugs.annotations.NonNull.class)
+@edu.umd.cs.findbugs.annotations.ReturnValuesAreNonnullByDefault
 package de.melsicon.kafka.lifecycle;

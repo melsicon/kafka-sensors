@@ -1,6 +1,6 @@
 package de.melsicon.kafka.serde.mapping;
 
-import de.melsicon.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import java.util.Map;
 import java.util.function.Function;
 import org.apache.kafka.common.header.Headers;

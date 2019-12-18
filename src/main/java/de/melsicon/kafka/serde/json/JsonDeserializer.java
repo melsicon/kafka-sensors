@@ -2,7 +2,7 @@ package de.melsicon.kafka.serde.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import de.melsicon.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import java.io.IOException;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
@@ -14,8 +14,9 @@ public final class JsonDeserializer<T> implements Deserializer<T> {
     this.objectReader = objectMapper.readerFor(type);
   }
 
+  @Nullable
   @Override
-  public @Nullable T deserialize(String topic, @Nullable byte[] data) {
+  public T deserialize(String topic, @Nullable byte[] data) {
     if (data == null) {
       return null;
     }

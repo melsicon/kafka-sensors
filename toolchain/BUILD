@@ -55,7 +55,7 @@ java_library(
     neverlink = True,
     visibility = ["//visibility:public"],
     exports = [
-        "//src/main/java/de/melsicon/annotation",
+        "@maven//:com_github_spotbugs_spotbugs_annotations",
         "@maven//:com_google_code_findbugs_jsr305",
     ],
 )

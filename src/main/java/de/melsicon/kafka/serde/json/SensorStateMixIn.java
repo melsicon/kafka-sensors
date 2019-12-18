@@ -3,9 +3,9 @@ package de.melsicon.kafka.serde.json;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import de.melsicon.annotation.Nullable;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Instant;
 
 @JsonDeserialize(builder = SensorState.Builder.class)
@@ -15,8 +15,9 @@ public abstract class SensorStateMixIn {
   public abstract static class BuilderMixIn {
     private BuilderMixIn() {}
 
+    @Nullable
     @JsonCreator
-    public static @Nullable SensorState.Builder builder() {
+    public static SensorState.Builder builder() {
       return null;
     }
 

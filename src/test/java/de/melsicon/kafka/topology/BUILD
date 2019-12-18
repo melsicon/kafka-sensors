@@ -9,6 +9,7 @@ java_library(
         "@maven//:org_slf4j_slf4j_jdk14",
     ],
     deps = [
+        "//src/main/java/de/melsicon/annotation",
         "//src/main/java/de/melsicon/kafka/model",
         "//src/main/java/de/melsicon/kafka/serde",
         "//src/main/java/de/melsicon/kafka/serde/avro",

@@ -1,6 +1,6 @@
 package de.melsicon.kafka.serde.avro;
 
-import de.melsicon.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 import java.util.HashMap;
