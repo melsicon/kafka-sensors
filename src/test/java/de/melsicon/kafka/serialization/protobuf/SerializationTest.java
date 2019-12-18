@@ -1,19 +1,17 @@
-package de.melsicon.kafka.sensors.v1;
+package de.melsicon.kafka.serialization.protobuf;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.google.protobuf.Timestamp;
+import de.melsicon.kafka.sensors.v1.SensorState;
 import de.melsicon.kafka.sensors.v1.SensorState.State;
-import de.melsicon.kafka.serde.proto.ProtoDeserializer;
-import de.melsicon.kafka.serde.proto.ProtoSerializer;
+import java.io.IOException;
 import java.time.Instant;
 import org.junit.Test;
 
-public final class SensorStateTest {
-  private static final String TOPIC = "topic";
-
+public final class SerializationTest {
   @Test
-  public void canDecode() {
+  public void canDecode() throws IOException {
     var instant = Instant.ofEpochSecond(443634300L);
 
     var sensorState =
@@ -26,16 +24,9 @@ public final class SensorStateTest {
             .setState(State.STATE_OFF)
             .build();
 
-    byte[] encoded;
-    try (var serializer = new ProtoSerializer<SensorState>()) {
-      encoded = serializer.serialize(TOPIC, sensorState);
-    }
+    var encoded = sensorState.toByteArray();
 
-    SensorState decoded;
-    try (var deserializer = new ProtoDeserializer<>(SensorState.parser())) {
-      decoded = deserializer.deserialize(TOPIC, encoded);
-    }
-
+    var decoded = SensorState.parseFrom(encoded);
     assertThat(decoded).isEqualTo(sensorState);
   }
 }

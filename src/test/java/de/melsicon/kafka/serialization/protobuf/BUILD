@@ -8,16 +8,16 @@ java_library(
         "@maven//:org_slf4j_slf4j_jdk14",
     ],
     deps = [
-        "//src/main/avro/de/melsicon/kafka/sensors/avro",
+        "//src/main/proto/melsicon/kafka/sensors/v1:sensorsv1_java_proto",
         "//toolchain:nullaway",
+        "@com_google_protobuf//:protobuf_java",
         "@maven//:junit_junit",
-        "@maven//:org_apache_avro_avro",
         "@maven//:org_assertj_assertj_core",
     ],
 )
 
 java_test(
-    name = "SensorStateTest",
+    name = "SerializationTest",
     size = "small",
     runtime_deps = [
         ":tests",

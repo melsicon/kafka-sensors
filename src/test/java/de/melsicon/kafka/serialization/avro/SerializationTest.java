@@ -1,46 +1,26 @@
-package de.melsicon.kafka.sensors.avro;
+package de.melsicon.kafka.serialization.avro;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import de.melsicon.kafka.sensors.avro.SensorState;
+import de.melsicon.kafka.sensors.avro.State;
 import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.ByteBuffer;
 import java.time.Instant;
 import org.apache.avro.AvroMissingFieldException;
 import org.apache.avro.AvroRuntimeException;
 import org.junit.Test;
 
-public final class SensorStateTest {
+public final class SerializationTest {
   private static final Instant INSTANT = Instant.ofEpochSecond(443634300L);
 
-  private static SensorState decode(ByteBuffer encoded) {
-    var decoder = SensorState.getDecoder();
-
-    try {
-      return decoder.decode(encoded);
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
-    }
-  }
-
-  private static ByteBuffer encode(SensorState sensorState) {
-    var encoder = SensorState.getEncoder();
-
-    try {
-      return encoder.encode(sensorState);
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
-    }
-  }
-
   @Test
-  public void canDecode() {
+  public void canDecode() throws IOException {
     var sensorState =
         SensorState.newBuilder().setId("7331").setTime(INSTANT).setState(State.OFF).build();
 
-    var encoded = encode(sensorState);
-    var decoded = decode(encoded);
+    var encoded = SensorState.getEncoder().encode(sensorState);
+    var decoded = SensorState.getDecoder().decode(encoded);
 
     assertThat(decoded).isEqualToComparingFieldByField(sensorState);
   }
