@@ -8,6 +8,7 @@ import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.avro.AvroSerdes;
 import de.melsicon.kafka.serde.json.JsonSerdes;
 import de.melsicon.kafka.serde.proto.ProtoSerdes;
+import de.melsicon.kafka.serde.reflect.ReflectSerdes;
 import de.melsicon.kafka.testutil.SerdeWithRegistryRule;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -38,7 +39,8 @@ public final class SerdeTest {
 
   @Parameters(name = "{index}: {0}")
   public static Collection<?> serdes() {
-    var serdes = List.of(new AvroSerdes(), new ProtoSerdes(), new JsonSerdes());
+    var serdes =
+        List.of(new AvroSerdes(), new ProtoSerdes(), new JsonSerdes(), new ReflectSerdes());
     var combinations = new ArrayList<Object[]>(serdes.size() * serdes.size());
     for (var inputSerdes : serdes) {
       for (var resultSerdes : serdes) {

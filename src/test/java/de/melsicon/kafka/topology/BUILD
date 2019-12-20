@@ -15,6 +15,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/serde/avro",
         "//src/main/java/de/melsicon/kafka/serde/json",
         "//src/main/java/de/melsicon/kafka/serde/proto",
+        "//src/main/java/de/melsicon/kafka/serde/reflect",
         "//src/main/java/de/melsicon/kafka/topology",
         "//src/test/java/de/melsicon/kafka/testutil",
         "//toolchain:nullaway",
