@@ -124,3 +124,18 @@ java_library(
     visibility = ["//visibility:public"],
     exports = ["@maven//:com_google_auto_service_auto_service_annotations"],
 )
+
+# ---
+
+java_plugin(
+    name = "jmh_processor",
+    processor_class = "org.openjdk.jmh.generators.BenchmarkProcessor",
+    deps = ["@maven//:org_openjdk_jmh_jmh_generator_annprocess"],
+)
+
+java_library(
+    name = "jmh",
+    exported_plugins = ["jmh_processor"],
+    visibility = ["//visibility:public"],
+    exports = ["@maven//:org_openjdk_jmh_jmh_core"],
+)
