@@ -167,3 +167,11 @@ The main app runs with JSON in- and output, so you can use sample sensor values 
 {"id":"7331","time":443634330.0,"state":"on"}
 {"id":"7331","time":443634390.0,"state":"off"}
 ----
+
+=== Benchmark
+
+Run the https://openjdk.java.net/projects/code-tools/jmh/[JMH] microbenchmarks with
+[source,shell]
+----
+bazel run //:benchmark
+----
