@@ -22,6 +22,9 @@
           "type": "enum",
           "name": "State",
           "doc": "New state of the sensor",
+          "aliases": [
+            "de.melsicon.kafka.serde.reflect.SensorState.State"
+          ],
           "symbols": [
             "OFF",
             "ON"
