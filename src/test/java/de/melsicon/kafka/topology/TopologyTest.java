@@ -20,7 +20,7 @@ import de.melsicon.kafka.serde.avro.AvroSerdes;
 import de.melsicon.kafka.serde.json.JsonSerdes;
 import de.melsicon.kafka.serde.proto.ProtoSerdes;
 import de.melsicon.kafka.serde.reflect.ReflectSerdes;
-import de.melsicon.kafka.testutil.SerdeWithRegistryRule;
+import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Duration;
 import java.time.Instant;
@@ -51,8 +51,10 @@ public final class TopologyTest {
   public static final SharedKafkaTestResource KAFKA_TEST_RESOURCE =
       TestHelper.newKafkaTestResource();
 
-  @Rule public final SerdeWithRegistryRule serdeTestResource;
-
+  @Rule public final SchemaRegistryRule registryTestResource;
+  private final Supplier<Serde<SensorState>> inputSerdes;
+  private final Supplier<Serde<SensorState>> storeSerdes;
+  private final Supplier<Serde<SensorStateWithDuration>> resultSerdes;
   private TopologyTestDriver testDriver;
   private TestInputTopic<String, SensorState> inputTopic;
   private TestOutputTopic<String, SensorStateWithDuration> outputTopic;
@@ -62,9 +64,11 @@ public final class TopologyTest {
       Supplier<Serde<SensorState>> inputSerdes,
       Supplier<Serde<SensorState>> storeSerdes,
       Supplier<Serde<SensorStateWithDuration>> resultSerdes) {
-    serdeTestResource =
-        new SerdeWithRegistryRule(
-            inputSerdes, storeSerdes, resultSerdes, TestHelper.REGISTRY_SCOPE);
+    this.inputSerdes = inputSerdes;
+    this.storeSerdes = storeSerdes;
+    this.resultSerdes = resultSerdes;
+
+    this.registryTestResource = new SchemaRegistryRule(TestHelper.REGISTRY_SCOPE);
   }
 
   @Parameters(name = "{index}: {0}")
@@ -104,9 +108,14 @@ public final class TopologyTest {
   @Before
   @Initializer
   public void before() {
-    var inputSerde = serdeTestResource.createInputSerde(false);
-    var storeSerde = serdeTestResource.createstoreSerde(false);
-    var resultSerde = serdeTestResource.createResultSerde(false);
+    var inputSerde = inputSerdes.get();
+    registryTestResource.configureSerde(inputSerde);
+
+    var storeSerde = storeSerdes.get();
+    registryTestResource.configureSerde(storeSerde);
+
+    var resultSerde = resultSerdes.get();
+    registryTestResource.configureSerde(resultSerde);
 
     var kafkaTestUtils = KAFKA_TEST_RESOURCE.getKafkaTestUtils();
     kafkaTestUtils.createTopic(INPUT_TOPIC, PARTITIONS, TestHelper.REPLICATION_FACTOR);

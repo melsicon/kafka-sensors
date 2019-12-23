@@ -6,7 +6,6 @@ java_library(
     visibility = ["//visibility:public"],
     deps = [
         "//src/main/java/de/melsicon/annotation",
-        "//src/main/java/de/melsicon/kafka/model",
         "//toolchain:nullaway",
         "@confluent_schema_registry//:kafka-avro-serializer",
         "@confluent_schema_registry//:kafka-schema-registry-client",

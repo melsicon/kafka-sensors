@@ -9,7 +9,7 @@ import de.melsicon.kafka.serde.avro.AvroSerdes;
 import de.melsicon.kafka.serde.json.JsonSerdes;
 import de.melsicon.kafka.serde.proto.ProtoSerdes;
 import de.melsicon.kafka.serde.reflect.ReflectSerdes;
-import de.melsicon.kafka.testutil.SerdeWithRegistryRule;
+import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,16 +25,18 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public final class SerdeTest {
-  @Rule public final SerdeWithRegistryRule serdeTestResource;
+  @Rule public final SchemaRegistryRule registryTestResource;
+
+  private final Supplier<Serde<SensorState>> inputSerdes;
+  private final Supplier<Serde<SensorStateWithDuration>> resultSerdes;
 
   public SerdeTest(
       String description,
       Supplier<Serde<SensorState>> inputSerdes,
       Supplier<Serde<SensorStateWithDuration>> resultSerdes) {
-    Objects.requireNonNull(inputSerdes, "input serde supplier missing");
-    Objects.requireNonNull(resultSerdes, "result serde supplier missing");
-    this.serdeTestResource =
-        new SerdeWithRegistryRule(inputSerdes, () -> null, resultSerdes, REGISTRY_SCOPE);
+    this.inputSerdes = Objects.requireNonNull(inputSerdes, "input serde supplier missing");
+    this.resultSerdes = Objects.requireNonNull(resultSerdes, "result serde supplier missing");
+    this.registryTestResource = new SchemaRegistryRule(REGISTRY_SCOPE);
   }
 
   @Parameters(name = "{index}: {0}")
@@ -62,7 +64,8 @@ public final class SerdeTest {
     var sensorState = TestHelper.standardSensorState();
     SensorState decoded;
 
-    try (var serde = serdeTestResource.createInputSerde(false)) {
+    try (var serde = inputSerdes.get()) {
+      registryTestResource.configureSerde(serde);
       byte[] encoded;
       try (var serializer = serde.serializer()) {
         encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, sensorState);
@@ -87,7 +90,8 @@ public final class SerdeTest {
 
     SensorStateWithDuration decoded;
 
-    try (var serde = serdeTestResource.createResultSerde(false)) {
+    try (var serde = resultSerdes.get()) {
+      registryTestResource.configureSerde(serde);
       byte[] encoded;
       try (var serializer = serde.serializer()) {
         encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, event);
@@ -105,7 +109,8 @@ public final class SerdeTest {
   public void nullHandling() {
     SensorState decoded;
 
-    try (var serde = serdeTestResource.createInputSerde(false)) {
+    try (var serde = inputSerdes.get()) {
+      registryTestResource.configureSerde(serde);
       byte[] encoded;
       try (var serializer = serde.serializer()) {
         encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, null);
