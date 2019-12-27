@@ -18,9 +18,9 @@ rules_pkg_dependencies()
 
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "baa842cbc67aec78408aec3e480b2e94dbdd14d6b0170d3a3ee14a0e1a5bb95f",
-    strip_prefix = "rules_jvm_external-3.0",
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/3.0.tar.gz",
+    sha256 = "19c5c43a84d3c631a047b8e499b00b3ffca2e6784a1e4abfe2facdf865951e43",
+    strip_prefix = "rules_jvm_external-3.1",
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/3.1.tar.gz",
 )
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
@@ -68,7 +68,7 @@ maven_install(
         "com.google.errorprone:error_prone_annotations:2.3.4",
         "com.google.flogger:flogger-system-backend:0.4",
         "com.google.flogger:flogger:0.4",
-        "com.google.guava:guava:28.1-jre",
+        "com.google.guava:guava:28.2-jre",
         "com.salesforce.kafka.test:kafka-junit4:3.2.0",
         "com.uber.nullaway:nullaway:0.7.9",
         "info.picocli:picocli:4.1.2",
