@@ -17,9 +17,6 @@ java_library(
         "@maven//:org_apache_kafka_kafka_clients",
         "@maven//:org_slf4j_slf4j_api",
     ],
-    javacopts = [
-        "-Xlint:-deprecation,-serial",
-    ],
 )
 
 java_library(
@@ -33,9 +30,6 @@ java_library(
         "@maven//:org_apache_kafka_kafka_2_13",
         "@maven//:org_apache_kafka_kafka_clients",
     ],
-    javacopts = [
-        "-Xlint:-deprecation,-rawtypes,-unchecked",
-    ],
 )
 
 java_library(
@@ -47,8 +41,5 @@ java_library(
         ":kafka-schema-registry-client",
         "@maven//:org_apache_avro_avro",
         "@maven//:org_apache_kafka_kafka_clients",
-    ],
-    javacopts = [
-        "-Xlint:-unchecked",
     ],
 )
