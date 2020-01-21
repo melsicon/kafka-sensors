@@ -2,6 +2,7 @@ load("@rules_java//java:defs.bzl", "java_library", "java_test")
 
 java_library(
     name = "tests",
+    testonly = True,
     srcs = glob(["*.java"]),
     runtime_deps = [
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
