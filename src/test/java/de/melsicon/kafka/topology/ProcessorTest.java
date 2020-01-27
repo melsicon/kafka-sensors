@@ -2,7 +2,6 @@ package de.melsicon.kafka.topology;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.melsicon.annotation.Initializer;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
@@ -18,7 +17,6 @@ public final class ProcessorTest {
   private ValueTransformer<SensorState, SensorStateWithDuration> processor;
 
   @Before
-  @Initializer
   public void before() {
     var store = new HashMap<String, SensorState>();
     var processor = new DurationProcessor();

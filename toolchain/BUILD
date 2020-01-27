@@ -30,6 +30,7 @@ java_package_configuration(
         "-XepOpt:NullAway:TreatGeneratedAsUnannotated",
         "-XepOpt:NullAway:CheckOptionalEmptiness",
         "-XepOpt:NullAway:AcknowledgeRestrictiveAnnotations",
+        "-XepOpt:NullAway:CustomInitializerAnnotations=org.junit.Before,org.junit.BeforeClass",
         "-XepOpt:NullAway:ExcludedFieldAnnotations=picocli.CommandLine.Option",
     ],
     packages = [":package_group"],

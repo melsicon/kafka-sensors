@@ -3,7 +3,6 @@ package de.melsicon.kafka.serialization.reflect;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import de.melsicon.annotation.Initializer;
 import de.melsicon.kafka.serde.reflect.SensorState;
 import de.melsicon.kafka.serde.reflect.SensorState.State;
 import java.io.ByteArrayOutputStream;
@@ -26,7 +25,6 @@ public final class SerializationTest {
   private static DatumWriter<SensorState> writer;
   private static DatumReader<SensorState> reader;
 
-  @Initializer
   @BeforeClass
   public static void before() {
     var data = ReflectData.get();

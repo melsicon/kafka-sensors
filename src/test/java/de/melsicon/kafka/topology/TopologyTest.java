@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
-import de.melsicon.annotation.Initializer;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
@@ -106,7 +105,6 @@ public final class TopologyTest {
   }
 
   @Before
-  @Initializer
   public void before() {
     var inputSerde = inputSerdes.get();
     registryTestResource.configureSerde(inputSerde);

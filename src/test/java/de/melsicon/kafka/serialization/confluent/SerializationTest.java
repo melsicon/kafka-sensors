@@ -2,7 +2,6 @@ package de.melsicon.kafka.serialization.confluent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.melsicon.annotation.Initializer;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
@@ -70,7 +69,6 @@ public final class SerializationTest {
   }
 
   @Before
-  @Initializer
   public void before() {
     var inputSerde = inputSerdes.get();
     registryTestResource.configureSerde(inputSerde);

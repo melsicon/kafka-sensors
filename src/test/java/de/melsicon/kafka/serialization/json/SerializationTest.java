@@ -3,7 +3,6 @@ package de.melsicon.kafka.serialization.json;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.melsicon.annotation.Initializer;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.serde.json.JsonHelper;
@@ -16,7 +15,6 @@ public final class SerializationTest {
   private ObjectMapper mapper;
 
   @Before
-  @Initializer
   public void before() {
     mapper = JsonHelper.mapper();
   }
