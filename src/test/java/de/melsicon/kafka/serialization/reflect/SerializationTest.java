@@ -3,49 +3,31 @@ package de.melsicon.kafka.serialization.reflect;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import de.melsicon.kafka.serde.reflect.SensorState;
-import de.melsicon.kafka.serde.reflect.SensorState.State;
-import java.io.ByteArrayOutputStream;
+import de.melsicon.kafka.sensors.reflect.SensorState;
+import de.melsicon.kafka.sensors.reflect.State;
 import java.io.IOException;
 import java.time.Instant;
 import org.apache.avro.AvroTypeException;
-import org.apache.avro.io.DatumReader;
-import org.apache.avro.io.DatumWriter;
-import org.apache.avro.io.DecoderFactory;
-import org.apache.avro.io.EncoderFactory;
+import org.apache.avro.message.BinaryMessageDecoder;
+import org.apache.avro.message.BinaryMessageEncoder;
+import org.apache.avro.message.MessageDecoder;
+import org.apache.avro.message.MessageEncoder;
 import org.apache.avro.reflect.ReflectData;
-import org.apache.avro.reflect.ReflectDatumReader;
-import org.apache.avro.reflect.ReflectDatumWriter;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public final class SerializationTest {
   private static final Instant INSTANT = Instant.ofEpochSecond(443634300L);
 
-  private static DatumWriter<SensorState> writer;
-  private static DatumReader<SensorState> reader;
+  private static MessageEncoder<SensorState> encoder;
+  private static MessageDecoder<SensorState> decoder;
 
   @BeforeClass
   public static void before() {
-    var data = ReflectData.get();
-    var schema = data.getSchema(SensorState.class);
-
-    writer = new ReflectDatumWriter<>(schema, data);
-    reader = new ReflectDatumReader<>(schema, schema, data);
-  }
-
-  private static SensorState readSensorState(byte[] bytes) throws IOException {
-    var decoderFactory = DecoderFactory.get();
-    var decoder = decoderFactory.binaryDecoder(bytes, null);
-    return reader.read(null, decoder);
-  }
-
-  private static void writeSensorState(SensorState sensorState, ByteArrayOutputStream out)
-      throws IOException {
-    var encoderFactory = EncoderFactory.get();
-    var encoder = encoderFactory.directBinaryEncoder(out, null);
-    writer.write(sensorState, encoder);
-    encoder.flush();
+    var model = ReflectData.get();
+    var schema = model.getSchema(SensorState.class);
+    encoder = new BinaryMessageEncoder<>(model, schema);
+    decoder = new BinaryMessageDecoder<>(model, schema);
   }
 
   @Test
@@ -55,27 +37,24 @@ public final class SerializationTest {
     sensorState.time = INSTANT;
     sensorState.state = State.OFF;
 
-    var out = new ByteArrayOutputStream();
-    writeSensorState(sensorState, out);
+    var encoded = encoder.encode(sensorState);
 
-    var encoded = out.toByteArray();
-    var decoded = readSensorState(encoded);
+    // Check for single-record format marker
+    // http://avro.apache.org/docs/1.9.1/spec.html#single_object_encoding
+    assertThat(encoded.getShort(0)).isEqualTo((short) 0xc301);
+
+    var decoded = decoder.decode(encoded);
 
     assertThat(decoded).isEqualToComparingFieldByField(sensorState);
   }
 
   @Test
-  public void stateIsRequired() {
+  public void stateIsRequired() throws IOException {
     var sensorState = new SensorState();
     sensorState.id = "7331";
     sensorState.time = INSTANT;
 
-    var out = new ByteArrayOutputStream();
-
-    var encoderFactory = EncoderFactory.get();
-    var encoder = encoderFactory.directBinaryEncoder(out, null);
-
     assertThatExceptionOfType(AvroTypeException.class)
-        .isThrownBy(() -> writer.write(sensorState, encoder));
+        .isThrownBy(() -> encoder.encode(sensorState));
   }
 }

@@ -11,11 +11,12 @@ java_library(
         "//src/main/java/de/melsicon/kafka/model",
         "//src/main/java/de/melsicon/kafka/serde",
         "//src/main/java/de/melsicon/kafka/serde/avro",
+        "//src/main/java/de/melsicon/kafka/serde/confluent",
         "//src/main/java/de/melsicon/kafka/serde/json",
         "//src/main/java/de/melsicon/kafka/serde/proto",
-        "//src/main/java/de/melsicon/kafka/serde/reflect",
         "//src/test/java/de/melsicon/kafka/testutil",
         "//toolchain:nullaway",
+        "@maven//:com_google_guava_guava",
         "@maven//:junit_junit",
         "@maven//:org_apache_kafka_kafka_clients",
         "@maven//:org_assertj_assertj_core",
@@ -24,6 +25,14 @@ java_library(
 
 java_test(
     name = "SerdeTest",
+    size = "small",
+    runtime_deps = [
+        ":tests",
+    ],
+)
+
+java_test(
+    name = "SerdeWithDurationTest",
     size = "small",
     runtime_deps = [
         ":tests",

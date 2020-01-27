@@ -4,13 +4,11 @@ import static io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig.SCHEMA
 
 import de.melsicon.annotation.Initializer;
 import de.melsicon.kafka.model.SensorState;
+import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.SensorStateSerdes;
-import de.melsicon.kafka.serde.avro.AvroSerdes;
-import de.melsicon.kafka.serde.json.JsonSerdes;
-import de.melsicon.kafka.serde.proto.ProtoSerdes;
-import de.melsicon.kafka.serde.reflect.ReflectSerdes;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.testutil.MockSchemaRegistry;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Map;
 import org.apache.kafka.common.serialization.Deserializer;
@@ -26,42 +24,64 @@ import org.openjdk.jmh.annotations.TearDown;
 public final class BenchHelper {
   private BenchHelper() {}
 
-  private static Serde<SensorState> createSensorStateSerde(SerType serdes) {
+  private static Serde<SensorStateWithDuration> createSerde(SerType serdes) {
     SensorStateSerdes serdeFactory;
     switch (serdes) {
-      case AVRO:
-        serdeFactory = new AvroSerdes();
-        break;
       case JSON:
-        serdeFactory = new JsonSerdes();
+        serdeFactory = new de.melsicon.kafka.serde.json.JsonSerdes();
         break;
       case PROTO:
-        serdeFactory = new ProtoSerdes();
+        serdeFactory = new de.melsicon.kafka.serde.proto.ProtoSerdes();
         break;
-      case REFLECT:
-        serdeFactory = new ReflectSerdes();
+      case AVRO:
+        serdeFactory = new de.melsicon.kafka.serde.avro.AvroSerdes();
+        break;
+      case AVRO_REFLECT:
+        serdeFactory = new de.melsicon.kafka.serde.avro.ReflectSerdes();
+        break;
+      case AVRO_GENERIC:
+        serdeFactory = new de.melsicon.kafka.serde.avro.GenericSerdes();
+        break;
+      case CONFLUENT:
+        serdeFactory = new de.melsicon.kafka.serde.confluent.AvroSerdes();
+        break;
+      case CONFLUENT_REFLECT:
+        serdeFactory = new de.melsicon.kafka.serde.confluent.ReflectSerdes();
+        break;
+      case CONFLUENT_GENERIC:
+        serdeFactory = new de.melsicon.kafka.serde.confluent.GenericSerdes();
         break;
       default:
         throw new UnsupportedOperationException("Unknown type " + serdes.name());
     }
-    return serdeFactory.createSensorStateSerde();
+    return serdeFactory.createSensorStateWithDurationSerde();
   }
 
-  private static SensorState createSensorState() {
+  private static SensorStateWithDuration createData() {
     var instant = Instant.ofEpochSecond(443634300L);
 
-    return SensorState.builder()
-        .setId("7331")
-        .setTime(instant)
-        .setState(SensorState.State.OFF)
+    var event =
+        SensorState.builder()
+            .setId("7331")
+            .setTime(instant)
+            .setState(SensorState.State.OFF)
+            .build();
+
+    return SensorStateWithDuration.builder()
+        .setEvent(event)
+        .setDuration(Duration.ofSeconds(15))
         .build();
   }
 
   public enum SerType {
-    AVRO,
     JSON,
     PROTO,
-    REFLECT
+    AVRO,
+    AVRO_REFLECT,
+    AVRO_GENERIC,
+    CONFLUENT,
+    CONFLUENT_REFLECT,
+    CONFLUENT_GENERIC
   }
 
   @State(Scope.Benchmark)
@@ -70,12 +90,21 @@ public final class BenchHelper {
     private static final String REGISTRY_URL = "mock://" + REGISTRY_SCOPE;
 
     @SuppressWarnings("NullAway.Init")
-    @Param({"AVRO", "JSON", "PROTO", "REFLECT"})
+    @Param({
+      "JSON",
+      "PROTO",
+      "AVRO",
+      "AVRO_REFLECT",
+      "AVRO_GENERIC",
+      "CONFLUENT",
+      "CONFLUENT_REFLECT",
+      "CONFLUENT_GENERIC"
+    })
     public SerType serdes;
 
-    public Serializer<SensorState> serializer;
-    public Deserializer<SensorState> deserializer;
-    public SensorState data;
+    public Serializer<SensorStateWithDuration> serializer;
+    public Deserializer<SensorStateWithDuration> deserializer;
+    public SensorStateWithDuration data;
     public byte[] bytes;
 
     private SchemaRegistryClient registryClient;
@@ -85,14 +114,14 @@ public final class BenchHelper {
     public void setup() {
       registryClient = MockSchemaRegistry.getClientForScope(REGISTRY_SCOPE);
 
-      var serde = createSensorStateSerde(serdes);
+      var serde = createSerde(serdes);
       var serdeConfig = Map.of(SCHEMA_REGISTRY_URL_CONFIG, REGISTRY_URL);
       serde.configure(serdeConfig, /* isKey= */ false);
 
       serializer = serde.serializer();
       deserializer = serde.deserializer();
 
-      data = createSensorState();
+      data = createData();
 
       bytes = serializer.serialize(null, data);
     }

@@ -23,7 +23,7 @@
           "name": "State",
           "doc": "New state of the sensor",
           "aliases": [
-            "de.melsicon.kafka.serde.reflect.SensorState.State"
+            "de.melsicon.kafka.sensors.reflect.State"
           ],
           "symbols": [
             "OFF",

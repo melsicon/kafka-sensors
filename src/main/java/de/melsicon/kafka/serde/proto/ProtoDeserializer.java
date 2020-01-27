@@ -17,7 +17,7 @@ public final class ProtoDeserializer<T extends MessageLite> implements Deseriali
   @Nullable
   @Override
   public T deserialize(String topic, @Nullable byte[] data) {
-    if (data == null) {
+    if (data == null || data.length == 0) {
       return null;
     }
     try {

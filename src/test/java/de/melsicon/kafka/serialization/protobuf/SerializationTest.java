@@ -13,16 +13,14 @@ public final class SerializationTest {
   @Test
   public void canDecode() throws IOException {
     var instant = Instant.ofEpochSecond(443634300L);
+    var time =
+        Timestamp.newBuilder()
+            .setSeconds(instant.getEpochSecond())
+            .setNanos(instant.getNano())
+            .build();
 
     var sensorState =
-        SensorState.newBuilder()
-            .setId("7331")
-            .setTime(
-                Timestamp.newBuilder()
-                    .setSeconds(instant.getEpochSecond())
-                    .setNanos(instant.getNano()))
-            .setState(State.STATE_OFF)
-            .build();
+        SensorState.newBuilder().setId("7331").setTime(time).setState(State.STATE_OFF).build();
 
     var encoded = sensorState.toByteArray();
 

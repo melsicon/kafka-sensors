@@ -5,8 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import de.melsicon.kafka.serde.avro.AvroSerdes;
-import de.melsicon.kafka.serde.reflect.ReflectSerdes;
+import de.melsicon.kafka.serde.confluent.AvroSerdes;
+import de.melsicon.kafka.serde.confluent.GenericSerdes;
+import de.melsicon.kafka.serde.confluent.ReflectSerdes;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import java.time.Duration;
 import java.time.Instant;
@@ -49,7 +50,7 @@ public final class SerializationTest {
 
   @Parameters(name = "{index}: {0}")
   public static Collection<?> serdes() {
-    var serdes = List.of(new AvroSerdes(), new ReflectSerdes());
+    var serdes = List.of(new AvroSerdes(), new ReflectSerdes(), new GenericSerdes());
     var combinations = new ArrayList<Object[]>(serdes.size() * serdes.size());
     for (var inputSerdes : serdes) {
       for (var resultSerdes : serdes) {
@@ -97,6 +98,10 @@ public final class SerializationTest {
             .setDuration(Duration.ofSeconds(15))
             .build();
     var bytes = serializer.serialize(null, sensorState);
+
+    // Check for “Magic Byte”
+    // https://docs.confluent.io/current/schema-registry/serializer-formatter.html#wire-format
+    assertThat(bytes).startsWith(0);
 
     var decoded = deserializer.deserialize(null, bytes);
 

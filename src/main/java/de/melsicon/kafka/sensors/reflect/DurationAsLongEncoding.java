@@ -1,4 +1,4 @@
-package de.melsicon.kafka.serde.reflect;
+package de.melsicon.kafka.sensors.reflect;
 
 import java.io.IOException;
 import java.time.Duration;

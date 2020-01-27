@@ -20,11 +20,13 @@ public final class MappedSerializer<U, T> implements Serializer<U> {
     serializer.configure(configs, isKey);
   }
 
+  @Nullable
   @Override
   public byte[] serialize(String topic, @Nullable U data) {
     return serializer.serialize(topic, unmapper.apply(data));
   }
 
+  @Nullable
   @Override
   public byte[] serialize(String topic, Headers headers, @Nullable U data) {
     return serializer.serialize(topic, headers, unmapper.apply(data));

@@ -3,6 +3,7 @@ package de.melsicon.kafka.serde.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
+import de.melsicon.kafka.serde.Format;
 import de.melsicon.kafka.serde.SensorStateSerdes;
 import javax.inject.Inject;
 import org.apache.kafka.common.serialization.Serde;
@@ -17,6 +18,11 @@ public final class JsonSerdes implements SensorStateSerdes {
   @Override
   public String name() {
     return "json";
+  }
+
+  @Override
+  public Format format() {
+    return Format.JSON;
   }
 
   @Override

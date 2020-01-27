@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
 
 import com.google.common.collect.ImmutableCollection;
-import de.melsicon.kafka.model.SensorState;
+import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -21,20 +21,20 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
-public final class SerdeTest {
+public final class SerdeWithDurationTest {
   @Rule public final SchemaRegistryRule registryTestResource;
 
   private final String description;
-  private final Supplier<Serde<SensorState>> inputSerdes;
-  private final Supplier<Serde<SensorState>> resultSerdes;
+  private final Supplier<Serde<SensorStateWithDuration>> inputSerdes;
+  private final Supplier<Serde<SensorStateWithDuration>> resultSerdes;
 
-  private Serializer<SensorState> serializer;
-  private Deserializer<SensorState> deserializer;
+  private Serializer<SensorStateWithDuration> serializer;
+  private Deserializer<SensorStateWithDuration> deserializer;
 
-  public SerdeTest(
+  public SerdeWithDurationTest(
       String description,
-      Supplier<Serde<SensorState>> inputSerdes,
-      Supplier<Serde<SensorState>> resultSerdes) {
+      Supplier<Serde<SensorStateWithDuration>> inputSerdes,
+      Supplier<Serde<SensorStateWithDuration>> resultSerdes) {
     this.description = description;
     this.inputSerdes = Objects.requireNonNull(inputSerdes, "input serde supplier missing");
     this.resultSerdes = Objects.requireNonNull(resultSerdes, "result serde supplier missing");
@@ -43,7 +43,7 @@ public final class SerdeTest {
 
   @Parameters(name = "{index}: {0}")
   public static ImmutableCollection<?> parameters() {
-    return TestHelper.parameters();
+    return TestHelper.parametersWithDuration();
   }
 
   @Before
@@ -65,7 +65,7 @@ public final class SerdeTest {
 
   @Test
   public void compatability() {
-    var sensorState = TestHelper.standardSensorState();
+    var sensorState = TestHelper.standardSensorStateWithDuration();
 
     var encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, sensorState);
     assertThat(encoded).isNotEmpty();

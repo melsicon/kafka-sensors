@@ -1,4 +1,4 @@
-package de.melsicon.kafka.serde.avro;
+package de.melsicon.kafka.serde.confluent;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;

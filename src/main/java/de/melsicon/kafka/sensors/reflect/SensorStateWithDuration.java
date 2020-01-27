@@ -1,4 +1,4 @@
-package de.melsicon.kafka.serde.reflect;
+package de.melsicon.kafka.sensors.reflect;
 
 import java.time.Duration;
 import org.apache.avro.reflect.AvroEncode;

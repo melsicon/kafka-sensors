@@ -9,8 +9,7 @@ java_library(
         "//src/main/java/de/melsicon/annotation",
         "//src/main/java/de/melsicon/kafka/model",
         "//src/main/java/de/melsicon/kafka/serde",
-        "//src/main/java/de/melsicon/kafka/serde/avro",
-        "//src/main/java/de/melsicon/kafka/serde/reflect",
+        "//src/main/java/de/melsicon/kafka/serde/confluent",
         "//src/test/java/de/melsicon/kafka/testutil",
         "//toolchain:nullaway",
         "@maven//:junit_junit",
@@ -24,5 +23,6 @@ java_test(
     size = "small",
     runtime_deps = [
         ":tests",
+        "@maven//:org_slf4j_slf4j_jdk14",
     ],
 )

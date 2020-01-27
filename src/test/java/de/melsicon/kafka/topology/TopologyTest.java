@@ -15,17 +15,12 @@ import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import de.melsicon.kafka.serde.avro.AvroSerdes;
-import de.melsicon.kafka.serde.json.JsonSerdes;
-import de.melsicon.kafka.serde.proto.ProtoSerdes;
-import de.melsicon.kafka.serde.reflect.ReflectSerdes;
+import de.melsicon.kafka.serde.SensorStateSerdes;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Properties;
 import java.util.function.Supplier;
 import org.apache.kafka.common.serialization.Serde;
@@ -70,11 +65,19 @@ public final class TopologyTest {
     this.registryTestResource = new SchemaRegistryRule(TestHelper.REGISTRY_SCOPE);
   }
 
+  private static SensorStateSerdes[] serdes() {
+    return new SensorStateSerdes[] {
+      new de.melsicon.kafka.serde.json.JsonSerdes(),
+      new de.melsicon.kafka.serde.proto.ProtoSerdes(),
+      new de.melsicon.kafka.serde.avro.AvroSerdes(),
+      new de.melsicon.kafka.serde.confluent.AvroSerdes()
+    };
+  }
+
   @Parameters(name = "{index}: {0}")
-  public static Collection<?> serdes() {
-    var serdes =
-        List.of(new AvroSerdes(), new ProtoSerdes(), new JsonSerdes(), new ReflectSerdes());
-    var combinations = new ArrayList<Object[]>(serdes.size() * serdes.size());
+  public static Collection<?> parameters() {
+    var serdes = serdes();
+    var combinations = new ArrayList<Object[]>(serdes.length * serdes.length * serdes.length);
     for (var inputSerdes : serdes) {
       for (var storeSerdes : serdes) {
         for (var resultSerdes : serdes) {
@@ -139,9 +142,8 @@ public final class TopologyTest {
     testDriver.close();
   }
 
-  private void pipeState(@Nullable SensorState sensorState) {
-    var key = sensorState == null ? null : sensorState.getId();
-    inputTopic.pipeInput(key, sensorState);
+  private void pipeState(SensorState sensorState) {
+    inputTopic.pipeInput(sensorState.getId(), sensorState);
   }
 
   @Test
@@ -218,7 +220,7 @@ public final class TopologyTest {
 
   @Test
   public void testTombstone() {
-    assertThatCode(() -> pipeState(null)).doesNotThrowAnyException();
+    assertThatCode(() -> inputTopic.pipeInput("7331", null)).doesNotThrowAnyException();
 
     var result = outputTopic.readKeyValue();
 

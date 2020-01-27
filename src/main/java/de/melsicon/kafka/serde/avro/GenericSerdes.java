@@ -3,28 +3,33 @@ package de.melsicon.kafka.serde.avro;
 import static de.melsicon.kafka.serde.avro.SchemaHelper.RESOLVER;
 import static de.melsicon.kafka.serde.avro.SchemaHelper.RESOLVER_WITH_DURATION;
 
-import de.melsicon.kafka.sensors.avro.SensorState;
-import de.melsicon.kafka.sensors.avro.SensorStateWithDuration;
+import de.melsicon.kafka.model.SensorState;
+import de.melsicon.kafka.sensors.generic.SensorStateSchema;
+import de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema;
 import de.melsicon.kafka.serde.Format;
 import de.melsicon.kafka.serde.SensorStateSerdes;
-import de.melsicon.kafka.serde.avromapper.AvroMapper;
+import de.melsicon.kafka.serde.avromapper.GenericMapper;
 import de.melsicon.kafka.serde.mapping.MappedDeserializer;
 import de.melsicon.kafka.serde.mapping.MappedSerializer;
 import javax.inject.Inject;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.message.BinaryMessageDecoder;
+import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 
-public final class AvroSerdes implements SensorStateSerdes {
-  private final AvroMapper mapper;
+public final class GenericSerdes implements SensorStateSerdes {
+  private final GenericMapper mapper;
 
   @Inject
-  public AvroSerdes() {
-    this.mapper = AvroMapper.instance();
+  public GenericSerdes() {
+    this.mapper = GenericMapper.instance();
   }
 
   @Override
   public String name() {
-    return "avro";
+    return "generic";
   }
 
   @Override
@@ -33,12 +38,15 @@ public final class AvroSerdes implements SensorStateSerdes {
   }
 
   @Override
-  public Serde<de.melsicon.kafka.model.SensorState> createSensorStateSerde() {
-    var encoder = SensorState.getEncoder();
+  public Serde<SensorState> createSensorStateSerde() {
+    var model = GenericData.get();
+    var schema = SensorStateSchema.SCHEMA;
+
+    var encoder = new BinaryMessageEncoder<GenericRecord>(model, schema);
     var serializer = new AvroSerializer<>(encoder);
     var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap);
 
-    var decoder = SensorState.createDecoder(RESOLVER);
+    var decoder = new BinaryMessageDecoder<GenericRecord>(model, schema, RESOLVER);
     var deserializer = new AvroDeserializer<>(decoder);
     var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map);
 
@@ -48,11 +56,14 @@ public final class AvroSerdes implements SensorStateSerdes {
   @Override
   public Serde<de.melsicon.kafka.model.SensorStateWithDuration>
       createSensorStateWithDurationSerde() {
-    var encoder = SensorStateWithDuration.getEncoder();
+    var model = GenericData.get();
+    var schema = SensorStateWithDurationSchema.SCHEMA;
+
+    var encoder = new BinaryMessageEncoder<GenericRecord>(model, schema);
     var serializer = new AvroSerializer<>(encoder);
     var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap2);
 
-    var decoder = SensorStateWithDuration.createDecoder(RESOLVER_WITH_DURATION);
+    var decoder = new BinaryMessageDecoder<GenericRecord>(model, schema, RESOLVER_WITH_DURATION);
     var deserializer = new AvroDeserializer<>(decoder);
     var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map2);
 

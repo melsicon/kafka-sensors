@@ -7,6 +7,8 @@ import org.apache.kafka.common.serialization.Serde;
 public interface SensorStateSerdes {
   String name();
 
+  Format format();
+
   Serde<SensorState> createSensorStateSerde();
 
   Serde<SensorStateWithDuration> createSensorStateWithDurationSerde();

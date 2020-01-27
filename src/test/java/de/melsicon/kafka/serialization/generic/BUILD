@@ -9,8 +9,7 @@ java_library(
         "@maven//:org_slf4j_slf4j_jdk14",
     ],
     deps = [
-        "//src/main/java/de/melsicon/annotation",
-        "//src/main/java/de/melsicon/kafka/sensors/reflect",
+        "//src/main/java/de/melsicon/kafka/sensors/generic",
         "//toolchain:nullaway",
         "@maven//:junit_junit",
         "@maven//:org_apache_avro_avro",

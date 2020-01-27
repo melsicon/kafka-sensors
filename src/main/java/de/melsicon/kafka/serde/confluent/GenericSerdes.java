@@ -1,39 +1,41 @@
-package de.melsicon.kafka.serde.proto;
+package de.melsicon.kafka.serde.confluent;
 
-import de.melsicon.kafka.sensors.v1.SensorState;
-import de.melsicon.kafka.sensors.v1.SensorStateWithDuration;
+import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.serde.Format;
 import de.melsicon.kafka.serde.SensorStateSerdes;
+import de.melsicon.kafka.serde.avromapper.GenericMapper;
 import de.melsicon.kafka.serde.mapping.MappedDeserializer;
 import de.melsicon.kafka.serde.mapping.MappedSerializer;
+import io.confluent.kafka.streams.serdes.avro.GenericAvroDeserializer;
+import io.confluent.kafka.streams.serdes.avro.GenericAvroSerializer;
 import javax.inject.Inject;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 
-public final class ProtoSerdes implements SensorStateSerdes {
-  private final ProtoMapper mapper;
+public final class GenericSerdes implements SensorStateSerdes {
+  private final GenericMapper mapper;
 
   @Inject
-  public ProtoSerdes() {
-    this.mapper = ProtoMapper.instance();
+  public GenericSerdes() {
+    this.mapper = GenericMapper.instance();
   }
 
   @Override
   public String name() {
-    return "proto";
+    return "confluent-generic";
   }
 
   @Override
   public Format format() {
-    return Format.PROTO;
+    return Format.CONFLUENT;
   }
 
   @Override
-  public Serde<de.melsicon.kafka.model.SensorState> createSensorStateSerde() {
-    var serializer = new ProtoSerializer<SensorState>();
-    var deserializer = new ProtoDeserializer<>(SensorState.parser());
-
+  public Serde<SensorState> createSensorStateSerde() {
+    var serializer = new GenericAvroSerializer();
     var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap);
+
+    var deserializer = new GenericAvroDeserializer();
     var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map);
 
     return Serdes.serdeFrom(mappedSerializer, mappedDeserializer);
@@ -42,10 +44,10 @@ public final class ProtoSerdes implements SensorStateSerdes {
   @Override
   public Serde<de.melsicon.kafka.model.SensorStateWithDuration>
       createSensorStateWithDurationSerde() {
-    var serializer = new ProtoSerializer<SensorStateWithDuration>();
-    var deserializer = new ProtoDeserializer<>(SensorStateWithDuration.parser());
-
+    var serializer = new GenericAvroSerializer();
     var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap2);
+
+    var deserializer = new GenericAvroDeserializer();
     var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map2);
 
     return Serdes.serdeFrom(mappedSerializer, mappedDeserializer);

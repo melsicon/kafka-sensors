@@ -1,7 +1,6 @@
-package de.melsicon.kafka.serde.reflect;
+package de.melsicon.kafka.sensors.reflect;
 
 import java.time.Instant;
-import org.apache.avro.reflect.AvroAlias;
 import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.AvroEncode;
 
@@ -14,11 +13,4 @@ public final class SensorState {
   public Instant time;
 
   public State state;
-
-  @AvroDoc("New state of the sensor")
-  @AvroAlias(alias = "State", space = "de.melsicon.kafka.sensors.avro")
-  public enum State {
-    OFF,
-    ON
-  }
 }

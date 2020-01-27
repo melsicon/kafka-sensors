@@ -15,9 +15,9 @@ import org.mapstruct.ValueMappings;
 
 @Immutable
 @Mapper(config = MapStructConfig.class, uses = ProtoTypesMapper.class)
-public abstract class SensorStateMapper {
-  public static SensorStateMapper instance() {
-    return new SensorStateMapperImpl();
+public abstract class ProtoMapper {
+  public static ProtoMapper instance() {
+    return new ProtoMapperImpl();
   }
 
   public abstract SensorState map(de.melsicon.kafka.sensors.v1.SensorState sensorState);

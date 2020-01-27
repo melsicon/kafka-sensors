@@ -20,11 +20,13 @@ public final class MappedDeserializer<U, T> implements Deserializer<U> {
     deserializer.configure(configs, isKey);
   }
 
+  @Nullable
   @Override
   public U deserialize(String topic, @Nullable byte[] data) {
     return mapper.apply(deserializer.deserialize(topic, data));
   }
 
+  @Nullable
   @Override
   public U deserialize(String topic, Headers headers, @Nullable byte[] data) {
     return mapper.apply(deserializer.deserialize(topic, headers, data));
