@@ -13,17 +13,16 @@ public final class JsonHelper {
   private JsonHelper() {}
 
   public static ObjectMapper mapper() {
-    var mapper = new ObjectMapper();
-    mapper.registerModule(new Jdk8Module());
-    mapper.registerModule(new JavaTimeModule());
-    mapper.registerModule(new GuavaModule());
-    mapper.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, /* state= */ true);
-    mapper.configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, /* state= */ true);
-    mapper.addMixIn(SensorState.class, SensorStateMixIn.class);
-    mapper.addMixIn(SensorState.Builder.class, SensorStateMixIn.BuilderMixIn.class);
-    mapper.addMixIn(SensorStateWithDuration.class, SensorStateWithDurationMixIn.class);
-    mapper.addMixIn(
-        SensorStateWithDuration.Builder.class, SensorStateWithDurationMixIn.BuilderMixIn.class);
-    return mapper;
+    return new ObjectMapper()
+        .registerModule(new Jdk8Module())
+        .registerModule(new JavaTimeModule())
+        .registerModule(new GuavaModule())
+        .configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, /* state= */ true)
+        .configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, /* state= */ true)
+        .addMixIn(SensorState.class, SensorStateMixIn.class)
+        .addMixIn(SensorState.Builder.class, SensorStateMixIn.BuilderMixIn.class)
+        .addMixIn(SensorStateWithDuration.class, SensorStateWithDurationMixIn.class)
+        .addMixIn(
+            SensorStateWithDuration.Builder.class, SensorStateWithDurationMixIn.BuilderMixIn.class);
   }
 }
