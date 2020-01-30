@@ -8,7 +8,7 @@ import de.melsicon.kafka.sensors.generic.SensorStateSchema;
 import de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema;
 import de.melsicon.kafka.serde.Format;
 import de.melsicon.kafka.serde.SensorStateSerdes;
-import de.melsicon.kafka.serde.avromapper.GenericMapper;
+import de.melsicon.kafka.serde.avromapper.AvroMapper;
 import de.melsicon.kafka.serde.mapping.MappedDeserializer;
 import de.melsicon.kafka.serde.mapping.MappedSerializer;
 import javax.inject.Inject;
@@ -20,11 +20,11 @@ import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 
 public final class GenericSerdes implements SensorStateSerdes {
-  private final GenericMapper mapper;
+  private final AvroMapper<GenericRecord, GenericRecord> mapper;
 
   @Inject
-  public GenericSerdes() {
-    this.mapper = GenericMapper.instance();
+  public GenericSerdes(AvroMapper<GenericRecord, GenericRecord> mapper) {
+    this.mapper = mapper;
   }
 
   @Override

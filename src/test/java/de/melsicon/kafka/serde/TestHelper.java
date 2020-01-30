@@ -5,6 +5,9 @@ import com.google.common.collect.ImmutableMultimap;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
+import de.melsicon.kafka.serde.avromapper.GenericMapper;
+import de.melsicon.kafka.serde.avromapper.ReflectMapper;
+import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.function.Function;
@@ -33,15 +36,19 @@ import org.apache.kafka.common.serialization.Serde;
   }
 
   private static SensorStateSerdes[] serdes() {
+    var specificMapper = SpecificMapper.instance();
+    var reflectMapper = ReflectMapper.instance();
+    var genericMapper = GenericMapper.instance();
+
     return new SensorStateSerdes[] {
       new de.melsicon.kafka.serde.json.JsonSerdes(),
       new de.melsicon.kafka.serde.proto.ProtoSerdes(),
-      new de.melsicon.kafka.serde.avro.AvroSerdes(),
-      new de.melsicon.kafka.serde.avro.ReflectSerdes(),
-      new de.melsicon.kafka.serde.avro.GenericSerdes(),
-      new de.melsicon.kafka.serde.confluent.AvroSerdes(),
-      new de.melsicon.kafka.serde.confluent.ReflectSerdes(),
-      new de.melsicon.kafka.serde.confluent.GenericSerdes()
+      new de.melsicon.kafka.serde.avro.AvroSerdes(specificMapper),
+      new de.melsicon.kafka.serde.avro.ReflectSerdes(reflectMapper),
+      new de.melsicon.kafka.serde.avro.GenericSerdes(genericMapper),
+      new de.melsicon.kafka.serde.confluent.AvroSerdes(specificMapper),
+      new de.melsicon.kafka.serde.confluent.ReflectSerdes(reflectMapper),
+      new de.melsicon.kafka.serde.confluent.GenericSerdes(genericMapper)
     };
   }
 

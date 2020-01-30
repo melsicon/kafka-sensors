@@ -16,6 +16,7 @@ import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.SensorStateSerdes;
+import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import java.time.Duration;
 import java.time.Instant;
@@ -66,11 +67,12 @@ public final class TopologyTest {
   }
 
   private static SensorStateSerdes[] serdes() {
+    var specificMapper = SpecificMapper.instance();
     return new SensorStateSerdes[] {
       new de.melsicon.kafka.serde.json.JsonSerdes(),
       new de.melsicon.kafka.serde.proto.ProtoSerdes(),
-      new de.melsicon.kafka.serde.avro.AvroSerdes(),
-      new de.melsicon.kafka.serde.confluent.AvroSerdes()
+      new de.melsicon.kafka.serde.avro.AvroSerdes(specificMapper),
+      new de.melsicon.kafka.serde.confluent.AvroSerdes(specificMapper)
     };
   }
 

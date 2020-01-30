@@ -20,11 +20,10 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 import org.apache.avro.generic.GenericData.EnumSymbol;
-import org.apache.avro.generic.GenericData.Record;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 
-public final class GenericMapper {
+public final class GenericMapper implements AvroMapper<GenericRecord, GenericRecord> {
   public static GenericMapper instance() {
     return new GenericMapper();
   }
@@ -55,6 +54,7 @@ public final class GenericMapper {
   }
 
   @Nullable
+  @Override
   public SensorState map(@Nullable GenericRecord sensorState) {
     if (sensorState == null) {
       return null;
@@ -67,7 +67,8 @@ public final class GenericMapper {
   }
 
   @Nullable
-  public Record unmap(@Nullable SensorState sensorState) {
+  @Override
+  public GenericRecord unmap(@Nullable SensorState sensorState) {
     if (sensorState == null) {
       return null;
     }
@@ -79,6 +80,7 @@ public final class GenericMapper {
   }
 
   @Nullable
+  @Override
   public SensorStateWithDuration map2(@Nullable GenericRecord sensorState) {
     if (sensorState == null) {
       return null;
@@ -91,7 +93,8 @@ public final class GenericMapper {
   }
 
   @Nullable
-  public Record unmap2(@Nullable SensorStateWithDuration sensorState) {
+  @Override
+  public GenericRecord unmap2(@Nullable SensorStateWithDuration sensorState) {
     if (sensorState == null) {
       return null;
     }

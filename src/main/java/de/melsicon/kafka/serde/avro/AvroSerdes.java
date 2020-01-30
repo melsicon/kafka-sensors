@@ -15,11 +15,11 @@ import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 
 public final class AvroSerdes implements SensorStateSerdes {
-  private final AvroMapper mapper;
+  private final AvroMapper<SensorState, SensorStateWithDuration> mapper;
 
   @Inject
-  public AvroSerdes() {
-    this.mapper = AvroMapper.instance();
+  public AvroSerdes(AvroMapper<SensorState, SensorStateWithDuration> mapper) {
+    this.mapper = mapper;
   }
 
   @Override

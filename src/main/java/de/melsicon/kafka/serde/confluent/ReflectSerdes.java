@@ -4,7 +4,7 @@ import de.melsicon.kafka.sensors.reflect.SensorState;
 import de.melsicon.kafka.sensors.reflect.SensorStateWithDuration;
 import de.melsicon.kafka.serde.Format;
 import de.melsicon.kafka.serde.SensorStateSerdes;
-import de.melsicon.kafka.serde.avromapper.ReflectMapper;
+import de.melsicon.kafka.serde.avromapper.AvroMapper;
 import de.melsicon.kafka.serde.mapping.MappedDeserializer;
 import de.melsicon.kafka.serde.mapping.MappedSerializer;
 import io.confluent.kafka.streams.serdes.avro.ReflectionAvroDeserializer;
@@ -14,11 +14,11 @@ import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 
 public final class ReflectSerdes implements SensorStateSerdes {
-  private final ReflectMapper mapper;
+  private final AvroMapper<SensorState, SensorStateWithDuration> mapper;
 
   @Inject
-  public ReflectSerdes() {
-    this.mapper = ReflectMapper.instance();
+  public ReflectSerdes(AvroMapper<SensorState, SensorStateWithDuration> mapper) {
+    this.mapper = mapper;
   }
 
   @Override

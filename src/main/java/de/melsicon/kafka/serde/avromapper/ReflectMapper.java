@@ -9,24 +9,31 @@ import org.mapstruct.Mapper;
 
 @Immutable
 @Mapper(config = MapStructConfig.class)
-public abstract class ReflectMapper {
+public abstract class ReflectMapper
+    implements AvroMapper<
+        de.melsicon.kafka.sensors.reflect.SensorState,
+        de.melsicon.kafka.sensors.reflect.SensorStateWithDuration> {
   public static ReflectMapper instance() {
     return new ReflectMapperImpl();
   }
 
   @Nullable
+  @Override
   public abstract SensorState map(
       @Nullable de.melsicon.kafka.sensors.reflect.SensorState sensorState);
 
   @Nullable
+  @Override
   public abstract de.melsicon.kafka.sensors.reflect.SensorState unmap(
       @Nullable SensorState sensorState);
 
   @Nullable
+  @Override
   public abstract SensorStateWithDuration map2(
       @Nullable de.melsicon.kafka.sensors.reflect.SensorStateWithDuration sensorState);
 
   @Nullable
+  @Override
   public abstract de.melsicon.kafka.sensors.reflect.SensorStateWithDuration unmap2(
       @Nullable SensorStateWithDuration sensorState);
 }

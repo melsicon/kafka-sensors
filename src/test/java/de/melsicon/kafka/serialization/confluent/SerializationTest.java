@@ -5,6 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
+import de.melsicon.kafka.serde.avromapper.GenericMapper;
+import de.melsicon.kafka.serde.avromapper.ReflectMapper;
+import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import de.melsicon.kafka.serde.confluent.AvroSerdes;
 import de.melsicon.kafka.serde.confluent.GenericSerdes;
 import de.melsicon.kafka.serde.confluent.ReflectSerdes;
@@ -50,7 +53,15 @@ public final class SerializationTest {
 
   @Parameters(name = "{index}: {0}")
   public static Collection<?> serdes() {
-    var serdes = List.of(new AvroSerdes(), new ReflectSerdes(), new GenericSerdes());
+    var specificMapper = SpecificMapper.instance();
+    var reflectMapper = ReflectMapper.instance();
+    var genericMapper = GenericMapper.instance();
+
+    var serdes =
+        List.of(
+            new AvroSerdes(specificMapper),
+            new ReflectSerdes(reflectMapper),
+            new GenericSerdes(genericMapper));
     var combinations = new ArrayList<Object[]>(serdes.size() * serdes.size());
     for (var inputSerdes : serdes) {
       for (var resultSerdes : serdes) {
