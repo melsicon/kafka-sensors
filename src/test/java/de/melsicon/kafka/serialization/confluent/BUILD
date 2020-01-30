@@ -6,7 +6,6 @@ java_library(
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//src/main/java/de/melsicon/annotation",
         "//src/main/java/de/melsicon/kafka/model",
         "//src/main/java/de/melsicon/kafka/serde",
         "//src/main/java/de/melsicon/kafka/serde/confluent",
