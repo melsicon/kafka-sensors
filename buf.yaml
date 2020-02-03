@@ -1,0 +1,10 @@
+build:
+  roots:
+    - src/main/proto
+lint:
+  use:
+    - DEFAULT
+    - COMMENTS
+  except:
+    - COMMENT_ENUM_VALUE
+    - COMMENT_FIELD

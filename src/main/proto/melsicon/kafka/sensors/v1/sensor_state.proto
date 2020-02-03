@@ -16,7 +16,7 @@ message SensorState {
   google.protobuf.Timestamp time = 2;
   // New state of the sensor.
   enum State {
-    STATE_INVALID = 0;
+    STATE_UNSPECIFIED = 0;
     STATE_OFF = 1;
     STATE_ON = 2;
   }
