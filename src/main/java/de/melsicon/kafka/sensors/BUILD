@@ -42,7 +42,7 @@ java_binary(
 
 java_binary(
     name = "benchmark",
-    srcs = glob(["Bench*.java"]),
+    srcs = glob(["Bench*.java"]) + ["ExecutionPlan.java"],
     data = ["//conf"],
     jvm_flags = [
         "--add-opens",

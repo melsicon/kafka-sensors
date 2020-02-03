@@ -31,7 +31,7 @@ java_package_configuration(
         "-XepOpt:NullAway:CheckOptionalEmptiness",
         "-XepOpt:NullAway:AcknowledgeRestrictiveAnnotations",
         "-XepOpt:NullAway:CustomInitializerAnnotations=org.junit.Before,org.junit.BeforeClass",
-        "-XepOpt:NullAway:ExcludedFieldAnnotations=picocli.CommandLine.Option",
+        "-XepOpt:NullAway:ExcludedFieldAnnotations=picocli.CommandLine.Option,org.openjdk.jmh.annotations.Param",
     ],
     packages = [":package_group"],
 )
