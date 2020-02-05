@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import java.io.IOException;
 import java.time.Instant;
 import org.apache.avro.AvroMissingFieldException;
+import org.apache.avro.AvroRuntimeException;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
@@ -62,6 +63,18 @@ public final class SerializationTest {
                 new GenericRecordBuilder(SCHEMA)
                     .set(FIELD_ID, "7331")
                     .set(FIELD_TIME, INSTANT.toEpochMilli())
+                    .build());
+  }
+
+  @Test
+  public void notNull() {
+    assertThatExceptionOfType(AvroRuntimeException.class)
+        .isThrownBy(
+            () ->
+                new GenericRecordBuilder(SCHEMA)
+                    .set(FIELD_ID, "7331")
+                    .set(FIELD_TIME, INSTANT.toEpochMilli())
+                    .set(FIELD_STATE, null)
                     .build());
   }
 }
