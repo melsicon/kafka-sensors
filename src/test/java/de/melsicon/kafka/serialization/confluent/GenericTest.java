@@ -1,0 +1,67 @@
+package de.melsicon.kafka.serialization.confluent;
+
+import static de.melsicon.kafka.sensors.generic.SensorStateSchema.ENUM_OFF;
+import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_ID;
+import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_STATE;
+import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_TIME;
+import static de.melsicon.kafka.sensors.generic.SensorStateSchema.SCHEMA;
+import static de.melsicon.kafka.serialization.confluent.TestHelper.INSTANT;
+import static de.melsicon.kafka.serialization.confluent.TestHelper.KAFKA_TOPIC;
+import static de.melsicon.kafka.serialization.confluent.TestHelper.REGISTRY_SCOPE;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import de.melsicon.kafka.testutil.SchemaRegistryRule;
+import io.confluent.kafka.streams.serdes.avro.GenericAvroDeserializer;
+import io.confluent.kafka.streams.serdes.avro.GenericAvroSerializer;
+import java.io.IOException;
+import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.generic.GenericRecordBuilder;
+import org.apache.kafka.common.serialization.Deserializer;
+import org.apache.kafka.common.serialization.Serializer;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+public final class GenericTest {
+  @ClassRule
+  public static final SchemaRegistryRule registryTestResource =
+      new SchemaRegistryRule(REGISTRY_SCOPE);
+
+  private static Serializer<GenericRecord> encoder;
+  private static Deserializer<GenericRecord> decoder;
+
+  @BeforeClass
+  public static void before() {
+    encoder = new GenericAvroSerializer();
+    registryTestResource.configureSerializer(encoder);
+    decoder = new GenericAvroDeserializer();
+    registryTestResource.configureDeserializer(decoder);
+  }
+
+  @AfterClass
+  public static void after() {
+    encoder.close();
+    decoder.close();
+  }
+
+  @Test
+  public void canDecode() throws IOException {
+    var sensorState =
+        new GenericRecordBuilder(SCHEMA)
+            .set(FIELD_ID, "7331")
+            .set(FIELD_TIME, INSTANT.toEpochMilli())
+            .set(FIELD_STATE, ENUM_OFF)
+            .build();
+
+    var encoded = encoder.serialize(KAFKA_TOPIC, sensorState);
+
+    // Check for “Magic Byte”
+    // https://docs.confluent.io/current/schema-registry/serializer-formatter.html#wire-format
+    assertThat(encoded).startsWith(0);
+
+    var decoded = decoder.deserialize(KAFKA_TOPIC, encoded);
+
+    assertThat(decoded).isEqualTo(sensorState);
+  }
+}
