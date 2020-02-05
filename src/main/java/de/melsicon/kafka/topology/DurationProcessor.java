@@ -70,7 +70,7 @@ public final class DurationProcessor
     // Check for the previous state, update if necessary
     var oldState = checkAndUpdateSensorState(sensorState);
 
-    // When we have historical data, return duration so far. Otherwise return null
+    // When we have historical data, return duration so far. Otherwise, return null
     return oldState.map(state -> addDuration(state, sensorState)).orElse(null);
   }
 
