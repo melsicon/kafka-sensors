@@ -19,7 +19,7 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
-import org.apache.avro.generic.GenericData.EnumSymbol;
+import org.apache.avro.generic.GenericEnumSymbol;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 
@@ -28,7 +28,7 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
     return new GenericMapper();
   }
 
-  private static State stateMap(EnumSymbol state) {
+  private static State stateMap(GenericEnumSymbol<?> state) {
     switch (state.toString()) {
       case STATE_OFF:
         return State.OFF;
@@ -41,7 +41,7 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
     }
   }
 
-  private static EnumSymbol stateUnmap(State state) {
+  private static GenericEnumSymbol<?> stateUnmap(State state) {
     switch (state) {
       case OFF:
         return ENUM_OFF;
@@ -62,7 +62,7 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
     return SensorState.builder()
         .setId(((CharSequence) sensorState.get(FIELD_ID)).toString())
         .setTime(Instant.ofEpochMilli((Long) sensorState.get(FIELD_TIME)))
-        .setState(stateMap((EnumSymbol) sensorState.get(FIELD_STATE)))
+        .setState(stateMap((GenericEnumSymbol<?>) sensorState.get(FIELD_STATE)))
         .build();
   }
 
