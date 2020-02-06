@@ -29,8 +29,12 @@ public final class AvroTest {
   @BeforeClass
   public static void before() {
     encoder = new SpecificAvroSerializer<>();
-    registryTestResource.configureSerializer(encoder);
     decoder = new SpecificAvroDeserializer<>(SensorState.class);
+    registerRegistry();
+  }
+
+  private static void registerRegistry() {
+    registryTestResource.configureSerializer(encoder);
     registryTestResource.configureDeserializer(decoder);
   }
 
@@ -40,10 +44,13 @@ public final class AvroTest {
     decoder.close();
   }
 
+  private static SensorState createSensorState() {
+    return SensorState.newBuilder().setId("7331").setTime(INSTANT).setState(State.OFF).build();
+  }
+
   @Test
   public void canDecode() throws IOException {
-    var sensorState =
-        SensorState.newBuilder().setId("7331").setTime(INSTANT).setState(State.OFF).build();
+    var sensorState = createSensorState();
 
     var encoded = encoder.serialize(KAFKA_TOPIC, sensorState);
 

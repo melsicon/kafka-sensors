@@ -10,8 +10,9 @@ import static de.melsicon.kafka.serialization.confluent.TestHelper.KAFKA_TOPIC;
 import static de.melsicon.kafka.serialization.confluent.TestHelper.REGISTRY_SCOPE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.melsicon.kafka.sensors.generic.SensorStateSchema;
+import de.melsicon.kafka.serde.confluent.GenericAvroDeserializer;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
-import io.confluent.kafka.streams.serdes.avro.GenericAvroDeserializer;
 import io.confluent.kafka.streams.serdes.avro.GenericAvroSerializer;
 import java.io.IOException;
 import org.apache.avro.generic.GenericRecord;
@@ -34,8 +35,12 @@ public final class GenericTest {
   @BeforeClass
   public static void before() {
     encoder = new GenericAvroSerializer();
+    decoder = new GenericAvroDeserializer(SensorStateSchema.SCHEMA);
+    registerRegistry();
+  }
+
+  private static void registerRegistry() {
     registryTestResource.configureSerializer(encoder);
-    decoder = new GenericAvroDeserializer();
     registryTestResource.configureDeserializer(decoder);
   }
 
@@ -45,14 +50,17 @@ public final class GenericTest {
     decoder.close();
   }
 
+  private static GenericRecord createSensorState() {
+    return new GenericRecordBuilder(SCHEMA)
+        .set(FIELD_ID, "7331")
+        .set(FIELD_TIME, INSTANT.toEpochMilli())
+        .set(FIELD_STATE, ENUM_OFF)
+        .build();
+  }
+
   @Test
   public void canDecode() throws IOException {
-    var sensorState =
-        new GenericRecordBuilder(SCHEMA)
-            .set(FIELD_ID, "7331")
-            .set(FIELD_TIME, INSTANT.toEpochMilli())
-            .set(FIELD_STATE, ENUM_OFF)
-            .build();
+    var sensorState = createSensorState();
 
     var encoded = encoder.serialize(KAFKA_TOPIC, sensorState);
 

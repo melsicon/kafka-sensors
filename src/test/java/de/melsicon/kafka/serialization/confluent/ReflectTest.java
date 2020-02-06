@@ -31,8 +31,12 @@ public final class ReflectTest {
   @BeforeClass
   public static void before() {
     encoder = new ReflectionAvroSerializer<>();
-    registryTestResource.configureSerializer(encoder);
     decoder = new ReflectionAvroDeserializer<>(SensorState.class);
+    registerRegistry();
+  }
+
+  private static void registerRegistry() {
+    registryTestResource.configureSerializer(encoder);
     registryTestResource.configureDeserializer(decoder);
   }
 
@@ -42,12 +46,17 @@ public final class ReflectTest {
     decoder.close();
   }
 
-  @Test
-  public void canDecode() throws IOException {
+  private static SensorState createSensorState() {
     var sensorState = new SensorState();
     sensorState.id = "7331";
     sensorState.time = INSTANT;
     sensorState.state = State.OFF;
+    return sensorState;
+  }
+
+  @Test
+  public void canDecode() throws IOException {
+    var sensorState = createSensorState();
 
     var encoded = encoder.serialize(KAFKA_TOPIC, sensorState);
 
