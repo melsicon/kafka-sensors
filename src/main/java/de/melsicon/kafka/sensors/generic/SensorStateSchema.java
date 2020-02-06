@@ -6,6 +6,7 @@ import org.apache.avro.LogicalTypes;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
 import org.apache.avro.generic.GenericData.EnumSymbol;
+import org.apache.avro.generic.GenericEnumSymbol;
 
 public final class SensorStateSchema {
   public static final String FIELD_ID = "id";
@@ -13,8 +14,8 @@ public final class SensorStateSchema {
   public static final String FIELD_STATE = "state";
   public static final String STATE_OFF = "OFF";
   public static final String STATE_ON = "ON";
-  public static final EnumSymbol ENUM_OFF;
-  public static final EnumSymbol ENUM_ON;
+  public static final GenericEnumSymbol<?> ENUM_OFF;
+  public static final GenericEnumSymbol<?> ENUM_ON;
   public static final Schema SCHEMA;
   /* package */ static final String NAMESPACE = "de.melsicon.kafka.sensors.generic";
 
