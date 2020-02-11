@@ -60,6 +60,6 @@ public final class AvroTest {
 
     var decoded = decoder.deserialize(KAFKA_TOPIC, encoded);
 
-    assertThat(decoded).isEqualToComparingFieldByField(sensorState);
+    assertThat(decoded).isEqualTo(sensorState);
   }
 }

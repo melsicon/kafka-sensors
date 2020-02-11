@@ -39,7 +39,7 @@ public final class SerializationTest {
 
     var decoded = decoder.decode(encoded);
 
-    assertThat(decoded).isEqualToComparingFieldByField(sensorState);
+    assertThat(decoded).isEqualTo(sensorState);
   }
 
   @Test
