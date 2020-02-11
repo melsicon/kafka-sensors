@@ -66,7 +66,7 @@ public final class ReflectTest {
 
     var decoded = decoder.deserialize(KAFKA_TOPIC, encoded);
 
-    assertThat(decoded).isEqualToComparingFieldByField(sensorState);
+    assertThat(decoded).isEqualTo(sensorState);
   }
 
   @Test
