@@ -1,8 +1,21 @@
 [
   {
-    "type": "record",
+    "name": "State",
+    "namespace": "de.melsicon.kafka.sensors.avro",
+    "type": "enum",
+    "doc": "New state of the sensor",
+    "aliases": [
+      "de.melsicon.kafka.sensors.reflect.State"
+    ],
+    "symbols": [
+      "OFF",
+      "ON"
+    ]
+  },
+  {
     "name": "SensorState",
     "namespace": "de.melsicon.kafka.sensors.avro",
+    "type": "record",
     "doc": "State change of a sensor",
     "fields": [
       {
@@ -18,25 +31,14 @@
       },
       {
         "name": "state",
-        "type": {
-          "type": "enum",
-          "name": "State",
-          "doc": "New state of the sensor",
-          "aliases": [
-            "de.melsicon.kafka.sensors.reflect.State"
-          ],
-          "symbols": [
-            "OFF",
-            "ON"
-          ]
-        }
+        "type": "State"
       }
     ]
   },
   {
-    "type": "record",
     "name": "SensorStateWithDuration",
     "namespace": "de.melsicon.kafka.sensors.avro",
+    "type": "record",
     "doc": "Duration a sensor was in this state",
     "fields": [
       {
