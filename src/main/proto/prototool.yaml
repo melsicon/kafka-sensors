@@ -1,5 +1,5 @@
 protoc:
-  version: 3.11.3
+  version: 3.11.4
 
 lint:
   group: uber2

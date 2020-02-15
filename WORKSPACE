@@ -29,9 +29,9 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "cf754718b0aa945b00550ed7962ddc167167bd922b842199eeb6505e6f344852",
-    strip_prefix = "protobuf-3.11.3",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.11.3.tar.gz"],
+    sha256 = "a79d19dcdf9139fa4b81206e318e33d245c4c9da1ffed21c87288ed4380426f9",
+    strip_prefix = "protobuf-3.11.4",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.11.4.tar.gz"],
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
@@ -58,7 +58,7 @@ maven_install(
         "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.10.2",
         "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.2",
         "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.2",
-        "com.github.spotbugs:spotbugs-annotations:3.1.12",
+        "com.github.spotbugs:spotbugs-annotations:4.0.0-RC3",
         "com.google.auto.service:auto-service-annotations:1.0-rc6",
         "com.google.auto.service:auto-service:1.0-rc6",
         "com.google.auto.value:auto-value-annotations:1.7",
@@ -71,11 +71,11 @@ maven_install(
         "com.google.guava:guava:28.2-jre",
         "com.salesforce.kafka.test:kafka-junit4:3.2.1",
         "com.uber.nullaway:nullaway:0.7.9",
-        "info.picocli:picocli:4.1.4",
+        "info.picocli:picocli:4.2.0",
         "io.github.classgraph:classgraph:4.8.62",
-        "io.helidon.config:helidon-config-object-mapping:1.4.1",
-        "io.helidon.config:helidon-config-yaml:1.4.1",
-        "io.helidon.config:helidon-config:1.4.1",
+        "io.helidon.config:helidon-config-object-mapping:2.0.0-M1",
+        "io.helidon.config:helidon-config-yaml:2.0.0-M1",
+        "io.helidon.config:helidon-config:2.0.0-M1",
         "io.swagger:swagger-annotations:1.6.0",
         "jakarta.annotation:jakarta.annotation-api:1.3.5",
         "junit:junit:4.13",
