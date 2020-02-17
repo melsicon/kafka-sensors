@@ -1,4 +1,4 @@
-package de.melsicon.kafka.sensors.reflect;
+package de.melsicon.kafka.sensors.confluent_reflect;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -10,9 +10,7 @@ import org.apache.avro.reflect.CustomEncoding;
 
 public final class InstantAsLongEncoding extends CustomEncoding<Instant> {
   public InstantAsLongEncoding() {
-    var schema = Schema.create(Schema.Type.LONG);
-    var logicalType = LogicalTypes.timestampMillis();
-    super.schema = logicalType.addToSchema(schema);
+    super.schema = LogicalTypes.timestampMillis().addToSchema(Schema.create(Schema.Type.LONG));
   }
 
   @Override

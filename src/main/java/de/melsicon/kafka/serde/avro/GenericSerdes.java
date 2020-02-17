@@ -9,15 +9,9 @@ import de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema;
 import de.melsicon.kafka.serde.Format;
 import de.melsicon.kafka.serde.SensorStateSerdes;
 import de.melsicon.kafka.serde.avromapper.AvroMapper;
-import de.melsicon.kafka.serde.mapping.MappedDeserializer;
-import de.melsicon.kafka.serde.mapping.MappedSerializer;
 import javax.inject.Inject;
-import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.message.BinaryMessageDecoder;
-import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.kafka.common.serialization.Serde;
-import org.apache.kafka.common.serialization.Serdes;
 
 public final class GenericSerdes implements SensorStateSerdes {
   private final AvroMapper<GenericRecord, GenericRecord> mapper;
@@ -39,34 +33,21 @@ public final class GenericSerdes implements SensorStateSerdes {
 
   @Override
   public Serde<SensorState> createSensorStateSerde() {
-    var model = GenericData.get();
+    var model = SensorStateSchema.MODEL;
+    model.setFastReaderEnabled(true);
     var schema = SensorStateSchema.SCHEMA;
 
-    var encoder = new BinaryMessageEncoder<GenericRecord>(model, schema);
-    var serializer = new AvroSerializer<>(encoder);
-    var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap);
-
-    var decoder = new BinaryMessageDecoder<GenericRecord>(model, schema, RESOLVER);
-    var deserializer = new AvroDeserializer<>(decoder);
-    var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map);
-
-    return Serdes.serdeFrom(mappedSerializer, mappedDeserializer);
+    return SerdeHelper.createSerde(model, schema, mapper::unmap, mapper::map, RESOLVER);
   }
 
   @Override
   public Serde<de.melsicon.kafka.model.SensorStateWithDuration>
       createSensorStateWithDurationSerde() {
-    var model = GenericData.get();
+    var model = SensorStateWithDurationSchema.MODEL;
+    model.setFastReaderEnabled(true);
     var schema = SensorStateWithDurationSchema.SCHEMA;
 
-    var encoder = new BinaryMessageEncoder<GenericRecord>(model, schema);
-    var serializer = new AvroSerializer<>(encoder);
-    var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap2);
-
-    var decoder = new BinaryMessageDecoder<GenericRecord>(model, schema, RESOLVER_WITH_DURATION);
-    var deserializer = new AvroDeserializer<>(decoder);
-    var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map2);
-
-    return Serdes.serdeFrom(mappedSerializer, mappedDeserializer);
+    return SerdeHelper.createSerde(
+        model, schema, mapper::unmap2, mapper::map2, RESOLVER_WITH_DURATION);
   }
 }

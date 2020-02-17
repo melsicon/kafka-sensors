@@ -6,8 +6,8 @@ import static de.melsicon.kafka.serialization.confluent.TestHelper.REGISTRY_SCOP
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import de.melsicon.kafka.sensors.reflect.SensorState;
-import de.melsicon.kafka.sensors.reflect.State;
+import de.melsicon.kafka.sensors.confluent_reflect.SensorState;
+import de.melsicon.kafka.sensors.confluent_reflect.State;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import io.confluent.kafka.streams.serdes.avro.ReflectionAvroDeserializer;
 import io.confluent.kafka.streams.serdes.avro.ReflectionAvroSerializer;

@@ -17,15 +17,14 @@ def _commonprefix(m):
 
 def _new_generator_command(ctx, src_dir, gen_dir):
     java_path = ctx.attr._jdk[java_common.JavaRuntimeInfo].java_executable_exec_path
-    gen_command = "{java} {options} -cp {tool} {main} compile ".format(
+    gen_command = "{java} -cp {tool} {main} compile ".format(
         java = java_path,
         main = "org.apache.avro.tool.Main",  # should be -jar
-        options = "-Dorg.apache.avro.specific.use_custom_coders=true",
         tool = ctx.file._avro_tools.path,
     )
 
     if ctx.attr.strings:
-        gen_command += " -string"
+        gen_command += " -string -bigDecimal"
 
     if ctx.attr.encoding:
         gen_command += " -encoding {encoding}".format(

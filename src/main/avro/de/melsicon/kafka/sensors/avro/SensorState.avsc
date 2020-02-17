@@ -5,7 +5,8 @@
     "type": "enum",
     "doc": "New state of the sensor",
     "aliases": [
-      "de.melsicon.kafka.sensors.reflect.State"
+      "de.melsicon.kafka.sensors.reflect.State",
+      "de.melsicon.kafka.sensors.confluent_reflect.State"
     ],
     "symbols": [
       "OFF",
@@ -47,7 +48,10 @@
       },
       {
         "name": "duration",
-        "type": "long"
+        "type": {
+          "type": "long",
+          "logicalType": "duration-millis"
+        }
       }
     ]
   }

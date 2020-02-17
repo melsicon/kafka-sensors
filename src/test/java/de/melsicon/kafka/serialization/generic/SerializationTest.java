@@ -4,6 +4,7 @@ import static de.melsicon.kafka.sensors.generic.SensorStateSchema.ENUM_OFF;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_ID;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_STATE;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_TIME;
+import static de.melsicon.kafka.sensors.generic.SensorStateSchema.MODEL;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.SCHEMA;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -12,7 +13,6 @@ import java.io.IOException;
 import java.time.Instant;
 import org.apache.avro.AvroMissingFieldException;
 import org.apache.avro.AvroRuntimeException;
-import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 import org.apache.avro.message.BinaryMessageDecoder;
@@ -30,9 +30,8 @@ public final class SerializationTest {
 
   @BeforeClass
   public static void before() {
-    var model = GenericData.get();
-    encoder = new BinaryMessageEncoder<>(model, SCHEMA);
-    decoder = new BinaryMessageDecoder<>(model, SCHEMA);
+    encoder = new BinaryMessageEncoder<>(MODEL, SCHEMA);
+    decoder = new BinaryMessageDecoder<>(MODEL, SCHEMA);
   }
 
   @Test
@@ -40,7 +39,7 @@ public final class SerializationTest {
     var sensorState =
         new GenericRecordBuilder(SCHEMA)
             .set(FIELD_ID, "7331")
-            .set(FIELD_TIME, INSTANT.toEpochMilli())
+            .set(FIELD_TIME, INSTANT)
             .set(FIELD_STATE, ENUM_OFF)
             .build();
 
@@ -62,7 +61,7 @@ public final class SerializationTest {
             () ->
                 new GenericRecordBuilder(SCHEMA)
                     .set(FIELD_ID, "7331")
-                    .set(FIELD_TIME, INSTANT.toEpochMilli())
+                    .set(FIELD_TIME, INSTANT)
                     .build());
   }
 
@@ -73,7 +72,7 @@ public final class SerializationTest {
             () ->
                 new GenericRecordBuilder(SCHEMA)
                     .set(FIELD_ID, "7331")
-                    .set(FIELD_TIME, INSTANT.toEpochMilli())
+                    .set(FIELD_TIME, INSTANT)
                     .set(FIELD_STATE, null)
                     .build());
   }

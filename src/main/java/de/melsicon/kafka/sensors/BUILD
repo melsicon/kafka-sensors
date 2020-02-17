@@ -48,6 +48,7 @@ java_binary(
         "--add-opens",
         "java.base/java.io=ALL-UNNAMED",
         "-Djava.util.logging.config.file=conf/logging.properties",
+        "-Dorg.apache.avro.fastread=true",
     ],
     main_class = "org.openjdk.jmh.Main",
     visibility = ["//visibility:public"],

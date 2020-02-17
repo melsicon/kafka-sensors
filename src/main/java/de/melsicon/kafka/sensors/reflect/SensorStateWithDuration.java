@@ -1,14 +1,27 @@
 package de.melsicon.kafka.sensors.reflect;
 
+import de.melsicon.kafka.sensors.logicaltypes.DurationMillisConversion;
 import java.time.Duration;
 import java.util.Objects;
-import org.apache.avro.reflect.AvroEncode;
+import org.apache.avro.Schema;
+import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
+import org.apache.avro.reflect.ReflectData;
 
 @SuppressWarnings("NullAway")
 public final class SensorStateWithDuration {
+  public static final ReflectData MODEL;
+  public static final Schema SCHEMA;
+
+  static {
+    MODEL = new ReflectData();
+    MODEL.addLogicalTypeConversion(new TimestampMillisConversion());
+    MODEL.addLogicalTypeConversion(new DurationMillisConversion());
+
+    SCHEMA = MODEL.getSchema(SensorStateWithDuration.class);
+  }
+
   public SensorState event;
 
-  @AvroEncode(using = DurationAsLongEncoding.class)
   public Duration duration;
 
   @Override

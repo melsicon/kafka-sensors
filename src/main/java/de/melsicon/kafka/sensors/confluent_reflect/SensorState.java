@@ -1,27 +1,16 @@
-package de.melsicon.kafka.sensors.reflect;
+package de.melsicon.kafka.sensors.confluent_reflect;
 
 import java.time.Instant;
 import java.util.Objects;
-import org.apache.avro.Schema;
-import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
 import org.apache.avro.reflect.AvroDoc;
-import org.apache.avro.reflect.ReflectData;
+import org.apache.avro.reflect.AvroEncode;
 
 @SuppressWarnings("NullAway")
 @AvroDoc("State change of a sensor")
 public final class SensorState {
-  public static final ReflectData MODEL;
-  public static final Schema SCHEMA;
-
-  static {
-    MODEL = new ReflectData();
-    MODEL.addLogicalTypeConversion(new TimestampMillisConversion());
-
-    SCHEMA = MODEL.getSchema(SensorState.class);
-  }
-
   public String id;
 
+  @AvroEncode(using = InstantAsLongEncoding.class)
   public Instant time;
 
   public State state;

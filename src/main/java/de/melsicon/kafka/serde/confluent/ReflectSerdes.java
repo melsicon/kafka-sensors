@@ -1,7 +1,7 @@
 package de.melsicon.kafka.serde.confluent;
 
-import de.melsicon.kafka.sensors.reflect.SensorState;
-import de.melsicon.kafka.sensors.reflect.SensorStateWithDuration;
+import de.melsicon.kafka.sensors.confluent_reflect.SensorState;
+import de.melsicon.kafka.sensors.confluent_reflect.SensorStateWithDuration;
 import de.melsicon.kafka.serde.Format;
 import de.melsicon.kafka.serde.SensorStateSerdes;
 import de.melsicon.kafka.serde.avromapper.AvroMapper;

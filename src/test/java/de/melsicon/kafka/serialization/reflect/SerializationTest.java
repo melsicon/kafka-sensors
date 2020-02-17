@@ -1,41 +1,46 @@
 package de.melsicon.kafka.serialization.reflect;
 
+import static de.melsicon.kafka.sensors.reflect.SensorStateWithDuration.MODEL;
+import static de.melsicon.kafka.sensors.reflect.SensorStateWithDuration.SCHEMA;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import de.melsicon.kafka.sensors.reflect.SensorState;
+import de.melsicon.kafka.sensors.reflect.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.reflect.State;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.Instant;
 import org.apache.avro.AvroTypeException;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.MessageDecoder;
 import org.apache.avro.message.MessageEncoder;
-import org.apache.avro.reflect.ReflectData;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public final class SerializationTest {
   private static final Instant INSTANT = Instant.ofEpochSecond(443634300L);
 
-  private static MessageEncoder<SensorState> encoder;
-  private static MessageDecoder<SensorState> decoder;
+  private static MessageEncoder<SensorStateWithDuration> encoder;
+  private static MessageDecoder<SensorStateWithDuration> decoder;
 
   @BeforeClass
   public static void before() {
-    var model = ReflectData.get();
-    var schema = model.getSchema(SensorState.class);
-    encoder = new BinaryMessageEncoder<>(model, schema);
-    decoder = new BinaryMessageDecoder<>(model, schema);
+    encoder = new BinaryMessageEncoder<>(MODEL, SCHEMA);
+    decoder = new BinaryMessageDecoder<>(MODEL, SCHEMA);
   }
 
   @Test
   public void canDecode() throws IOException {
-    var sensorState = new SensorState();
-    sensorState.id = "7331";
-    sensorState.time = INSTANT;
-    sensorState.state = State.OFF;
+    var event = new SensorState();
+    event.id = "7331";
+    event.time = INSTANT;
+    event.state = State.OFF;
+
+    var sensorState = new SensorStateWithDuration();
+    sensorState.event = event;
+    sensorState.duration = Duration.ofSeconds(15);
 
     var encoded = encoder.encode(sensorState);
 
@@ -50,9 +55,13 @@ public final class SerializationTest {
 
   @Test
   public void stateIsRequired() throws IOException {
-    var sensorState = new SensorState();
-    sensorState.id = "7331";
-    sensorState.time = INSTANT;
+    var event = new SensorState();
+    event.id = "7331";
+    event.time = INSTANT;
+
+    var sensorState = new SensorStateWithDuration();
+    sensorState.event = event;
+    sensorState.duration = Duration.ofSeconds(15);
 
     assertThatExceptionOfType(AvroTypeException.class)
         .isThrownBy(() -> encoder.encode(sensorState));

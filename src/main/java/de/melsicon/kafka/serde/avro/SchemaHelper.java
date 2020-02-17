@@ -1,43 +1,38 @@
 package de.melsicon.kafka.serde.avro;
 
+import java.util.List;
+import org.apache.avro.Schema;
 import org.apache.avro.message.SchemaStore;
 import org.apache.avro.message.SchemaStore.Cache;
-import org.apache.avro.reflect.ReflectData;
 
 /* package */ final class SchemaHelper {
   /* package */ static final SchemaStore RESOLVER;
   /* package */ static final SchemaStore RESOLVER_WITH_DURATION;
 
   static {
-    RESOLVER = resolver();
-    RESOLVER_WITH_DURATION = resolverWithDuration();
+    RESOLVER = createSchemaStore(allSensorStateSchemata());
+    RESOLVER_WITH_DURATION = createSchemaStore(allSensorStateWithDurationSchemata());
   }
 
   private SchemaHelper() {}
 
-  private static SchemaStore resolver() {
+  private static SchemaStore createSchemaStore(Iterable<Schema> schemata) {
     var resolver = new Cache();
-    resolver.addSchema(de.melsicon.kafka.sensors.avro.SensorState.getClassSchema());
-
-    resolver.addSchema(de.melsicon.kafka.sensors.generic.SensorStateSchema.SCHEMA);
-
-    var model = ReflectData.get();
-    var schema = model.getSchema(de.melsicon.kafka.sensors.reflect.SensorState.class);
-    resolver.addSchema(schema);
-
+    schemata.forEach(resolver::addSchema);
     return resolver;
   }
 
-  private static SchemaStore resolverWithDuration() {
-    var resolver = new Cache();
-    resolver.addSchema(de.melsicon.kafka.sensors.avro.SensorStateWithDuration.getClassSchema());
+  private static List<Schema> allSensorStateSchemata() {
+    return List.of(
+        de.melsicon.kafka.sensors.avro.SensorState.getClassSchema(),
+        de.melsicon.kafka.sensors.generic.SensorStateSchema.SCHEMA,
+        de.melsicon.kafka.sensors.reflect.SensorState.SCHEMA);
+  }
 
-    resolver.addSchema(de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema.SCHEMA);
-
-    var model = ReflectData.get();
-    var schema = model.getSchema(de.melsicon.kafka.sensors.reflect.SensorStateWithDuration.class);
-    resolver.addSchema(schema);
-
-    return resolver;
+  private static List<Schema> allSensorStateWithDurationSchemata() {
+    return List.of(
+        de.melsicon.kafka.sensors.avro.SensorStateWithDuration.getClassSchema(),
+        de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema.SCHEMA,
+        de.melsicon.kafka.sensors.reflect.SensorStateWithDuration.SCHEMA);
   }
 }

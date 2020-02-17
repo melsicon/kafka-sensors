@@ -1,5 +1,6 @@
-package de.melsicon.kafka.sensors.reflect;
+package de.melsicon.kafka.sensors.confluent_reflect;
 
+import de.melsicon.kafka.sensors.logicaltypes.DurationMillisConversion;
 import java.io.IOException;
 import java.time.Duration;
 import org.apache.avro.Schema;
@@ -9,7 +10,8 @@ import org.apache.avro.reflect.CustomEncoding;
 
 public final class DurationAsLongEncoding extends CustomEncoding<Duration> {
   public DurationAsLongEncoding() {
-    super.schema = Schema.create(Schema.Type.LONG);
+    super.schema =
+        DurationMillisConversion.durationMillis().addToSchema(Schema.create(Schema.Type.LONG));
   }
 
   @Override

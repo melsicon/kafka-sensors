@@ -7,8 +7,8 @@ java_library(
     visibility = ["//visibility:public"],
     deps = [
         "//src/main/avro/de/melsicon/kafka/sensors/avro",
+        "//src/main/java/de/melsicon/kafka/sensors/confluent_reflect",
         "//src/main/java/de/melsicon/kafka/sensors/generic",
-        "//src/main/java/de/melsicon/kafka/sensors/reflect",
         "//src/main/java/de/melsicon/kafka/serde/confluent",
         "//src/test/java/de/melsicon/kafka/testutil",
         "//toolchain:nullaway",

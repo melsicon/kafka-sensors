@@ -20,11 +20,9 @@ import org.apache.avro.generic.GenericEnumSymbol;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 
-public final class GenericMapper implements AvroMapper<GenericRecord, GenericRecord> {
-  private GenericMapper() {}
-
-  public static GenericMapper instance() {
-    return new GenericMapper();
+public final class ConfluentGenericMapper implements AvroMapper<GenericRecord, GenericRecord> {
+  public static ConfluentGenericMapper instance() {
+    return new ConfluentGenericMapper();
   }
 
   @Nullable
@@ -35,7 +33,7 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
     }
     return SensorState.builder()
         .setId(((CharSequence) sensorState.get(FIELD_ID)).toString())
-        .setTime((Instant) sensorState.get(FIELD_TIME))
+        .setTime(Instant.ofEpochMilli((Long) sensorState.get(FIELD_TIME)))
         .setState(stateMap((GenericEnumSymbol<?>) sensorState.get(FIELD_STATE)))
         .build();
   }
@@ -48,7 +46,7 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
     }
     return new GenericRecordBuilder(SensorStateSchema.SCHEMA)
         .set(FIELD_ID, sensorState.getId())
-        .set(FIELD_TIME, sensorState.getTime())
+        .set(FIELD_TIME, sensorState.getTime().toEpochMilli())
         .set(FIELD_STATE, stateUnmap(sensorState.getState()))
         .build();
   }
@@ -62,7 +60,7 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
     var event = Objects.requireNonNull(map((GenericRecord) sensorState.get(FIELD_EVENT)));
     return SensorStateWithDuration.builder()
         .setEvent(event)
-        .setDuration((Duration) sensorState.get(FIELD_DURATION))
+        .setDuration(Duration.ofMillis((Long) sensorState.get(FIELD_DURATION)))
         .build();
   }
 
@@ -75,7 +73,7 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
     var event = Objects.requireNonNull(unmap(sensorState.getEvent()));
     return new GenericRecordBuilder(SensorStateWithDurationSchema.SCHEMA)
         .set(FIELD_EVENT, event)
-        .set(FIELD_DURATION, sensorState.getDuration())
+        .set(FIELD_DURATION, sensorState.getDuration().toMillis())
         .build();
   }
 }

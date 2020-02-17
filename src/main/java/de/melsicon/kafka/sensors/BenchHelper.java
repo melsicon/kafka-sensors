@@ -4,6 +4,8 @@ import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.ExecutionPlan.SerType;
 import de.melsicon.kafka.serde.SensorStateSerdes;
+import de.melsicon.kafka.serde.avromapper.ConfluentGenericMapper;
+import de.melsicon.kafka.serde.avromapper.ConfluentReflectMapper;
 import de.melsicon.kafka.serde.avromapper.GenericMapper;
 import de.melsicon.kafka.serde.avromapper.ReflectMapper;
 import de.melsicon.kafka.serde.avromapper.SpecificMapper;
@@ -37,11 +39,11 @@ import org.apache.kafka.common.serialization.Serde;
         break;
       case CONFLUENT_REFLECT:
         serdeFactory =
-            new de.melsicon.kafka.serde.confluent.ReflectSerdes(ReflectMapper.instance());
+            new de.melsicon.kafka.serde.confluent.ReflectSerdes(ConfluentReflectMapper.instance());
         break;
       case CONFLUENT_GENERIC:
         serdeFactory =
-            new de.melsicon.kafka.serde.confluent.GenericSerdes(GenericMapper.instance());
+            new de.melsicon.kafka.serde.confluent.GenericSerdes(ConfluentGenericMapper.instance());
         break;
       default:
         throw new UnsupportedOperationException("Unknown type " + serdes.name());
