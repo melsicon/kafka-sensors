@@ -21,19 +21,19 @@ For example, a stream
 |Name|Timestamp|State
 
 |Sensor 1
-|0s
+|1984-01-22T15:45:00Z
 |off
 
 |Sensor 1
-|10s
+|1984-01-22T15:45:10Z
 |off
 
 |Sensor 1
-|30s
+|1984-01-22T15:45:30Z
 |on
 
 |Sensor 1
-|90s
+|1984-01-22T15:46:30Z
 |off
 |===
 
@@ -44,22 +44,22 @@ should produce
 |Name|Timestamp|State|Duration
 
 |Sensor 1
-|0s
+|1984-01-22T15:45:00Z
 |off
 |10s
 
 |Sensor 1
-|0s
+|1984-01-22T15:45:00Z
 |off
 |30s
 
 |Sensor 1
-|30s
+|1984-01-22T15:45:30Z
 |on
 |60s
 |===
 
-Which tells us that “Sensor 1” was “off” from 0 for 30 seconds and “on” from 30 for 60 seconds.
+Which tells us that “Sensor 1” was “off” from 15:45:00 for 30 seconds and “on” from 15:45:30 for 60 seconds.
 
 Note that the second “off” reading produced an intermediate result.
 
