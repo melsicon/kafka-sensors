@@ -12,3 +12,5 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 - Simplify Avro Schema
 - Add AVRO reflection serialization
 - Add JMH microbenchmark
+- Use Avro logical types
+- Add Avro schema compatibility test
