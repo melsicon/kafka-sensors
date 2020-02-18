@@ -2,9 +2,11 @@ package de.melsicon.kafka.sensors.confluent_reflect;
 
 import java.time.Duration;
 import java.util.Objects;
+import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.AvroEncode;
 
 @SuppressWarnings("NullAway")
+@AvroDoc("Duration a sensor was in this state")
 public final class SensorStateWithDuration {
   public SensorState event;
 

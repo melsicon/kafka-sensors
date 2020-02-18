@@ -5,9 +5,11 @@ import java.time.Duration;
 import java.util.Objects;
 import org.apache.avro.Schema;
 import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
+import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.ReflectData;
 
 @SuppressWarnings("NullAway")
+@AvroDoc("Duration a sensor was in this state")
 public final class SensorStateWithDuration {
   public static final ReflectData MODEL;
   public static final Schema SCHEMA;
