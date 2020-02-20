@@ -22,6 +22,7 @@ import javax.inject.Singleton;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.errors.LogAndContinueExceptionHandler;
 
 @Singleton
 public final class MyStreams extends AbstractIdleService {
@@ -53,9 +54,11 @@ public final class MyStreams extends AbstractIdleService {
     var settings = new Properties();
     settings.putAll(properties);
 
+    // https://kafka.apache.org/documentation/streams/developer-guide/config-streams.html#default-deserialization-exception-handler
     settings.put(
         DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG,
-        ContinueDeserializationExceptionHandler.class);
+        LogAndContinueExceptionHandler.class);
+    // https://kafka.apache.org/documentation/streams/developer-guide/config-streams.html#default-production-exception-handler
     settings.put(
         DEFAULT_PRODUCTION_EXCEPTION_HANDLER_CLASS_CONFIG,
         ContinueProductionExceptionHandler.class);
