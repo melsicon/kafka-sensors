@@ -22,7 +22,8 @@ public final class AvroDeserializer<T> implements Deserializer<T> {
     try {
       return decoder.decode(data, null);
     } catch (IOException e) {
-      throw new SerializationException("Can't read record from topic " + topic, e);
+      var message = String.format("Error while parsing message from topic %s", topic);
+      throw new SerializationException(message, e);
     }
   }
 }

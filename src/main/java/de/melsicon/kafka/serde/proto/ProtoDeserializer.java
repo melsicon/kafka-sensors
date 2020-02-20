@@ -23,7 +23,8 @@ public final class ProtoDeserializer<T extends MessageLite> implements Deseriali
     try {
       return parser.parseFrom(data);
     } catch (InvalidProtocolBufferException e) {
-      throw new SerializationException("Error while parsing message from topic " + topic, e);
+      var message = String.format("Error while parsing message from topic %s", topic);
+      throw new SerializationException(message, e);
     }
   }
 }

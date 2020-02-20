@@ -18,11 +18,11 @@ import org.openjdk.jmh.annotations.Warmup;
 public class Bench {
   @Benchmark
   public void serialize(ExecutionPlan plan) {
-    plan.serializer.serialize(null, plan.data);
+    plan.serializer.serialize(BenchHelper.TOPIC, plan.data);
   }
 
   @Benchmark
   public void deserialize(ExecutionPlan plan) {
-    plan.deserializer.deserialize(null, plan.bytes);
+    plan.deserializer.deserialize(BenchHelper.TOPIC, plan.bytes);
   }
 }

@@ -14,6 +14,8 @@ import java.time.Instant;
 import org.apache.kafka.common.serialization.Serde;
 
 /* package */ final class BenchHelper {
+  /* package */ static final String TOPIC = "topic";
+
   private BenchHelper() {}
 
   /* package */ static Serde<SensorStateWithDuration> createSerde(SerType serdes) {

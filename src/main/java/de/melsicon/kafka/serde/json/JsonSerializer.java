@@ -31,8 +31,8 @@ public final class JsonSerializer<T> implements Serializer<T> {
     try {
       return objectWriter.writeValueAsBytes(message);
     } catch (IOException e) {
-      throw new SerializationException(
-          "Error while writing message " + message + " for topic " + topic, e);
+      var msg = String.format("Error while writing message %s for topic %s", message, topic);
+      throw new SerializationException(msg, e);
     }
   }
 }

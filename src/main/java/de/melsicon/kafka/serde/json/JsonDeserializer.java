@@ -23,7 +23,8 @@ public final class JsonDeserializer<T> implements Deserializer<T> {
     try {
       return objectReader.readValue(data);
     } catch (IOException e) {
-      throw new SerializationException("Error while parsing message from topic " + topic, e);
+      var message = String.format("Error while parsing message from topic %s", topic);
+      throw new SerializationException(message, e);
     }
   }
 }
