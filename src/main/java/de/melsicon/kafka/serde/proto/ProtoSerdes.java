@@ -1,5 +1,7 @@
 package de.melsicon.kafka.serde.proto;
 
+import static org.apache.kafka.common.serialization.Serdes.serdeFrom;
+
 import de.melsicon.kafka.sensors.v1.SensorState;
 import de.melsicon.kafka.sensors.v1.SensorStateWithDuration;
 import de.melsicon.kafka.serde.Format;
@@ -8,7 +10,6 @@ import de.melsicon.kafka.serde.mapping.MappedDeserializer;
 import de.melsicon.kafka.serde.mapping.MappedSerializer;
 import javax.inject.Inject;
 import org.apache.kafka.common.serialization.Serde;
-import org.apache.kafka.common.serialization.Serdes;
 
 public final class ProtoSerdes implements SensorStateSerdes {
   private final ProtoMapper mapper;
@@ -36,7 +37,7 @@ public final class ProtoSerdes implements SensorStateSerdes {
     var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap);
     var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map);
 
-    return Serdes.serdeFrom(mappedSerializer, mappedDeserializer);
+    return serdeFrom(mappedSerializer, mappedDeserializer);
   }
 
   @Override
@@ -48,6 +49,6 @@ public final class ProtoSerdes implements SensorStateSerdes {
     var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap2);
     var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map2);
 
-    return Serdes.serdeFrom(mappedSerializer, mappedDeserializer);
+    return serdeFrom(mappedSerializer, mappedDeserializer);
   }
 }

@@ -1,5 +1,7 @@
 package de.melsicon.kafka.serde.confluent;
 
+import static org.apache.kafka.common.serialization.Serdes.serdeFrom;
+
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.sensors.generic.SensorStateSchema;
 import de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema;
@@ -13,7 +15,6 @@ import io.confluent.kafka.streams.serdes.avro.GenericAvroSerializer;
 import javax.inject.Inject;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.common.serialization.Serde;
-import org.apache.kafka.common.serialization.Serdes;
 
 public final class GenericSerdes implements SensorStateSerdes {
   private final AvroMapper<GenericRecord, GenericRecord> mapper;
@@ -41,7 +42,7 @@ public final class GenericSerdes implements SensorStateSerdes {
     var deserializer = new GenericAvroDeserializer(SensorStateSchema.SCHEMA);
     var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map);
 
-    return Serdes.serdeFrom(mappedSerializer, mappedDeserializer);
+    return serdeFrom(mappedSerializer, mappedDeserializer);
   }
 
   @Override
@@ -53,6 +54,6 @@ public final class GenericSerdes implements SensorStateSerdes {
     var deserializer = new GenericAvroDeserializer(SensorStateWithDurationSchema.SCHEMA);
     var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map2);
 
-    return Serdes.serdeFrom(mappedSerializer, mappedDeserializer);
+    return serdeFrom(mappedSerializer, mappedDeserializer);
   }
 }

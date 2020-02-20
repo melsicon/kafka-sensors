@@ -1,5 +1,7 @@
 package de.melsicon.kafka.serde.avro;
 
+import static org.apache.kafka.common.serialization.Serdes.serdeFrom;
+
 import de.melsicon.kafka.serde.mapping.MappedDeserializer;
 import de.melsicon.kafka.serde.mapping.MappedSerializer;
 import java.util.function.Function;
@@ -10,7 +12,6 @@ import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.SchemaStore;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serde;
-import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.Serializer;
 
 /* package */ final class SerdeHelper {
@@ -38,6 +39,6 @@ import org.apache.kafka.common.serialization.Serializer;
       SchemaStore resolver) {
     var mappedSerializer = mappedSerializer(model, schema, unmapper);
     var mappedDeserializer = mappedDeserializer(model, schema, mapper, resolver);
-    return Serdes.serdeFrom(mappedSerializer, mappedDeserializer);
+    return serdeFrom(mappedSerializer, mappedDeserializer);
   }
 }
