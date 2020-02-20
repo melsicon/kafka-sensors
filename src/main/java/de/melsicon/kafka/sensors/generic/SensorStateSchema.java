@@ -1,10 +1,12 @@
 package de.melsicon.kafka.sensors.generic;
 
 import org.apache.avro.Schema;
+import org.apache.avro.Schema.Type;
 import org.apache.avro.SchemaBuilder;
 import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericData.EnumSymbol;
+import org.apache.avro.generic.GenericData.StringType;
 import org.apache.avro.generic.GenericEnumSymbol;
 
 public final class SensorStateSchema {
@@ -37,14 +39,28 @@ public final class SensorStateSchema {
     ENUM_OFF = new EnumSymbol(stateSchema, STATE_OFF);
     ENUM_ON = new EnumSymbol(stateSchema, STATE_ON);
 
+    /* Reusable shortcut `.type(stringSchema)` for
+     *   .type()
+     *     .stringBuilder()
+     *     .prop("avro.java.string", "String")
+     *     .endString()
+     */
+
+    var stringSchema = Schema.create(Type.STRING);
+    stringSchema.addProp(GenericData.STRING_PROP, StringType.String.name());
+
+    var timestampSchema = timestampConversion.getRecommendedSchema();
+
     SCHEMA =
         SchemaBuilder.record("SensorState")
             .namespace(NAMESPACE)
             .doc("State change of a sensor")
             .fields()
-            .requiredString(FIELD_ID)
+            .name(FIELD_ID)
+            .type(stringSchema)
+            .noDefault()
             .name(FIELD_TIME)
-            .type(timestampConversion.getRecommendedSchema())
+            .type(timestampSchema)
             .noDefault()
             .name(FIELD_STATE)
             .type(stateSchema)

@@ -34,7 +34,7 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
       return null;
     }
     return SensorState.builder()
-        .setId(((CharSequence) sensorState.get(FIELD_ID)).toString())
+        .setId((String) sensorState.get(FIELD_ID))
         .setTime((Instant) sensorState.get(FIELD_TIME))
         .setState(stateMap((GenericEnumSymbol<?>) sensorState.get(FIELD_STATE)))
         .build();

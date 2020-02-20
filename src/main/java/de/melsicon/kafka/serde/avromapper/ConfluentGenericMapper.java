@@ -32,7 +32,7 @@ public final class ConfluentGenericMapper implements AvroMapper<GenericRecord, G
       return null;
     }
     return SensorState.builder()
-        .setId(((CharSequence) sensorState.get(FIELD_ID)).toString())
+        .setId((String) sensorState.get(FIELD_ID))
         .setTime(Instant.ofEpochMilli((Long) sensorState.get(FIELD_TIME)))
         .setState(stateMap((GenericEnumSymbol<?>) sensorState.get(FIELD_STATE)))
         .build();
