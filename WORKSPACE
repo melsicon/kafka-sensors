@@ -18,12 +18,13 @@ rules_pkg_dependencies()
 
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "19c5c43a84d3c631a047b8e499b00b3ffca2e6784a1e4abfe2facdf865951e43",
-    strip_prefix = "rules_jvm_external-3.1",
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/3.1.tar.gz",
+    sha256 = "19d402ef15f58750352a1a38b694191209ebc7f0252104b81196124fdd43ffa0",
+    strip_prefix = "rules_jvm_external-3.2",
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/3.2.tar.gz",
 )
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:specs.bzl", "maven")
 
 # ---
 
@@ -69,26 +70,46 @@ maven_install(
         "com.google.flogger:flogger-system-backend:0.4",
         "com.google.flogger:flogger:0.4",
         "com.google.guava:guava:28.2-jre",
-        "com.salesforce.kafka.test:kafka-junit4:3.2.1",
         "com.uber.nullaway:nullaway:0.7.9",
         "info.picocli:picocli:4.2.0",
-        "io.github.classgraph:classgraph:4.8.64",
+        "io.github.classgraph:classgraph:4.8.65",
         "io.helidon.config:helidon-config-object-mapping:2.0.0-M1",
         "io.helidon.config:helidon-config-yaml:2.0.0-M1",
         "io.helidon.config:helidon-config:2.0.0-M1",
         "io.swagger:swagger-annotations:1.6.0",
         "jakarta.annotation:jakarta.annotation-api:1.3.5",
-        "junit:junit:4.13",
         "org.apache.kafka:kafka-clients:2.4.0",
-        "org.apache.kafka:kafka-streams-test-utils:2.4.0",
         "org.apache.kafka:kafka-streams:2.4.0",
         "org.apache.kafka:kafka_2.13:2.4.0",
-        "org.assertj:assertj-core:3.15.0",
         "org.mapstruct:mapstruct-processor:1.3.1.Final",
         "org.mapstruct:mapstruct:1.3.1.Final",
         "org.openjdk.jmh:jmh-core:1.23",
         "org.openjdk.jmh:jmh-generator-annprocess:1.23",
         "org.slf4j:slf4j-jdk14:1.7.30",
+        maven.artifact(
+            "com.salesforce.kafka.test",
+            "kafka-junit4",
+            "3.2.1",
+            testonly = True,
+        ),
+        maven.artifact(
+            "junit",
+            "junit",
+            "4.13",
+            testonly = True,
+        ),
+        maven.artifact(
+            "org.apache.kafka",
+            "kafka-streams-test-utils",
+            "2.4.0",
+            testonly = True,
+        ),
+        maven.artifact(
+            "org.assertj",
+            "assertj-core",
+            "3.15.0",
+            testonly = True,
+        ),
     ] + AVRO_ARTIFACTS,
     fetch_sources = True,
     maven_install_json = "@de_melsicon_kafka_sensors//:maven_install.json",
