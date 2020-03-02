@@ -7,8 +7,6 @@ import de.melsicon.kafka.model.SensorStateWithDuration;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Duration;
 import java.util.Optional;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 import org.apache.kafka.streams.kstream.ValueTransformer;
 import org.apache.kafka.streams.processor.ProcessorContext;
 
@@ -16,8 +14,7 @@ public final class DurationProcessor
     implements ValueTransformer<SensorState, SensorStateWithDuration> {
   public static final String SENSOR_STATES = "SensorStates";
 
-  private Function<String, SensorState> get;
-  private BiConsumer<String, SensorState> put;
+  private KVStore<String, SensorState> store;
 
   /**
    * Wrap the old state with a duration how log it lasted.
@@ -35,28 +32,38 @@ public final class DurationProcessor
   /**
    * Check if we need to update the state in the state store.
    *
-   * <p>Either we have no historical data, or the state has changed.
+   * <p>Either we have no historical data, or the state has changed. We do not update for new events
+   * with the same state.
    *
    * @param oldState The old sensor state
    * @param sensorState The new sensor state
-   * @return Flag whether we need to update
+   * @return True when we need to update
    */
-  private static boolean neetToUpdate(@Nullable SensorState oldState, SensorState sensorState) {
-    return oldState == null || oldState.getState() != sensorState.getState();
+  private static boolean needsUpdate(@Nullable SensorState oldState, SensorState sensorState) {
+    if (oldState == null) {
+      return true;
+    }
+
+    return oldState.getState() != sensorState.getState();
   }
 
+  /**
+   * Initialize with our {@link org.apache.kafka.streams.state.KeyValueStore}. Abstracted to enable
+   * testing with a simple {@link java.util.Map}.
+   *
+   * @param store State store
+   */
   @VisibleForTesting
   @Initializer
-  /* package */ void initStore(
-      Function<String, SensorState> get, BiConsumer<String, SensorState> put) {
-    this.get = get;
-    this.put = put;
+  /* package */ void initStore(KVStore<String, SensorState> store) {
+    this.store = store;
   }
 
   @Override
   public void init(ProcessorContext context) {
     var store = StoreHelper.<String, SensorState>stateStore(context, SENSOR_STATES);
-    initStore(store::get, store::put);
+    var kvStore = StoreHelper.store2KVStore(store);
+    initStore(kvStore);
   }
 
   @Nullable
@@ -80,19 +87,24 @@ public final class DurationProcessor
   /**
    * Checks the state store for historical state based on sensor ID and updates it, if necessary.
    *
+   * <p>Modifies the state store as a side effect, so this method is not idempotent.
+   *
    * @param sensorState The new sensor state
    * @return The old sensor state
    */
   private Optional<SensorState> checkAndUpdateSensorState(SensorState sensorState) {
-    // The Sensor ID is our index
-    var index = sensorState.getId();
+    // The Sensor ID is our store key
+    var sensorId = sensorState.getId();
 
     // Get the historical state (might be null)
-    var oldState = get.apply(index);
-    if (neetToUpdate(oldState, sensorState)) {
-      // Update the state store to the new state
-      put.accept(index, sensorState);
+    var oldState = store.get(sensorId);
+
+    // Update the state store if necessary
+    if (needsUpdate(oldState, sensorState)) {
+      store.put(sensorId, sensorState);
     }
+
+    // Return historical data
     return Optional.ofNullable(oldState);
   }
 }

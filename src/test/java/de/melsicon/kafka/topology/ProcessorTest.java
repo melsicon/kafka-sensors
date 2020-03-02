@@ -5,9 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.Map;
 import org.apache.kafka.streams.kstream.ValueTransformer;
 import org.junit.After;
 import org.junit.Before;
@@ -16,11 +18,28 @@ import org.junit.Test;
 public final class ProcessorTest {
   private ValueTransformer<SensorState, SensorStateWithDuration> processor;
 
+  private static <K, V> KVStore<K, V> map2KVStore(Map<K, V> store) {
+    return new KVStore<>() {
+      @Nullable
+      @Override
+      public V get(K key) {
+        return store.get(key);
+      }
+
+      @Override
+      public void put(K key, V value) {
+        store.put(key, value);
+      }
+    };
+  }
+
   @Before
   public void before() {
     var store = new HashMap<String, SensorState>();
+    var kvStore = map2KVStore(store);
+
     var processor = new DurationProcessor();
-    processor.initStore(store::get, store::put);
+    processor.initStore(kvStore);
     this.processor = processor;
   }
 
