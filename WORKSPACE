@@ -53,12 +53,12 @@ confluent_repositories()
 
 maven_install(
     artifacts = [
-        "com.fasterxml.jackson.core:jackson-annotations:2.10.2",
-        "com.fasterxml.jackson.core:jackson-core:2.10.2",
-        "com.fasterxml.jackson.core:jackson-databind:2.10.2",
-        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.10.2",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.2",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.2",
+        "com.fasterxml.jackson.core:jackson-annotations:2.10.3",
+        "com.fasterxml.jackson.core:jackson-core:2.10.3",
+        "com.fasterxml.jackson.core:jackson-databind:2.10.3",
+        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.10.3",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.3",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.3",
         "com.github.spotbugs:spotbugs-annotations:4.0.0",
         "com.google.auto.service:auto-service-annotations:1.0-rc6",
         "com.google.auto.service:auto-service:1.0-rc6",
