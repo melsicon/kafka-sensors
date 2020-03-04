@@ -16,6 +16,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public final class ProcessorTest {
+  private static final String SENSOR_ID = "7331";
+
   private ValueTransformer<SensorState, SensorStateWithDuration> processor;
 
   private static <K, V> KVStore<K, V> map2KVStore(Map<K, V> store) {
@@ -33,6 +35,41 @@ public final class ProcessorTest {
     };
   }
 
+  private static SensorState initial(State state) {
+    var instant = Instant.ofEpochSecond(443634300L);
+
+    return SensorState.builder().setId(SENSOR_ID).setTime(instant).setState(state).build();
+  }
+
+  private static SensorState advance(SensorState old, Duration step, State state) {
+    return SensorState.builder()
+        .setId(old.getId())
+        .setTime(old.getTime().plus(step))
+        .setState(state)
+        .build();
+  }
+
+  /**
+   * Feeds {@code newState} into the processor, testing for correct transformation.
+   *
+   * @param newState New state
+   * @param oldState Expected historic state
+   * @param duration Expected duration the old state lasted
+   * @throws AssertionError When the state is not transformed correctly
+   */
+  private void transformAndAssert(
+      SensorState newState, @Nullable SensorState oldState, Duration duration) {
+    var result = processor.transform(newState);
+
+    if (oldState == null) {
+      assertThat(result).isNull();
+    } else {
+      assertThat(result).isNotNull();
+      assertThat(result.getEvent()).isEqualTo(oldState);
+      assertThat(result.getDuration()).isEqualTo(duration);
+    }
+  }
+
   @Before
   public void before() {
     var store = new HashMap<String, SensorState>();
@@ -48,62 +85,38 @@ public final class ProcessorTest {
 
   @Test
   public void testSimple() {
-    var instant = Instant.ofEpochSecond(443634300L);
-
-    var initialState =
-        SensorState.builder().setId("7331").setTime(instant).setState(State.OFF).build();
+    var initialState = initial(State.OFF);
 
     var result1 = processor.transform(initialState);
 
     assertThat(result1).isNull();
 
-    var next = instant.plusSeconds(30);
-    var newState = SensorState.builder().setId("7331").setTime(next).setState(State.ON).build();
+    var step1 = Duration.ofSeconds(30);
+    var newState = advance(initialState, step1, State.ON);
 
-    var result2 = processor.transform(newState);
-
-    assertThat(result2).isNotNull();
-    assertThat(result2.getEvent()).isEqualTo(initialState);
-    assertThat(result2.getDuration()).isEqualTo(Duration.ofSeconds(30));
+    transformAndAssert(newState, initialState, step1);
   }
 
   @Test
   public void testRepeated() {
-    var instant = Instant.ofEpochSecond(443634300L);
+    var initialState = initial(State.OFF);
 
-    var initialState =
-        SensorState.builder().setId("7331").setTime(instant).setState(State.OFF).build();
+    transformAndAssert(initialState, null, Duration.ZERO);
 
-    var result1 = processor.transform(initialState);
+    var step1 = Duration.ofSeconds(30);
+    var newState = advance(initialState, step1, State.OFF);
 
-    assertThat(result1).isNull();
+    transformAndAssert(newState, initialState, step1);
 
-    var next = instant.plusSeconds(30);
-    var newState = SensorState.builder().setId("7331").setTime(next).setState(State.OFF).build();
+    var step2 = Duration.ofSeconds(30);
+    var newState2 = advance(newState, step2, State.ON);
 
-    var result2 = processor.transform(newState);
+    transformAndAssert(newState2, initialState, step1.plus(step2));
 
-    assertThat(result2).isNotNull();
-    assertThat(result2.getEvent()).isEqualTo(initialState);
-    assertThat(result2.getDuration()).isEqualTo(Duration.ofSeconds(30));
+    var step3 = Duration.ofSeconds(15);
+    var newState3 = advance(newState2, step3, State.OFF);
 
-    var next2 = next.plusSeconds(30);
-    var newState2 = SensorState.builder().setId("7331").setTime(next2).setState(State.ON).build();
-
-    var result3 = processor.transform(newState2);
-
-    assertThat(result3).isNotNull();
-    assertThat(result3.getEvent()).isEqualTo(initialState);
-    assertThat(result3.getDuration()).isEqualTo(Duration.ofSeconds(60));
-
-    var next3 = next2.plusSeconds(15);
-    var newState3 = SensorState.builder().setId("7331").setTime(next3).setState(State.OFF).build();
-
-    var result4 = processor.transform(newState3);
-
-    assertThat(result4).isNotNull();
-    assertThat(result4.getEvent()).isEqualTo(newState2);
-    assertThat(result4.getDuration()).isEqualTo(Duration.ofSeconds(15));
+    transformAndAssert(newState3, newState2, step3);
   }
 
   @Test
