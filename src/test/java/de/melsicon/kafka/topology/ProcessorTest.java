@@ -1,83 +1,26 @@
 package de.melsicon.kafka.topology;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static de.melsicon.kafka.topology.ProcessorTestHelper.advance;
+import static de.melsicon.kafka.topology.ProcessorTestHelper.assertStateWithDuration;
+import static de.melsicon.kafka.topology.ProcessorTestHelper.createProcessor;
+import static de.melsicon.kafka.topology.ProcessorTestHelper.initial;
 
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import de.melsicon.kafka.topology.ProcessorTestHelper.Advancement;
 import java.time.Duration;
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.kafka.streams.kstream.ValueTransformer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public final class ProcessorTest {
-  private static final String SENSOR_ID = "7331";
-
   private ValueTransformer<SensorState, SensorStateWithDuration> processor;
-
-  private static <K, V> KVStore<K, V> map2KVStore(Map<K, V> store) {
-    return new KVStore<>() {
-      @Nullable
-      @Override
-      public V get(K key) {
-        return store.get(key);
-      }
-
-      @Override
-      public void put(K key, V value) {
-        store.put(key, value);
-      }
-    };
-  }
-
-  private static SensorState initial(State state) {
-    var instant = Instant.ofEpochSecond(443634300L);
-
-    return SensorState.builder().setId(SENSOR_ID).setTime(instant).setState(state).build();
-  }
-
-  private static SensorState advance(SensorState old, Duration step, State state) {
-    return SensorState.builder()
-        .setId(old.getId())
-        .setTime(old.getTime().plus(step))
-        .setState(state)
-        .build();
-  }
-
-  /**
-   * Feeds {@code newState} into the processor, testing for correct transformation.
-   *
-   * @param newState New state
-   * @param oldState Expected historic state
-   * @param duration Expected duration the old state lasted
-   * @throws AssertionError When the state is not transformed correctly
-   */
-  private void transformAndAssert(
-      SensorState newState, @Nullable SensorState oldState, Duration duration) {
-    var result = processor.transform(newState);
-
-    if (oldState == null) {
-      assertThat(result).isNull();
-    } else {
-      assertThat(result).isNotNull();
-      assertThat(result.getEvent()).isEqualTo(oldState);
-      assertThat(result.getDuration()).isEqualTo(duration);
-    }
-  }
 
   @Before
   public void before() {
-    var store = new HashMap<String, SensorState>();
-    var kvStore = map2KVStore(store);
-
-    var processor = new DurationProcessor();
-    processor.initStore(kvStore);
-    this.processor = processor;
+    this.processor = createProcessor();
   }
 
   @After
@@ -86,42 +29,43 @@ public final class ProcessorTest {
   @Test
   public void testSimple() {
     var initialState = initial(State.OFF);
+    var advancement = new Advancement(Duration.ofSeconds(30), State.ON);
+
+    var newState = advance(initialState, advancement);
 
     var result1 = processor.transform(initialState);
+    var result2 = processor.transform(newState);
 
-    assertThat(result1).isNull();
-
-    var step1 = Duration.ofSeconds(30);
-    var newState = advance(initialState, step1, State.ON);
-
-    transformAndAssert(newState, initialState, step1);
+    assertStateWithDuration(result1, null, Duration.ZERO);
+    assertStateWithDuration(result2, initialState, advancement.duration);
   }
 
   @Test
   public void testRepeated() {
     var initialState = initial(State.OFF);
+    var advancement1 = new Advancement(Duration.ofSeconds(30), State.OFF);
+    var advancement2 = new Advancement(Duration.ofSeconds(30), State.ON);
+    var advancement3 = new Advancement(Duration.ofSeconds(15), State.OFF);
 
-    transformAndAssert(initialState, null, Duration.ZERO);
+    var newState1 = advance(initialState, advancement1);
+    var newState2 = advance(newState1, advancement2);
+    var newState3 = advance(newState2, advancement3);
 
-    var step1 = Duration.ofSeconds(30);
-    var newState = advance(initialState, step1, State.OFF);
+    var result1 = processor.transform(initialState);
+    var result2 = processor.transform(newState1);
+    var result3 = processor.transform(newState2);
+    var result4 = processor.transform(newState3);
 
-    transformAndAssert(newState, initialState, step1);
-
-    var step2 = Duration.ofSeconds(30);
-    var newState2 = advance(newState, step2, State.ON);
-
-    transformAndAssert(newState2, initialState, step1.plus(step2));
-
-    var step3 = Duration.ofSeconds(15);
-    var newState3 = advance(newState2, step3, State.OFF);
-
-    transformAndAssert(newState3, newState2, step3);
+    assertStateWithDuration(result1, null, Duration.ZERO);
+    assertStateWithDuration(result2, initialState, advancement1.duration);
+    assertStateWithDuration(
+        result3, initialState, advancement1.duration.plus(advancement2.duration));
+    assertStateWithDuration(result4, newState2, advancement3.duration);
   }
 
   @Test
   public void nullHandling() {
     var result = processor.transform(null);
-    assertThat(result).isNull();
+    assertStateWithDuration(result, null, Duration.ZERO);
   }
 }

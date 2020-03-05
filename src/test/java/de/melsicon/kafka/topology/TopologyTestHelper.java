@@ -2,7 +2,7 @@ package de.melsicon.kafka.topology;
 
 import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
 
-/* package */ final class TestHelper {
+/* package */ final class TopologyTestHelper {
   /* package */ static final String INPUT_TOPIC = "input-topic";
   /* package */ static final String RESULT_TOPIC = "result-topic";
   /* package */ static final String REGISTRY_SCOPE = "test";
@@ -12,7 +12,7 @@ import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
   private static final int BROKER_COUNT = 2;
   /* package */ static final int PARTITIONS = BROKER_COUNT;
 
-  private TestHelper() {}
+  private TopologyTestHelper() {}
 
   /* package */ static SharedKafkaTestResource newKafkaTestResource() {
     return new SharedKafkaTestResource()

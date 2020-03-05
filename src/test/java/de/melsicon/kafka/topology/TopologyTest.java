@@ -1,9 +1,12 @@
 package de.melsicon.kafka.topology;
 
-import static de.melsicon.kafka.topology.TestHelper.APPLICATION_ID;
-import static de.melsicon.kafka.topology.TestHelper.INPUT_TOPIC;
-import static de.melsicon.kafka.topology.TestHelper.PARTITIONS;
-import static de.melsicon.kafka.topology.TestHelper.RESULT_TOPIC;
+import static de.melsicon.kafka.topology.TopologyTestHelper.APPLICATION_ID;
+import static de.melsicon.kafka.topology.TopologyTestHelper.INPUT_TOPIC;
+import static de.melsicon.kafka.topology.TopologyTestHelper.PARTITIONS;
+import static de.melsicon.kafka.topology.TopologyTestHelper.REGISTRY_SCOPE;
+import static de.melsicon.kafka.topology.TopologyTestHelper.REPLICATION_FACTOR;
+import static de.melsicon.kafka.topology.TopologyTestHelper.RESULT_TOPIC;
+import static de.melsicon.kafka.topology.TopologyTestHelper.newKafkaTestResource;
 import static org.apache.kafka.streams.StreamsConfig.APPLICATION_ID_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG;
@@ -43,8 +46,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public final class TopologyTest {
   @ClassRule
-  public static final SharedKafkaTestResource KAFKA_TEST_RESOURCE =
-      TestHelper.newKafkaTestResource();
+  public static final SharedKafkaTestResource KAFKA_TEST_RESOURCE = newKafkaTestResource();
 
   @Rule public final SchemaRegistryRule registryTestResource;
   private final Supplier<Serde<SensorState>> inputSerdes;
@@ -63,7 +65,7 @@ public final class TopologyTest {
     this.storeSerdes = storeSerdes;
     this.resultSerdes = resultSerdes;
 
-    this.registryTestResource = new SchemaRegistryRule(TestHelper.REGISTRY_SCOPE);
+    this.registryTestResource = new SchemaRegistryRule(REGISTRY_SCOPE);
   }
 
   private static SensorStateSerdes[] serdes() {
@@ -121,8 +123,8 @@ public final class TopologyTest {
     registryTestResource.configureSerde(resultSerde);
 
     var kafkaTestUtils = KAFKA_TEST_RESOURCE.getKafkaTestUtils();
-    kafkaTestUtils.createTopic(INPUT_TOPIC, PARTITIONS, TestHelper.REPLICATION_FACTOR);
-    kafkaTestUtils.createTopic(RESULT_TOPIC, PARTITIONS, TestHelper.REPLICATION_FACTOR);
+    kafkaTestUtils.createTopic(INPUT_TOPIC, PARTITIONS, REPLICATION_FACTOR);
+    kafkaTestUtils.createTopic(RESULT_TOPIC, PARTITIONS, REPLICATION_FACTOR);
 
     var topologyFactory =
         new TopologyFactory()
