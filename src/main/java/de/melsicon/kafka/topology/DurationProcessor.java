@@ -62,7 +62,7 @@ public final class DurationProcessor
   @Override
   public void init(ProcessorContext context) {
     var store = StoreHelper.<String, SensorState>stateStore(context, SENSOR_STATES);
-    var kvStore = StoreHelper.store2KVStore(store);
+    var kvStore = new StoreHelper.MappedStore<>(store);
     initStore(kvStore);
   }
 

@@ -31,23 +31,25 @@ import org.apache.kafka.streams.state.KeyValueStore;
   /**
    * Wrap a {@link KeyValueStore} in a {@link KVStore}.
    *
-   * @param store A Kafka Streams KeyValueStore
    * @param <K> the type of keys maintained by this store
    * @param <V> the type of stored values
-   * @return The store wrapped in a KVStore interface.
    */
-  /* package */ static <K, V> KVStore<K, V> store2KVStore(KeyValueStore<K, V> store) {
-    return new KVStore<>() {
-      @Nullable
-      @Override
-      public V get(K key) {
-        return store.get(key);
-      }
+  /* package */ static final class MappedStore<K, V> implements KVStore<K, V> {
+    private final KeyValueStore<K, V> store;
 
-      @Override
-      public void put(K key, V value) {
-        store.put(key, value);
-      }
-    };
+    /* package */ MappedStore(KeyValueStore<K, V> store) {
+      this.store = store;
+    }
+
+    @Nullable
+    @Override
+    public V get(K key) {
+      return store.get(key);
+    }
+
+    @Override
+    public void put(K key, V value) {
+      store.put(key, value);
+    }
   }
 }
