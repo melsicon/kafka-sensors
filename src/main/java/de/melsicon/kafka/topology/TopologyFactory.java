@@ -8,6 +8,7 @@ import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.Named;
 import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.state.Stores;
 
@@ -21,20 +22,23 @@ public final class TopologyFactory {
       Serde<SensorState> inputSerde,
       Serde<SensorState> storeSerde,
       Serde<SensorStateWithDuration> resultSerde) {
-    var builder = new StreamsBuilder();
-
-    // Our state store
+    // Create a builder for our state store
     var storeBuilder =
         Stores.keyValueStoreBuilder(
             Stores.persistentKeyValueStore(DurationProcessor.SENSOR_STATES),
             Serdes.String(),
             storeSerde);
 
+    // Initialize Kafka Streams DSL
+    var builder = new StreamsBuilder();
+
     // Register the store builder
     builder.addStateStore(storeBuilder);
 
+    String[] stateStoreNames = {DurationProcessor.SENSOR_STATES};
+
     builder.stream(inputTopic, Consumed.with(Serdes.String(), inputSerde))
-        .transformValues(DurationProcessor::new, DurationProcessor.SENSOR_STATES)
+        .transformValues(DurationProcessor::new, Named.as("DURATION-PROCESSOR"), stateStoreNames)
         .to(resultTopic, Produced.with(Serdes.String(), resultSerde));
 
     return builder.build();
