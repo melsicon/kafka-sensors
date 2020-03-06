@@ -13,9 +13,24 @@ java_library(
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
         "@maven//:com_google_guava_guava",
         "@maven//:io_swagger_swagger_annotations",
+        "@maven//:jakarta_validation_jakarta_validation_api",
+        "@maven//:jakarta_ws_rs_jakarta_ws_rs_api",
         "@maven//:org_apache_avro_avro",
         "@maven//:org_apache_kafka_kafka_clients",
         "@maven//:org_slf4j_slf4j_api",
+    ],
+)
+
+java_library(
+    name = "kafka-schema-serializer",
+    srcs = glob(["schema-serializer/src/main/java/**/*.java"]),
+    deps = [
+        ":kafka-schema-registry-client",
+        "@confluent_common//:common-config",
+        "@maven//:com_fasterxml_jackson_core_jackson_core",
+        "@maven//:org_apache_avro_avro",
+        "@maven//:org_apache_kafka_kafka_2_13",
+        "@maven//:org_apache_kafka_kafka_clients",
     ],
 )
 
@@ -25,6 +40,7 @@ java_library(
     visibility = ["//visibility:public"],
     deps = [
         ":kafka-schema-registry-client",
+        # ":kafka-schema-serializer",
         "@confluent_common//:common-config",
         "@maven//:org_apache_avro_avro",
         "@maven//:org_apache_kafka_kafka_2_13",

@@ -1,7 +1,5 @@
 package de.melsicon.kafka.sensors;
 
-import static io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
-
 import de.melsicon.annotation.Initializer;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
@@ -18,6 +16,10 @@ import org.openjdk.jmh.annotations.TearDown;
 
 @State(Scope.Benchmark)
 public class ExecutionPlan {
+  @SuppressWarnings("deprecation")
+  private static final String SCHEMA_REGISTRY_URL_CONFIG =
+      io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
+
   private static final String REGISTRY_SCOPE = "test";
   private static final String REGISTRY_URL = "mock://" + REGISTRY_SCOPE;
 
