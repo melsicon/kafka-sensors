@@ -119,6 +119,9 @@ maven_install(
     override_targets = {
         # Java EE is now Jakarta EE
         "javax.annotation:javax.annotation-api": ":jakarta_annotation_jakarta_annotation_api",
+        "javax.servlet:javax.servlet-api": "jakarta_servlet_jakarta_servlet_api",
+        "javax.validation:validation-api": ":jakarta_validation_jakarta_validation_api",
+        "javax.ws.rs:javax.ws.rs-api": ":jakarta_ws_rs_jakarta_ws_rs_api",
     },
     repositories = [
         "https://jcenter.bintray.com/",
