@@ -81,9 +81,9 @@ maven_install(
         "jakarta.servlet:jakarta.servlet-api:4.0.3",
         "jakarta.validation:jakarta.validation-api:2.0.2",
         "jakarta.ws.rs:jakarta.ws.rs-api:2.1.6",
-        "org.apache.kafka:kafka-clients:2.4.0",
-        "org.apache.kafka:kafka-streams:2.4.0",
-        "org.apache.kafka:kafka_2.13:2.4.0",
+        "org.apache.kafka:kafka-clients:2.4.1",
+        "org.apache.kafka:kafka-streams:2.4.1",
+        "org.apache.kafka:kafka_2.13:2.4.1",
         "org.mapstruct:mapstruct-processor:1.3.1.Final",
         "org.mapstruct:mapstruct:1.3.1.Final",
         "org.openjdk.jmh:jmh-core:1.23",
@@ -104,7 +104,7 @@ maven_install(
         maven.artifact(
             "org.apache.kafka",
             "kafka-streams-test-utils",
-            "2.4.0",
+            "2.4.1",
             testonly = True,
         ),
         maven.artifact(
