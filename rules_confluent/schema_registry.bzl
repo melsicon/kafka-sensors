@@ -22,6 +22,12 @@ java_library(
 )
 
 java_library(
+    name = "kafka-core",
+    neverlink = True,
+    exports = ["@maven//:org_apache_kafka_kafka_2_13"],
+)
+
+java_library(
     name = "kafka-avro-serializer",
     srcs = glob([
         "avro-serializer/src/main/java/**/*.java",
@@ -29,11 +35,11 @@ java_library(
     ]),
     visibility = ["//visibility:public"],
     deps = [
+        ":kafka-core",
         ":kafka-schema-registry-client",
         "@confluent_common//:common-config",
         "@maven//:com_fasterxml_jackson_core_jackson_core",
         "@maven//:org_apache_avro_avro",
-        "@maven//:org_apache_kafka_kafka_2_13",
         "@maven//:org_apache_kafka_kafka_clients",
     ],
 )
