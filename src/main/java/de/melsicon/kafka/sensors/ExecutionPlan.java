@@ -59,7 +59,7 @@ public class ExecutionPlan {
     bytes = serializer.serialize(null, data);
   }
 
-  @TearDown
+  @TearDown(Level.Iteration)
   public void tearDown() {
     serializer.close();
     deserializer.close();

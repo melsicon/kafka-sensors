@@ -20,11 +20,13 @@ public final class ProcessorTest {
 
   @Before
   public void before() {
-    this.processor = createProcessor();
+    processor = createProcessor();
   }
 
   @After
-  public void after() {}
+  public void after() {
+    processor.close();
+  }
 
   @Test
   public void testSimple() {

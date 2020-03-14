@@ -28,6 +28,7 @@ java_library(
         "@maven//:org_apache_kafka_kafka_streams",
         "@maven//:org_apache_kafka_kafka_streams_test_utils",
         "@maven//:org_assertj_assertj_core",
+        "@maven//:org_jetbrains_annotations",
     ],
 )
 
