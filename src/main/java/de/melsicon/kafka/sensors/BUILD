@@ -1,4 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_binary")
+load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 
 java_binary(
     name = "sensors",
@@ -40,9 +41,10 @@ java_binary(
     ],
 )
 
-java_binary(
+java_image(
     name = "benchmark",
     srcs = glob(["Bench*.java"]) + ["ExecutionPlan.java"],
+    base = "//images:java11_nonroot",
     data = ["//conf"],
     jvm_flags = [
         "--add-opens",

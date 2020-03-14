@@ -5,16 +5,17 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # ---
 
 http_archive(
-    name = "rules_pkg",
-    sha256 = "4ba8f4ab0ff85f2484287ab06c0d871dcb31cc54d439457d28fd4ae14b18450a",
-    url = "https://github.com/bazelbuild/rules_pkg/releases/download/0.2.4/rules_pkg-0.2.4.tar.gz",
+    name = "io_bazel_rules_go",
+    sha256 = "e6a6c016b0663e06fa5fccf1cd8152eab8aa8180c583ec20c872f4f9953a7ac5",
+    urls = ["https://github.com/bazelbuild/rules_go/releases/download/v0.22.1/rules_go-v0.22.1.tar.gz"],
 )
 
-load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
-
-rules_pkg_dependencies()
-
-# ---
+http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "dc97fccceacd4c6be14e800b2a00693d5e8d07f69ee187babfd04a80a9f8e250",
+    strip_prefix = "rules_docker-0.14.1",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.14.1/rules_docker-v0.14.1.tar.gz"],
+)
 
 http_archive(
     name = "rules_jvm_external",
@@ -23,17 +24,39 @@ http_archive(
     url = "https://github.com/bazelbuild/rules_jvm_external/archive/3.2.tar.gz",
 )
 
-load("@rules_jvm_external//:defs.bzl", "maven_install")
-load("@rules_jvm_external//:specs.bzl", "maven")
-
-# ---
-
 http_archive(
     name = "com_google_protobuf",
     sha256 = "a79d19dcdf9139fa4b81206e318e33d245c4c9da1ffed21c87288ed4380426f9",
     strip_prefix = "protobuf-3.11.4",
     urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.11.4.tar.gz"],
 )
+
+# ---
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_register_toolchains()
+
+go_rules_dependencies()
+
+# ---
+
+load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories")
+
+container_repositories()
+
+load("@io_bazel_rules_docker//go:image.bzl", go_repositories = "repositories")
+
+go_repositories()
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
+
+# ---
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:specs.bzl", "maven")
+
+# ---
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
@@ -48,6 +71,19 @@ load("//rules_avro:avro_deps.bzl", "AVRO_ARTIFACTS")
 load("//rules_confluent:repositories.bzl", "confluent_repositories")
 
 confluent_repositories()
+
+# ---
+
+# https://gcr.io/distroless/java-debian10:11
+container_pull(
+    name = "java_base",
+    architecture = "amd64",
+    digest = "sha256:eda9e5ae2facccc9c7016f0c2d718d2ee352743bda81234783b64aaa402679b6",
+    os = "linux",
+    registry = "gcr.io",
+    repository = "distroless/java-debian10",
+    tag = "11",
+)
 
 # ---
 
