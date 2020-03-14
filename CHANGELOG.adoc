@@ -7,10 +7,12 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 == [Unreleased]
 - Update Bazel and Protobuf
 - Refactor business logic for testability
-- Update Kafka to 2.4, Scala 2.13
+- Update Kafka to 2.4.1, Scala 2.13
 - Use SpotBugs annotations instead of our own
 - Simplify Avro Schema
 - Add AVRO reflection serialization
 - Add JMH microbenchmark
 - Use Avro logical types
 - Add Avro schema compatibility test
+- Update Confluent schema registry to 5.4.1
+- Add Docker image for benchmark
