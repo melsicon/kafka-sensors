@@ -64,14 +64,30 @@ java_library(
 # ---
 
 java_plugin(
-    name = "autovalue_processor",
+    name = "auto_value_processor",
     processor_class = "com.google.auto.value.processor.AutoValueProcessor",
+    deps = ["@maven//:com_google_auto_value_auto_value"],
+)
+
+java_plugin(
+    name = "auto_oneof_processor",
+    processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
+    deps = ["@maven//:com_google_auto_value_auto_value"],
+)
+
+java_plugin(
+    name = "auto_annotation_processor",
+    processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
     deps = ["@maven//:com_google_auto_value_auto_value"],
 )
 
 java_library(
     name = "autovalue",
-    exported_plugins = ["autovalue_processor"],
+    exported_plugins = [
+        "auto_value_processor",
+        "auto_oneof_processor",
+        "auto_annotation_processor",
+    ],
     neverlink = True,
     visibility = ["//visibility:public"],
     exports = [
@@ -113,14 +129,14 @@ java_library(
 # ---
 
 java_plugin(
-    name = "autoservice_processor",
+    name = "auto_service_processor",
     processor_class = "com.google.auto.service.processor.AutoServiceProcessor",
     deps = ["@maven//:com_google_auto_service_auto_service"],
 )
 
 java_library(
     name = "autoservice",
-    exported_plugins = ["autoservice_processor"],
+    exported_plugins = ["auto_service_processor"],
     neverlink = True,
     visibility = ["//visibility:public"],
     exports = ["@maven//:com_google_auto_service_auto_service_annotations"],
