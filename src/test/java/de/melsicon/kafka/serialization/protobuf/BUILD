@@ -11,9 +11,8 @@ java_library(
     deps = [
         "//src/main/proto/melsicon/kafka/sensors/v1:sensorsv1_java_proto",
         "//toolchain:nullaway",
+        "//toolchain:truth",
         "@com_google_protobuf//:protobuf_java",
-        "@maven//:junit_junit",
-        "@maven//:org_assertj_assertj_core",
     ],
 )
 

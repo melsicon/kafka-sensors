@@ -7,8 +7,7 @@ java_library(
     deps = [
         "//src/main/java/de/melsicon/kafka/model",
         "//toolchain:nullaway",
-        "@maven//:junit_junit",
-        "@maven//:org_assertj_assertj_core",
+        "//toolchain:truth",
     ],
 )
 

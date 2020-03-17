@@ -1,9 +1,8 @@
 package de.melsicon.kafka.schema;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 import com.google.common.collect.ImmutableCollection;
 import org.apache.avro.Schema;
+import org.apache.avro.SchemaValidationException;
 import org.apache.avro.SchemaValidatorBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,11 +25,7 @@ public final class SchemaTest {
   }
 
   @Test
-  public void canReadAll() {
-    var validator = new SchemaValidatorBuilder().canReadStrategy().validateAll();
-
-    assertThatCode(() -> validator.validate(schema, schemas))
-        .as("Testing that %s can read all", schema.getFullName())
-        .doesNotThrowAnyException();
+  public void canReadAll() throws SchemaValidationException {
+    new SchemaValidatorBuilder().canReadStrategy().validateAll().validate(schema, schemas);
   }
 }

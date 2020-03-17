@@ -1,6 +1,6 @@
 package de.melsicon.kafka.serialization.protobuf;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.google.common.truth.extensions.proto.ProtoTruth.assertThat;
 
 import com.google.protobuf.Timestamp;
 import de.melsicon.kafka.sensors.v1.SensorState;

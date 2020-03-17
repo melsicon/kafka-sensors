@@ -1,9 +1,9 @@
 package de.melsicon.kafka.serialization.reflect;
 
+import static com.google.common.truth.Truth.assertThat;
 import static de.melsicon.kafka.sensors.reflect.SensorStateWithDuration.MODEL;
 import static de.melsicon.kafka.sensors.reflect.SensorStateWithDuration.SCHEMA;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.Assert.assertThrows;
 
 import de.melsicon.kafka.sensors.reflect.SensorState;
 import de.melsicon.kafka.sensors.reflect.SensorStateWithDuration;
@@ -63,7 +63,6 @@ public final class SerializationTest {
     sensorState.event = event;
     sensorState.duration = Duration.ofSeconds(15);
 
-    assertThatExceptionOfType(AvroTypeException.class)
-        .isThrownBy(() -> encoder.encode(sensorState));
+    assertThrows(AvroTypeException.class, () -> encoder.encode(sensorState));
   }
 }

@@ -1,10 +1,10 @@
 package de.melsicon.kafka.serialization.confluent;
 
+import static com.google.common.truth.Truth.assertThat;
 import static de.melsicon.kafka.serialization.confluent.TestHelper.INSTANT;
 import static de.melsicon.kafka.serialization.confluent.TestHelper.KAFKA_TOPIC;
 import static de.melsicon.kafka.serialization.confluent.TestHelper.REGISTRY_SCOPE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.Assert.assertThrows;
 
 import de.melsicon.kafka.sensors.confluent_reflect.SensorState;
 import de.melsicon.kafka.sensors.confluent_reflect.State;
@@ -62,7 +62,7 @@ public final class ReflectTest {
 
     // Check for “Magic Byte”
     // https://docs.confluent.io/current/schema-registry/serializer-formatter.html#wire-format
-    assertThat(encoded).startsWith(0);
+    assertThat(encoded[0]).isEqualTo((byte) 0);
 
     var decoded = decoder.deserialize(KAFKA_TOPIC, encoded);
 
@@ -75,7 +75,6 @@ public final class ReflectTest {
     sensorState.id = "7331";
     sensorState.time = INSTANT;
 
-    assertThatExceptionOfType(SerializationException.class)
-        .isThrownBy(() -> encoder.serialize(KAFKA_TOPIC, sensorState));
+    assertThrows(SerializationException.class, () -> encoder.serialize(KAFKA_TOPIC, sensorState));
   }
 }

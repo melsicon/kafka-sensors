@@ -1,13 +1,13 @@
 package de.melsicon.kafka.serialization.generic;
 
+import static com.google.common.truth.Truth.assertThat;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.ENUM_OFF;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_ID;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_STATE;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_TIME;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.MODEL;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.SCHEMA;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.Assert.assertThrows;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -56,24 +56,24 @@ public final class SerializationTest {
 
   @Test
   public void stateIsRequired() throws IOException {
-    assertThatExceptionOfType(AvroMissingFieldException.class)
-        .isThrownBy(
-            () ->
-                new GenericRecordBuilder(SCHEMA)
-                    .set(FIELD_ID, "7331")
-                    .set(FIELD_TIME, INSTANT)
-                    .build());
+    assertThrows(
+        AvroMissingFieldException.class,
+        () ->
+            new GenericRecordBuilder(SCHEMA)
+                .set(FIELD_ID, "7331")
+                .set(FIELD_TIME, INSTANT)
+                .build());
   }
 
   @Test
   public void notNull() {
-    assertThatExceptionOfType(AvroRuntimeException.class)
-        .isThrownBy(
-            () ->
-                new GenericRecordBuilder(SCHEMA)
-                    .set(FIELD_ID, "7331")
-                    .set(FIELD_TIME, INSTANT)
-                    .set(FIELD_STATE, null)
-                    .build());
+    assertThrows(
+        AvroRuntimeException.class,
+        () ->
+            new GenericRecordBuilder(SCHEMA)
+                .set(FIELD_ID, "7331")
+                .set(FIELD_TIME, INSTANT)
+                .set(FIELD_STATE, null)
+                .build());
   }
 }

@@ -11,9 +11,8 @@ java_library(
     deps = [
         "//src/main/avro/de/melsicon/kafka/sensors/avro",
         "//toolchain:nullaway",
-        "@maven//:junit_junit",
+        "//toolchain:truth",
         "@maven//:org_apache_avro_avro",
-        "@maven//:org_assertj_assertj_core",
     ],
 )
 

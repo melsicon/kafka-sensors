@@ -1,7 +1,7 @@
 package de.melsicon.kafka.serialization.avro;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import de.melsicon.kafka.sensors.avro.SensorState;
 import de.melsicon.kafka.sensors.avro.State;
@@ -44,15 +44,16 @@ public final class SerializationTest {
 
   @Test
   public void stateIsRequired() {
-    assertThatExceptionOfType(AvroMissingFieldException.class)
-        .isThrownBy(() -> SensorState.newBuilder().setId("7331").setTime(INSTANT).build());
+    assertThrows(
+        AvroMissingFieldException.class,
+        () -> SensorState.newBuilder().setId("7331").setTime(INSTANT).build());
   }
 
   @Test
   @SuppressWarnings("NullAway")
   public void notNull() {
-    assertThatExceptionOfType(AvroRuntimeException.class)
-        .isThrownBy(
-            () -> SensorState.newBuilder().setId(null).setTime(INSTANT).setState(null).build());
+    assertThrows(
+        AvroRuntimeException.class,
+        () -> SensorState.newBuilder().setId("7331").setTime(INSTANT).setState(null).build());
   }
 }

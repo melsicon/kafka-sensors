@@ -12,11 +12,10 @@ java_library(
         "//src/main/java/de/melsicon/kafka/serde/confluent",
         "//src/test/java/de/melsicon/kafka/testutil",
         "//toolchain:nullaway",
+        "//toolchain:truth",
         "@confluent_schema_registry//:kafka-streams-avro-serde",
-        "@maven//:junit_junit",
         "@maven//:org_apache_avro_avro",
         "@maven//:org_apache_kafka_kafka_clients",
-        "@maven//:org_assertj_assertj_core",
     ],
 )
 

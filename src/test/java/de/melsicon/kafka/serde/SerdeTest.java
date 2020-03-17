@@ -1,8 +1,8 @@
 package de.melsicon.kafka.serde;
 
+import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.TruthJUnit.assume;
 import static de.melsicon.kafka.serde.TestHelper.REGISTRY_SCOPE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assumptions.assumeThat;
 
 import com.google.common.collect.ImmutableCollection;
 import de.melsicon.kafka.model.SensorState;
@@ -77,7 +77,7 @@ public final class SerdeTest {
   @Test
   public void nullEncoding() {
     var encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, null);
-    assertThat(encoded).isNullOrEmpty();
+    assertThat(encoded == null || encoded.length == 0).isTrue();
   }
 
   @Test
@@ -88,7 +88,7 @@ public final class SerdeTest {
 
   @Test
   public void emptyDecoding() {
-    assumeThat(description).doesNotContain(" - confluent");
+    assume().that(description).doesNotContain(" - confluent");
     var decoded = deserializer.deserialize(TestHelper.KAFKA_TOPIC, new byte[0]);
     assertThat(decoded).isNull();
   }

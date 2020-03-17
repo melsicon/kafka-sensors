@@ -1,5 +1,6 @@
 package de.melsicon.kafka.serialization.confluent;
 
+import static com.google.common.truth.Truth.assertThat;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.ENUM_OFF;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_ID;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_STATE;
@@ -8,7 +9,6 @@ import static de.melsicon.kafka.sensors.generic.SensorStateSchema.SCHEMA;
 import static de.melsicon.kafka.serialization.confluent.TestHelper.INSTANT;
 import static de.melsicon.kafka.serialization.confluent.TestHelper.KAFKA_TOPIC;
 import static de.melsicon.kafka.serialization.confluent.TestHelper.REGISTRY_SCOPE;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import de.melsicon.kafka.sensors.generic.SensorStateSchema;
 import de.melsicon.kafka.serde.confluent.GenericAvroDeserializer;
@@ -66,7 +66,7 @@ public final class GenericTest {
 
     // Check for “Magic Byte”
     // https://docs.confluent.io/current/schema-registry/serializer-formatter.html#wire-format
-    assertThat(encoded).startsWith(0);
+    assertThat(encoded[0]).isEqualTo((byte) 0);
 
     var decoded = decoder.deserialize(KAFKA_TOPIC, encoded);
 

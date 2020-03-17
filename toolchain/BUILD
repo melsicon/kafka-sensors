@@ -156,3 +156,18 @@ java_library(
     visibility = ["//visibility:public"],
     exports = ["@maven//:org_openjdk_jmh_jmh_core"],
 )
+
+# ---
+
+java_library(
+    name = "truth",
+    testonly = True,
+    visibility = ["//visibility:public"],
+    exports = [
+        "@maven//:com_google_truth_extensions_truth_java8_extension",
+        "@maven//:com_google_truth_extensions_truth_proto_extension",
+        "@maven//:com_google_truth_truth",
+        "@maven//:junit_junit",
+        "@maven//:org_ow2_asm_asm",
+    ],
+)

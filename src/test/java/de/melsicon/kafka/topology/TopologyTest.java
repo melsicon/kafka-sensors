@@ -1,5 +1,6 @@
 package de.melsicon.kafka.topology;
 
+import static com.google.common.truth.Truth.assertThat;
 import static de.melsicon.kafka.topology.TopologyTestHelper.APPLICATION_ID;
 import static de.melsicon.kafka.topology.TopologyTestHelper.INPUT_TOPIC;
 import static de.melsicon.kafka.topology.TopologyTestHelper.PARTITIONS;
@@ -11,8 +12,6 @@ import static org.apache.kafka.streams.StreamsConfig.APPLICATION_ID_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.NUM_STREAM_THREADS_CONFIG;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
 import de.melsicon.kafka.model.SensorState;
@@ -224,7 +223,7 @@ public final class TopologyTest {
 
   @Test
   public void testTombstone() {
-    assertThatCode(() -> inputTopic.pipeInput("7331", null)).doesNotThrowAnyException();
+    inputTopic.pipeInput("7331", null);
 
     var result = outputTopic.readKeyValue();
 

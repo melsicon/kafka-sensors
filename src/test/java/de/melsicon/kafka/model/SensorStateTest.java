@@ -1,8 +1,7 @@
 package de.melsicon.kafka.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-import static org.assertj.core.api.Assertions.assertThatNullPointerException;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import de.melsicon.kafka.model.SensorState.State;
 import java.time.Duration;
@@ -24,13 +23,13 @@ public final class SensorStateTest {
 
   @Test
   public void required() {
-    assertThatIllegalStateException().isThrownBy(() -> SensorState.builder().build());
+    assertThrows(IllegalStateException.class, () -> SensorState.builder().build());
   }
 
   @Test
   @SuppressWarnings("NullAway")
   public void notNull() {
-    assertThatNullPointerException().isThrownBy(() -> SensorState.builder().setId(null).build());
+    assertThrows(NullPointerException.class, () -> SensorState.builder().setId(null).build());
   }
 
   @Test
@@ -40,12 +39,12 @@ public final class SensorStateTest {
     var sensorState =
         SensorState.builder().setId("7331").setTime(instant).setState(State.OFF).build();
 
-    assertThatIllegalStateException()
-        .isThrownBy(
-            () ->
-                SensorStateWithDuration.builder()
-                    .setEvent(sensorState)
-                    .setDuration(Duration.ofMillis(-1))
-                    .build());
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            SensorStateWithDuration.builder()
+                .setEvent(sensorState)
+                .setDuration(Duration.ofMillis(-1))
+                .build());
   }
 }

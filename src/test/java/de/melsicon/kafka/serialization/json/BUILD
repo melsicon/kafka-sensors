@@ -12,9 +12,8 @@ java_library(
         "//src/main/java/de/melsicon/kafka/model",
         "//src/main/java/de/melsicon/kafka/serde/json",
         "//toolchain:nullaway",
+        "//toolchain:truth",
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
-        "@maven//:junit_junit",
-        "@maven//:org_assertj_assertj_core",
     ],
 )
 

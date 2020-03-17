@@ -126,6 +126,30 @@ maven_install(
         "org.openjdk.jmh:jmh-generator-annprocess:1.23",
         "org.slf4j:slf4j-jdk14:1.7.30",
         maven.artifact(
+            "com.google.truth",
+            "truth",
+            "1.0.1",
+            testonly = True,
+        ),
+        maven.artifact(
+            "com.google.truth.extensions",
+            "truth-java8-extension",
+            "1.0.1",
+            testonly = True,
+        ),
+        maven.artifact(
+            "com.google.truth.extensions",
+            "truth-liteproto-extension",
+            "1.0.1",
+            testonly = True,
+        ),
+        maven.artifact(
+            "com.google.truth.extensions",
+            "truth-proto-extension",
+            "1.0.1",
+            testonly = True,
+        ),
+        maven.artifact(
             "com.salesforce.kafka.test",
             "kafka-junit4",
             "3.2.1",
@@ -144,9 +168,9 @@ maven_install(
             testonly = True,
         ),
         maven.artifact(
-            "org.assertj",
-            "assertj-core",
-            "3.15.0",
+            "org.ow2.asm",
+            "asm",
+            "7.3.1",
             testonly = True,
         ),
         maven.artifact(

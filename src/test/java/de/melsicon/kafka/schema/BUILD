@@ -12,10 +12,9 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/generic",
         "//src/main/java/de/melsicon/kafka/sensors/reflect",
         "//toolchain:nullaway",
+        "//toolchain:truth",
         "@maven//:com_google_guava_guava",
-        "@maven//:junit_junit",
         "@maven//:org_apache_avro_avro",
-        "@maven//:org_assertj_assertj_core",
     ],
 )
 
