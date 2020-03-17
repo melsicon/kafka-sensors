@@ -34,7 +34,7 @@ public final class SerializationTest {
     var encoded = encoder.encode(sensorState);
 
     // Check for single-record format marker
-    // http://avro.apache.org/docs/1.9.1/spec.html#single_object_encoding
+    // http://avro.apache.org/docs/1.9.2/spec.html#single_object_encoding
     assertThat(encoded.getShort(0)).isEqualTo((short) 0xc301);
 
     var decoded = decoder.decode(encoded);
