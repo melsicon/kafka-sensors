@@ -1,4 +1,4 @@
-package de.melsicon.kafka.startup;
+package de.melsicon.kafka.sensors.app;
 
 import io.helidon.config.Config;
 import io.helidon.config.ConfigSources;

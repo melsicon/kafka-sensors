@@ -1,7 +1,9 @@
-package de.melsicon.kafka.sensors;
+package de.melsicon.kafka.sensors.benchmark;
 
 import de.melsicon.annotation.Initializer;
 import de.melsicon.kafka.model.SensorStateWithDuration;
+import de.melsicon.kafka.sensors.serdes.SerDeType;
+import de.melsicon.kafka.sensors.serdes.SerDes;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.testutil.MockSchemaRegistry;
 import java.util.Map;
@@ -23,17 +25,7 @@ public class ExecutionPlan {
   private static final String REGISTRY_SCOPE = "test";
   private static final String REGISTRY_URL = "mock://" + REGISTRY_SCOPE;
 
-  @Param({
-    "JSON",
-    "PROTO",
-    "AVRO",
-    "AVRO_REFLECT",
-    "AVRO_GENERIC",
-    "CONFLUENT",
-    "CONFLUENT_REFLECT",
-    "CONFLUENT_GENERIC"
-  })
-  public SerType serdes;
+  @Param public SerDeType serdes;
 
   public Serializer<SensorStateWithDuration> serializer;
   public Deserializer<SensorStateWithDuration> deserializer;
@@ -47,16 +39,16 @@ public class ExecutionPlan {
   public void setup() {
     registryClient = MockSchemaRegistry.getClientForScope(REGISTRY_SCOPE);
 
-    var serde = BenchHelper.createSerde(serdes);
+    var serde = SerDes.createSerde(serdes);
     var serdeConfig = Map.of(SCHEMA_REGISTRY_URL_CONFIG, REGISTRY_URL);
     serde.configure(serdeConfig, /* isKey= */ false);
 
     serializer = serde.serializer();
     deserializer = serde.deserializer();
 
-    data = BenchHelper.createData();
+    data = SerDes.createData();
 
-    bytes = serializer.serialize(null, data);
+    bytes = serializer.serialize(SerDes.TOPIC, data);
   }
 
   @TearDown(Level.Iteration)
@@ -66,16 +58,5 @@ public class ExecutionPlan {
 
     registryClient.reset();
     MockSchemaRegistry.dropScope(REGISTRY_SCOPE);
-  }
-
-  public enum SerType {
-    JSON,
-    PROTO,
-    AVRO,
-    AVRO_REFLECT,
-    AVRO_GENERIC,
-    CONFLUENT,
-    CONFLUENT_REFLECT,
-    CONFLUENT_GENERIC
   }
 }

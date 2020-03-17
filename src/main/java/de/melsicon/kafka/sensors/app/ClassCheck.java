@@ -1,7 +1,6 @@
-package de.melsicon.kafka.sensors;
+package de.melsicon.kafka.sensors.app;
 
 import com.google.common.flogger.FluentLogger;
-import de.melsicon.kafka.startup.MainCommand;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ResourceList.ResourceFilter;
 
@@ -25,9 +24,6 @@ public final class ClassCheck {
   private ClassCheck() {}
 
   public static void main(String... args) {
-    // Pull in dependencies
-    var unused = MainCommand.command();
-
     var classGraph = new ClassGraph();
     try (var scan = classGraph.scan();
         var resourceList = scan.getAllResources().filter(MY_FILTER)) {

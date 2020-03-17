@@ -3,7 +3,7 @@ load("@rules_java//java:defs.bzl", "java_library")
 java_library(
     name = "context",
     srcs = glob(["*.java"]),
-    visibility = ["//visibility:public"],
+    visibility = ["//src/main/java/de/melsicon/kafka/sensors/app:__pkg__"],
     deps = [
         "//src/main/java/de/melsicon/kafka/configuration",
         "//src/main/java/de/melsicon/kafka/lifecycle",

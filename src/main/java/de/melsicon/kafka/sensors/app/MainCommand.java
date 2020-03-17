@@ -1,4 +1,4 @@
-package de.melsicon.kafka.startup;
+package de.melsicon.kafka.sensors.app;
 
 import de.melsicon.kafka.context.MainComponent;
 import de.melsicon.kafka.lifecycle.StartUpManager;
@@ -6,11 +6,12 @@ import io.helidon.config.Config;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-@CommandLine.Command(name = "kafka-sensors", mixinStandardHelpOptions = true)
+@Command(name = "kafka-sensors", mixinStandardHelpOptions = true)
 public final class MainCommand implements Callable<Integer> {
-  @CommandLine.Option(
+  @Option(
       names = {"-c", "--config"},
       paramLabel = "CONFIGURATION",
       description = "the configuration file")

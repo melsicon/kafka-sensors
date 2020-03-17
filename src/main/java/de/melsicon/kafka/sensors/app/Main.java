@@ -1,7 +1,6 @@
-package de.melsicon.kafka.sensors;
+package de.melsicon.kafka.sensors.app;
 
 import com.google.common.flogger.FluentLogger;
-import de.melsicon.kafka.startup.MainCommand;
 import picocli.CommandLine;
 
 public final class Main {

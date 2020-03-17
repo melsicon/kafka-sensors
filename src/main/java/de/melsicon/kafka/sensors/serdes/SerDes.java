@@ -1,8 +1,7 @@
-package de.melsicon.kafka.sensors;
+package de.melsicon.kafka.sensors.serdes;
 
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import de.melsicon.kafka.sensors.ExecutionPlan.SerType;
 import de.melsicon.kafka.serde.SensorStateSerdes;
 import de.melsicon.kafka.serde.avromapper.ConfluentGenericMapper;
 import de.melsicon.kafka.serde.avromapper.ConfluentReflectMapper;
@@ -13,12 +12,12 @@ import java.time.Duration;
 import java.time.Instant;
 import org.apache.kafka.common.serialization.Serde;
 
-/* package */ final class BenchHelper {
-  /* package */ static final String TOPIC = "topic";
+public final class SerDes {
+  public static final String TOPIC = "topic";
 
-  private BenchHelper() {}
+  private SerDes() {}
 
-  /* package */ static Serde<SensorStateWithDuration> createSerde(SerType serdes) {
+  public static Serde<SensorStateWithDuration> createSerde(SerDeType serdes) {
     SensorStateSerdes serdeFactory;
     switch (serdes) {
       case JSON:
@@ -53,7 +52,7 @@ import org.apache.kafka.common.serialization.Serde;
     return serdeFactory.createSensorStateWithDurationSerde();
   }
 
-  /* package */ static SensorStateWithDuration createData() {
+  public static SensorStateWithDuration createData() {
     var instant = Instant.ofEpochSecond(443634300L);
 
     var event =
