@@ -8,13 +8,10 @@ public final class ConfigHelper {
   private ConfigHelper() {}
 
   public static Config config(Path configFile) {
-    try (var configSource = ConfigSources.file(configFile.toString()).build()) {
-      return Config.builder(configSource)
-          .disableSystemPropertiesSource()
-          .disableEnvironmentVariablesSource()
-          .build();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+    var configSource = ConfigSources.file(configFile).build();
+    return Config.builder(configSource)
+        .disableSystemPropertiesSource()
+        .disableEnvironmentVariablesSource()
+        .build();
   }
 }
