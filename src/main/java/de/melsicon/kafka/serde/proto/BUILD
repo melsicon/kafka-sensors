@@ -3,6 +3,7 @@ load("@rules_java//java:defs.bzl", "java_library")
 java_library(
     name = "proto",
     srcs = glob(["*.java"]),
+    javacopts = ["-Amapstruct.suppressGeneratorTimestamp=true"],
     visibility = ["//visibility:public"],
     exports = [
         "@maven//:org_apache_kafka_kafka_clients",

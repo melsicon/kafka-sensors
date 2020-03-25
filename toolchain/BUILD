@@ -114,21 +114,6 @@ java_library(
 # ---
 
 java_plugin(
-    name = "mapstruct_processor",
-    processor_class = "org.mapstruct.ap.MappingProcessor",
-    deps = ["@maven//:org_mapstruct_mapstruct_processor"],
-)
-
-java_library(
-    name = "mapstruct",
-    exported_plugins = ["mapstruct_processor"],
-    visibility = ["//visibility:public"],
-    exports = ["@maven//:org_mapstruct_mapstruct"],
-)
-
-# ---
-
-java_plugin(
     name = "auto_service_processor",
     processor_class = "com.google.auto.service.processor.AutoServiceProcessor",
     deps = ["@maven//:com_google_auto_service_auto_service"],

@@ -5,26 +5,17 @@ import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.mapping.MapStructConfig;
 import edu.umd.cs.findbugs.annotations.Nullable;
-import java.time.Duration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Immutable
-@Mapper(config = MapStructConfig.class)
+@Mapper(config = MapStructConfig.class, uses = DurationMapper.class)
 public abstract class SpecificMapper
     implements AvroMapper<
         de.melsicon.kafka.sensors.avro.SensorState,
         de.melsicon.kafka.sensors.avro.SensorStateWithDuration> {
   public static SpecificMapper instance() {
     return new SpecificMapperImpl();
-  }
-
-  protected static Duration millis2Duration(long millis) {
-    return Duration.ofMillis(millis);
-  }
-
-  protected static long duration2Millis(Duration duration) {
-    return duration.toMillis();
   }
 
   @Nullable
