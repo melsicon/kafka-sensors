@@ -6,7 +6,6 @@ java_image(
     base = "//images:java11_nonroot",
     data = ["//conf"],
     jvm_flags = [
-        "-noverify",
         "--add-opens",
         "java.base/java.io=ALL-UNNAMED",
         "-Djava.util.logging.config.file=conf/logging.properties",

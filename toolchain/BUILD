@@ -14,7 +14,7 @@ default_java_toolchain(
 java_package_configuration(
     name = "package_configuration",
     javacopts = [
-        "-Xlint:all,-processing,-try,-classfile",
+        "-Xlint:all,-processing",
         "-Werror",
         "-Xpkginfo:always",
         "-XepExcludedPaths:.*/bazel-out/.*",
