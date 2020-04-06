@@ -3,6 +3,7 @@ package de.melsicon.kafka.serde.proto;
 import static org.mapstruct.MappingConstants.ANY_REMAINING;
 import static org.mapstruct.MappingConstants.NULL;
 
+import com.google.errorprone.annotations.ForOverride;
 import com.google.errorprone.annotations.Immutable;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
@@ -24,7 +25,8 @@ public abstract class ProtoMapper {
 
   @InheritInverseConfiguration
   @ValueMapping(source = ANY_REMAINING, target = NULL)
-  public abstract SensorState.State map(de.melsicon.kafka.sensors.v1.SensorState.State state);
+  @ForOverride
+  /* package */ abstract SensorState.State mapState(de.melsicon.kafka.sensors.v1.SensorState.State state);
 
   public abstract de.melsicon.kafka.sensors.v1.SensorState unmap(SensorState sensorState);
 
@@ -32,7 +34,8 @@ public abstract class ProtoMapper {
     @ValueMapping(source = "OFF", target = "STATE_OFF"),
     @ValueMapping(source = "ON", target = "STATE_ON"),
   })
-  public abstract de.melsicon.kafka.sensors.v1.SensorState.State unmapState(
+  @ForOverride
+  /* package */ abstract de.melsicon.kafka.sensors.v1.SensorState.State unmapState(
       SensorState.State state);
 
   public abstract SensorStateWithDuration map2(
