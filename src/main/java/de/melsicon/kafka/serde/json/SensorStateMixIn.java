@@ -16,7 +16,7 @@ public abstract class SensorStateMixIn {
 
     @Nullable
     @JsonCreator
-    public static SensorState.Builder builder() {
+    public static SensorState.Builder newBuilder() {
       return null;
     }
   }

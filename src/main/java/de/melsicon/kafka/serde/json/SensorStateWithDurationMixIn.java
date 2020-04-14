@@ -21,7 +21,7 @@ public abstract class SensorStateWithDurationMixIn {
 
     @Nullable
     @JsonCreator
-    public static SensorStateWithDuration.Builder builder() {
+    public static SensorStateWithDuration.Builder newBuilder() {
       return null;
     }
 
