@@ -17,6 +17,8 @@ public final class SerDes {
 
   private SerDes() {}
 
+  @SuppressWarnings(
+      "ReturnMissingNullable") // Work around for https://github.com/google/error-prone/issues/1575
   public static Serde<SensorStateWithDuration> createSerde(SerDeType serdes) {
     SensorStateSerdes serdeFactory;
     switch (serdes) {
