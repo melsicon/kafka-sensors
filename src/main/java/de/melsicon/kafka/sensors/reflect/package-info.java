@@ -1,6 +1,11 @@
 /** */
-@com.google.errorprone.annotations.CheckReturnValue
-@edu.umd.cs.findbugs.annotations.DefaultAnnotationForParameters(
-    edu.umd.cs.findbugs.annotations.NonNull.class)
-@edu.umd.cs.findbugs.annotations.ReturnValuesAreNonnullByDefault
+@CheckReturnValue
+@DefaultQualifier(
+    value = NonNull.class,
+    locations = {TypeUseLocation.PARAMETER, TypeUseLocation.RETURN})
 package de.melsicon.kafka.sensors.reflect;
+
+import com.google.errorprone.annotations.CheckReturnValue;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.DefaultQualifier;
+import org.checkerframework.framework.qual.TypeUseLocation;

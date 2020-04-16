@@ -4,17 +4,18 @@ import com.google.common.annotations.VisibleForTesting;
 import de.melsicon.annotation.Initializer;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Duration;
 import java.util.Optional;
 import org.apache.kafka.streams.kstream.ValueTransformer;
 import org.apache.kafka.streams.processor.ProcessorContext;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class DurationProcessor
     implements ValueTransformer<SensorState, SensorStateWithDuration> {
   public static final String SENSOR_STATES = "SensorStates";
 
-  private KVStore<String, SensorState> store;
+  private @MonotonicNonNull KVStore<String, SensorState> store;
 
   /**
    * Wrap the old state with a duration how log it lasted.
@@ -66,8 +67,8 @@ public final class DurationProcessor
     initStore(kvStore);
   }
 
-  @Nullable
   @Override
+  @Nullable
   public SensorStateWithDuration transform(@Nullable SensorState sensorState) {
     if (sensorState == null) {
       // Nothing to do

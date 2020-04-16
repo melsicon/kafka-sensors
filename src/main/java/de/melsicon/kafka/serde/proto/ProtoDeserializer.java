@@ -3,9 +3,9 @@ package de.melsicon.kafka.serde.proto;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.Parser;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class ProtoDeserializer<T extends MessageLite> implements Deserializer<T> {
   private final Parser<T> parser;
@@ -14,9 +14,9 @@ public final class ProtoDeserializer<T extends MessageLite> implements Deseriali
     this.parser = parser;
   }
 
-  @Nullable
   @Override
-  public T deserialize(String topic, @Nullable byte[] data) {
+  @Nullable
+  public T deserialize(String topic, byte @Nullable [] data) {
     if (data == null || data.length == 0) {
       return null;
     }

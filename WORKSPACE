@@ -6,8 +6,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "142dd33e38b563605f0d20e89d9ef9eda0fc3cb539a14be1bdb1350de2eda659",
-    urls = ["https://github.com/bazelbuild/rules_go/releases/download/v0.22.2/rules_go-v0.22.2.tar.gz"],
+    sha256 = "7b9bbe3ea1fccb46dcfa6c3f3e29ba7ec740d8733370e21cdc8937467b4a4349",
+    urls = ["https://github.com/bazelbuild/rules_go/releases/download/v0.22.4/rules_go-v0.22.4.tar.gz"],
 )
 
 http_archive(
@@ -95,7 +95,6 @@ maven_install(
         "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.11.0.rc1",
         "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.0.rc1",
         "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.0.rc1",
-        "com.github.spotbugs:spotbugs-annotations:4.0.1",
         "com.google.auto.service:auto-service-annotations:1.0-rc6",
         "com.google.auto.service:auto-service:1.0-rc6",
         "com.google.auto.value:auto-value-annotations:1.7",
@@ -117,9 +116,11 @@ maven_install(
         "jakarta.servlet:jakarta.servlet-api:4.0.3",
         "jakarta.validation:jakarta.validation-api:2.0.2",
         "jakarta.ws.rs:jakarta.ws.rs-api:2.1.6",
-        "org.apache.kafka:kafka-clients:2.4.1",
-        "org.apache.kafka:kafka-streams:2.4.1",
-        "org.apache.kafka:kafka_2.13:2.4.1",
+        "org.apache.kafka:kafka-clients:2.5.0",
+        "org.apache.kafka:kafka-streams:2.5.0",
+        "org.apache.kafka:kafka_2.13:2.5.0",
+        "org.checkerframework:checker-qual:3.3.0",
+        "org.checkerframework:checker:3.3.0",
         "org.mapstruct:mapstruct-processor:1.3.1.Final",
         "org.mapstruct:mapstruct:1.3.1.Final",
         "org.openjdk.jmh:jmh-core:1.23",
@@ -164,13 +165,13 @@ maven_install(
         maven.artifact(
             "org.apache.kafka",
             "kafka-streams-test-utils",
-            "2.4.1",
+            "2.5.0",
             testonly = True,
         ),
         maven.artifact(
             "org.ow2.asm",
             "asm",
-            "7.3.1",
+            "8.0.1",
             testonly = True,
         ),
         maven.artifact(

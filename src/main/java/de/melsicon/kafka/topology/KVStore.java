@@ -1,6 +1,6 @@
 package de.melsicon.kafka.topology;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Interface abstracting {@link org.apache.kafka.streams.state.KeyValueStore}, we can test with a

@@ -5,11 +5,12 @@ import static com.google.common.truth.Truth.assertThat;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.TestOnly;
 
 /* package */ final class ProcessorTestHelper {
@@ -49,14 +50,14 @@ import org.jetbrains.annotations.TestOnly;
    * @throws AssertionError When the state is not transformed correctly
    */
   /* package */ static void assertStateWithDuration(
-      SensorStateWithDuration result, @Nullable SensorState expectedState, Duration duration) {
-    if (expectedState == null) {
-      assertThat(result).isNull();
-    } else {
-      assertThat(result).isNotNull();
-      assertThat(result.getEvent()).isEqualTo(expectedState);
-      assertThat(result.getDuration()).isEqualTo(duration);
-    }
+      @Nullable SensorStateWithDuration result,
+      @Nullable SensorState expectedState,
+      Duration duration) {
+    var resultState = result == null ? null : result.getEvent();
+    assertThat(resultState).isEqualTo(expectedState);
+
+    var resultDuration = result == null ? Duration.ZERO : result.getDuration();
+    assertThat(resultDuration).isEqualTo(duration);
   }
 
   /* package */ static final class Advancement {
@@ -69,16 +70,16 @@ import org.jetbrains.annotations.TestOnly;
     }
   }
 
-  /* package */ static final class MapStore<K, V> implements KVStore<K, V> {
+  /* package */ static final class MapStore<K, V> implements KVStore<@NonNull K, V> {
     private final Map<K, V> store;
 
     /* package */ MapStore(Map<K, V> store) {
       this.store = store;
     }
 
-    @Nullable
     @Override
-    public V get(K key) {
+    @Nullable
+    public V get(@NonNull K key) {
       return store.get(key);
     }
 

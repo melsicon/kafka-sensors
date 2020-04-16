@@ -1,11 +1,11 @@
 package de.melsicon.kafka.serde.confluent;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import java.util.Map;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class GenericAvroDeserializer implements Deserializer<GenericRecord> {
   private final KafkaAvroDeserializer inner;

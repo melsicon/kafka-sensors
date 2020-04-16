@@ -4,7 +4,7 @@ import com.google.errorprone.annotations.Immutable;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.mapping.MapStructConfig;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -18,23 +18,21 @@ public abstract class SpecificMapper
     return new SpecificMapperImpl();
   }
 
-  @Nullable
   @Override
-  public abstract SensorState map(@Nullable de.melsicon.kafka.sensors.avro.SensorState sensorState);
+  @Nullable
+  public abstract SensorState map(de.melsicon.kafka.sensors.avro.@Nullable SensorState sensorState);
 
-  @Nullable
   @Override
-  public abstract de.melsicon.kafka.sensors.avro.SensorState unmap(
+  public abstract de.melsicon.kafka.sensors.avro.@Nullable SensorState unmap(
       @Nullable SensorState sensorState);
 
-  @Nullable
   @Override
-  public abstract SensorStateWithDuration map2(
-      @Nullable de.melsicon.kafka.sensors.avro.SensorStateWithDuration sensorState);
-
   @Nullable
+  public abstract SensorStateWithDuration map2(
+      de.melsicon.kafka.sensors.avro.@Nullable SensorStateWithDuration sensorState);
+
   @Override
   @Mapping(ignore = true, target = "eventBuilder")
-  public abstract de.melsicon.kafka.sensors.avro.SensorStateWithDuration unmap2(
+  public abstract de.melsicon.kafka.sensors.avro.@Nullable SensorStateWithDuration unmap2(
       @Nullable SensorStateWithDuration sensorState);
 }

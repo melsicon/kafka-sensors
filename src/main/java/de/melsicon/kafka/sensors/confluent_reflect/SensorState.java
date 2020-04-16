@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.Objects;
 import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.AvroEncode;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 @SuppressWarnings("NullAway")
 @AvroDoc("State change of a sensor")
@@ -21,7 +22,7 @@ public final class SensorState {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(@Nullable Object o) {
     if (this == o) {
       return true;
     }

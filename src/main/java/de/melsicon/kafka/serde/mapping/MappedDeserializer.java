@@ -1,10 +1,10 @@
 package de.melsicon.kafka.serde.mapping;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import java.util.Map;
 import java.util.function.Function;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class MappedDeserializer<U, T> implements Deserializer<U> {
   private final Deserializer<T> deserializer;
@@ -20,15 +20,15 @@ public final class MappedDeserializer<U, T> implements Deserializer<U> {
     deserializer.configure(configs, isKey);
   }
 
-  @Nullable
   @Override
-  public U deserialize(String topic, @Nullable byte[] data) {
+  @Nullable
+  public U deserialize(String topic, byte @Nullable [] data) {
     return mapper.apply(deserializer.deserialize(topic, data));
   }
 
-  @Nullable
   @Override
-  public U deserialize(String topic, Headers headers, @Nullable byte[] data) {
+  @Nullable
+  public U deserialize(String topic, Headers headers, byte @Nullable [] data) {
     return mapper.apply(deserializer.deserialize(topic, headers, data));
   }
 

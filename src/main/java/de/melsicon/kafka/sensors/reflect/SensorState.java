@@ -6,6 +6,7 @@ import org.apache.avro.Schema;
 import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
 import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.ReflectData;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 @SuppressWarnings("NullAway")
 @AvroDoc("State change of a sensor")
@@ -32,7 +33,7 @@ public final class SensorState {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(@Nullable Object o) {
     if (this == o) {
       return true;
     }

@@ -56,8 +56,7 @@ java_library(
     neverlink = True,
     visibility = ["//visibility:public"],
     exports = [
-        "@maven//:com_github_spotbugs_spotbugs_annotations",
-        "@maven//:com_google_code_findbugs_jsr305",
+        "@maven//:org_checkerframework_checker_qual",
     ],
 )
 

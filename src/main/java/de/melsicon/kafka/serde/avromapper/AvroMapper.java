@@ -2,7 +2,7 @@ package de.melsicon.kafka.serde.avromapper;
 
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public interface AvroMapper<S, T> {
   @Nullable

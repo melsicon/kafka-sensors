@@ -12,13 +12,13 @@ import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.generic.SensorStateSchema;
 import de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 import org.apache.avro.generic.GenericEnumSymbol;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class GenericMapper implements AvroMapper<GenericRecord, GenericRecord> {
   private GenericMapper() {}
@@ -27,8 +27,8 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
     return new GenericMapper();
   }
 
-  @Nullable
   @Override
+  @Nullable
   public SensorState map(@Nullable GenericRecord sensorState) {
     if (sensorState == null) {
       return null;
@@ -40,8 +40,8 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
         .build();
   }
 
-  @Nullable
   @Override
+  @Nullable
   public GenericRecord unmap(@Nullable SensorState sensorState) {
     if (sensorState == null) {
       return null;
@@ -53,8 +53,8 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
         .build();
   }
 
-  @Nullable
   @Override
+  @Nullable
   public SensorStateWithDuration map2(@Nullable GenericRecord sensorState) {
     if (sensorState == null) {
       return null;
@@ -66,8 +66,8 @@ public final class GenericMapper implements AvroMapper<GenericRecord, GenericRec
         .build();
   }
 
-  @Nullable
   @Override
+  @Nullable
   public GenericRecord unmap2(@Nullable SensorStateWithDuration sensorState) {
     if (sensorState == null) {
       return null;

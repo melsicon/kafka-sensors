@@ -1,6 +1,5 @@
 package de.melsicon.kafka.serde.confluent;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 import java.util.HashMap;
@@ -9,6 +8,7 @@ import org.apache.avro.Schema;
 import org.apache.avro.specific.SpecificRecord;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class SpecificAvroDeserializer<T extends SpecificRecord> implements Deserializer<T> {
   private final KafkaAvroDeserializer inner;

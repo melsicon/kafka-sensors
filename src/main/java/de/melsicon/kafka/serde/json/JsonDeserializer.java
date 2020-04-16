@@ -2,10 +2,10 @@ package de.melsicon.kafka.serde.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import java.io.IOException;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class JsonDeserializer<T> implements Deserializer<T> {
   private final ObjectReader objectReader;
@@ -14,9 +14,9 @@ public final class JsonDeserializer<T> implements Deserializer<T> {
     this.objectReader = objectMapper.readerFor(type);
   }
 
-  @Nullable
   @Override
-  public T deserialize(String topic, @Nullable byte[] data) {
+  @Nullable
+  public T deserialize(String topic, byte @Nullable [] data) {
     if (data == null || data.length == 0) {
       return null;
     }

@@ -3,11 +3,11 @@ package de.melsicon.kafka.configuration;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.Immutable;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import io.helidon.config.Config;
 import io.helidon.config.objectmapping.Value;
 import java.util.List;
 import java.util.Optional;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 @Immutable
 @AutoValue

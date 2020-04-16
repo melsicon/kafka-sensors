@@ -7,6 +7,7 @@ import org.apache.avro.Schema;
 import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
 import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.ReflectData;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 @SuppressWarnings("NullAway")
 @AvroDoc("Duration a sensor was in this state")
@@ -32,7 +33,7 @@ public final class SensorStateWithDuration {
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(@Nullable Object o) {
     if (this == o) {
       return true;
     }

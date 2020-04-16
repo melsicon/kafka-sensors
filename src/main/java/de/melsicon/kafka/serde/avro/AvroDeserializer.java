@@ -1,10 +1,10 @@
 package de.melsicon.kafka.serde.avro;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import java.io.IOException;
 import org.apache.avro.message.MessageDecoder;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class AvroDeserializer<T> implements Deserializer<T> {
   private final MessageDecoder<T> decoder;
@@ -13,9 +13,9 @@ public final class AvroDeserializer<T> implements Deserializer<T> {
     this.decoder = decoder;
   }
 
-  @Nullable
   @Override
-  public T deserialize(String topic, @Nullable byte[] data) {
+  @Nullable
+  public T deserialize(String topic, byte @Nullable [] data) {
     if (data == null || data.length == 0) {
       return null;
     }

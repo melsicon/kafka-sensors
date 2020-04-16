@@ -2,11 +2,11 @@ package de.melsicon.kafka.serde.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import java.io.IOException;
 import java.util.Map;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class JsonSerializer<T> implements Serializer<T> {
   private final ObjectWriter objectWriter;
@@ -22,9 +22,8 @@ public final class JsonSerializer<T> implements Serializer<T> {
     }
   }
 
-  @Nullable
   @Override
-  public byte[] serialize(String topic, @Nullable T message) {
+  public byte @Nullable [] serialize(String topic, @Nullable T message) {
     if (message == null) {
       return null;
     }

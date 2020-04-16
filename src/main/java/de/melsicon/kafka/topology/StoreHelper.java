@@ -1,9 +1,9 @@
 package de.melsicon.kafka.topology;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import org.apache.kafka.streams.errors.StreamsException;
 import org.apache.kafka.streams.processor.ProcessorContext;
 import org.apache.kafka.streams.state.KeyValueStore;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /* package */ final class StoreHelper {
   private StoreHelper() {}
@@ -41,8 +41,8 @@ import org.apache.kafka.streams.state.KeyValueStore;
       this.store = store;
     }
 
-    @Nullable
     @Override
+    @Nullable
     public V get(K key) {
       return store.get(key);
     }
