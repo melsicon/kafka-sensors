@@ -89,6 +89,7 @@ public final class SerdeTest {
   @Test
   public void emptyDecoding() {
     assume().that(description).doesNotContain(" - confluent");
+
     var decoded = deserializer.deserialize(TestHelper.KAFKA_TOPIC, new byte[0]);
     assertThat(decoded).isNull();
   }

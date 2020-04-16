@@ -26,7 +26,8 @@ public abstract class ProtoMapper {
   @InheritInverseConfiguration
   @ValueMapping(source = ANY_REMAINING, target = NULL)
   @ForOverride
-  /* package */ abstract SensorState.State mapState(de.melsicon.kafka.sensors.v1.SensorState.State state);
+  /* package */ abstract SensorState.State mapState(
+      de.melsicon.kafka.sensors.v1.SensorState.State state);
 
   public abstract de.melsicon.kafka.sensors.v1.SensorState unmap(SensorState sensorState);
 

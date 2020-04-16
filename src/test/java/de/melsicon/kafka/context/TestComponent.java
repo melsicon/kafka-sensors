@@ -11,7 +11,7 @@ import javax.inject.Singleton;
 public abstract class TestComponent {
   /* package */ TestComponent() {}
 
-  public static TestComponent.Factory factory() {
+  public static Factory factory() {
     return DaggerTestComponent.factory();
   }
 

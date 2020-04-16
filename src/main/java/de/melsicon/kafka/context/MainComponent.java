@@ -11,7 +11,7 @@ import javax.inject.Singleton;
 public abstract class MainComponent {
   /* package */ MainComponent() {}
 
-  public static MainComponent.Factory factory() {
+  public static Factory factory() {
     return DaggerMainComponent.factory();
   }
 
