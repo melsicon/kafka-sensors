@@ -6,6 +6,10 @@ import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+@SuppressWarnings({
+  "nullness:argument.type.incompatible",
+  "nullness:override.return.invalid"
+}) // Serializer is not annotated
 public final class MappedSerializer<U, T> implements Serializer<U> {
   private final Serializer<T> serializer;
   private final Function<U, T> unmapper;

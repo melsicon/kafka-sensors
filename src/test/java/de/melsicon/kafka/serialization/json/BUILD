@@ -11,6 +11,7 @@ java_library(
     deps = [
         "//src/main/java/de/melsicon/kafka/model",
         "//src/main/java/de/melsicon/kafka/serde/json",
+        "//toolchain:checker",
         "//toolchain:nullaway",
         "//toolchain:truth",
         "@maven//:com_fasterxml_jackson_core_jackson_databind",

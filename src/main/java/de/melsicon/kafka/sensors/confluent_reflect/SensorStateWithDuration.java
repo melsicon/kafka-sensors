@@ -6,7 +6,7 @@ import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.AvroEncode;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-@SuppressWarnings("NullAway")
+@SuppressWarnings({"NullAway", "nullness:initialization.fields.uninitialized"})
 @AvroDoc("Duration a sensor was in this state")
 public final class SensorStateWithDuration {
   public SensorState event;

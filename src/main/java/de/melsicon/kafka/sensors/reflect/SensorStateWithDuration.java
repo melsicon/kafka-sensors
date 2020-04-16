@@ -9,7 +9,7 @@ import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.ReflectData;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-@SuppressWarnings("NullAway")
+@SuppressWarnings({"NullAway", "nullness:initialization.fields.uninitialized"})
 @AvroDoc("Duration a sensor was in this state")
 public final class SensorStateWithDuration {
   public static final ReflectData MODEL;

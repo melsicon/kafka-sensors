@@ -11,6 +11,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/generic",
         "//src/main/java/de/melsicon/kafka/serde/confluent",
         "//src/test/java/de/melsicon/kafka/testutil",
+        "//toolchain:checker",
         "//toolchain:nullaway",
         "//toolchain:truth",
         "@confluent_schema_registry//:kafka-streams-avro-serde",

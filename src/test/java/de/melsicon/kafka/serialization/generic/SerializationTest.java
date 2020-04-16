@@ -19,9 +19,11 @@ import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.MessageDecoder;
 import org.apache.avro.message.MessageEncoder;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+@SuppressWarnings("nullness:initialization.static.fields.uninitialized") // Initialized in before
 public final class SerializationTest {
   private static final Instant INSTANT = Instant.ofEpochSecond(443634300L);
 
@@ -29,6 +31,7 @@ public final class SerializationTest {
   private static MessageDecoder<GenericRecord> decoder;
 
   @BeforeClass
+  @EnsuresNonNull({"encoder", "decoder"})
   public static void before() {
     encoder = new BinaryMessageEncoder<>(MODEL, SCHEMA);
     decoder = new BinaryMessageDecoder<>(MODEL, SCHEMA);
@@ -65,6 +68,7 @@ public final class SerializationTest {
                 .build());
   }
 
+  @SuppressWarnings("nullness:argument.type.incompatible")
   @Test
   public void notNull() {
     assertThrows(

@@ -10,6 +10,7 @@ java_library(
     ],
     deps = [
         "//src/main/java/de/melsicon/kafka/sensors/generic",
+        "//toolchain:checker",
         "//toolchain:nullaway",
         "//toolchain:truth",
         "@maven//:org_apache_avro_avro",

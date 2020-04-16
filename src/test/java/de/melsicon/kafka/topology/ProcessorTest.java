@@ -15,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+@SuppressWarnings("nullness:initialization.fields.uninitialized") // Initialized in before
 public final class ProcessorTest {
   private ValueTransformer<SensorState, SensorStateWithDuration> processor;
 
@@ -65,6 +66,7 @@ public final class ProcessorTest {
     assertStateWithDuration(result4, newState2, advancement3.duration);
   }
 
+  @SuppressWarnings("nullness:argument.type.incompatible")
   @Test
   public void nullHandling() {
     var result = processor.transform(null);

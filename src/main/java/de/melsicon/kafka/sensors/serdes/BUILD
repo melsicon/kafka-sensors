@@ -12,6 +12,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/serde/confluent",
         "//src/main/java/de/melsicon/kafka/serde/json",
         "//src/main/java/de/melsicon/kafka/serde/proto",
+        "//toolchain:checker",
         "//toolchain:nullaway",
         "@maven//:com_google_errorprone_error_prone_annotations",
     ],

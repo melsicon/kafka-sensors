@@ -9,6 +9,7 @@ java_library(
     deps = [
         "//src/main/java/de/melsicon/kafka/context",
         "//src/main/java/de/melsicon/kafka/lifecycle",
+        "//toolchain:checker",
         "//toolchain:nullaway",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:com_google_flogger_flogger",

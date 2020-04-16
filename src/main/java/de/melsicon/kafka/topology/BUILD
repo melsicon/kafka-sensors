@@ -7,6 +7,7 @@ java_library(
     deps = [
         "//src/main/java/de/melsicon/annotation",
         "//src/main/java/de/melsicon/kafka/model",
+        "//toolchain:checker",
         "//toolchain:nullaway",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:com_google_guava_guava",

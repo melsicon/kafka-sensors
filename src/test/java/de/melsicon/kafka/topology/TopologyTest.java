@@ -42,6 +42,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+@SuppressWarnings("nullness:initialization.fields.uninitialized") // Initialized in before
 @RunWith(Parameterized.class)
 public final class TopologyTest {
   @ClassRule
@@ -221,6 +222,7 @@ public final class TopologyTest {
     assertThat(result4.value.getDuration()).isEqualTo(Duration.ofSeconds(15));
   }
 
+  @SuppressWarnings("nullness:argument.type.incompatible")
   @Test
   public void testTombstone() {
     inputTopic.pipeInput("7331", null);

@@ -8,6 +8,7 @@ java_library(
     deps = [
         "//src/main/java/de/melsicon/kafka/configuration",
         "//src/main/java/de/melsicon/kafka/topology",
+        "//toolchain:checker",
         "//toolchain:dagger",
         "//toolchain:nullaway",
         "@maven//:com_salesforce_kafka_test_kafka_junit_core",

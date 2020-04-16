@@ -8,7 +8,7 @@ import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.ReflectData;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-@SuppressWarnings("NullAway")
+@SuppressWarnings({"NullAway", "nullness:initialization.fields.uninitialized"})
 @AvroDoc("State change of a sensor")
 public final class SensorState {
   public static final ReflectData MODEL;

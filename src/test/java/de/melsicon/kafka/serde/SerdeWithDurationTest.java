@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+@SuppressWarnings("nullness:initialization.fields.uninitialized") // Initialized in before
 @RunWith(Parameterized.class)
 public final class SerdeWithDurationTest {
   @Rule public final SchemaRegistryRule registryTestResource;
@@ -76,12 +77,14 @@ public final class SerdeWithDurationTest {
 
   @Test
   public void nullEncoding() {
+    @SuppressWarnings("nullness:argument.type.incompatible") // Serializer is not annotated
     var encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, null);
     assertThat(encoded == null || encoded.length == 0).isTrue();
   }
 
   @Test
   public void nullDecoding() {
+    @SuppressWarnings("nullness:argument.type.incompatible") // Deserializer is not annotated
     var decoded = deserializer.deserialize(TestHelper.KAFKA_TOPIC, null);
     assertThat(decoded).isNull();
   }

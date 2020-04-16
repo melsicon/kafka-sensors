@@ -10,6 +10,7 @@ import org.apache.kafka.streams.kstream.ValueTransformer;
 import org.apache.kafka.streams.processor.ProcessorContext;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 
 public final class DurationProcessor
     implements ValueTransformer<SensorState, SensorStateWithDuration> {
@@ -67,9 +68,13 @@ public final class DurationProcessor
     initStore(kvStore);
   }
 
+  @SuppressWarnings("nullness:override.return.invalid") // ValueTransformer is not annotated
   @Override
   @Nullable
   public SensorStateWithDuration transform(@Nullable SensorState sensorState) {
+    // init has to be called first
+    assert store != null : "@AssumeAssertion(nullness): init not called";
+
     if (sensorState == null) {
       // Nothing to do
       return null;
@@ -93,6 +98,7 @@ public final class DurationProcessor
    * @param sensorState The new sensor state
    * @return The old sensor state
    */
+  @RequiresNonNull("store")
   private Optional<SensorState> checkAndUpdateSensorState(SensorState sensorState) {
     // The Sensor ID is our store key
     var sensorId = sensorState.getId();

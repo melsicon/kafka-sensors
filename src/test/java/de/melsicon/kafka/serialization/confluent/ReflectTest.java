@@ -20,6 +20,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+@SuppressWarnings("nullness:initialization.static.fields.uninitialized") // Initialized in before
 public final class ReflectTest {
   @ClassRule
   public static final SchemaRegistryRule registryTestResource =

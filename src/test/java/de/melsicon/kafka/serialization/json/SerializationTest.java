@@ -11,6 +11,7 @@ import java.time.Instant;
 import org.junit.Before;
 import org.junit.Test;
 
+@SuppressWarnings("nullness:initialization.fields.uninitialized") // Initialized in before
 public final class SerializationTest {
   private ObjectMapper mapper;
 

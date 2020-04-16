@@ -6,6 +6,7 @@ java_library(
     srcs = glob(["*.java"]),
     deps = [
         "//src/main/java/de/melsicon/kafka/model",
+        "//toolchain:checker",
         "//toolchain:nullaway",
         "//toolchain:truth",
     ],

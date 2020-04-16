@@ -10,6 +10,7 @@ java_library(
     ],
     deps = [
         "//src/main/proto/melsicon/kafka/sensors/v1:sensorsv1_java_proto",
+        "//toolchain:checker",
         "//toolchain:nullaway",
         "//toolchain:truth",
         "@com_google_protobuf//:protobuf_java",

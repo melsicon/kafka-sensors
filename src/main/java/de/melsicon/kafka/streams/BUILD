@@ -8,6 +8,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/configuration",
         "//src/main/java/de/melsicon/kafka/model",
         "//src/main/java/de/melsicon/kafka/topology",
+        "//toolchain:checker",
         "//toolchain:nullaway",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:com_google_flogger_flogger",

@@ -14,6 +14,7 @@ import org.apache.avro.message.MessageEncoder;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+@SuppressWarnings("nullness:initialization.static.fields.uninitialized") // Initialized in before
 public final class SerializationTest {
   private static final Instant INSTANT = Instant.ofEpochSecond(443634300L);
 
@@ -50,7 +51,7 @@ public final class SerializationTest {
   }
 
   @Test
-  @SuppressWarnings("NullAway")
+  @SuppressWarnings({"NullAway", "nullness:argument.type.incompatible"})
   public void notNull() {
     assertThrows(
         AvroRuntimeException.class,

@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serializer;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,6 +21,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+@SuppressWarnings("nullness:initialization.fields.uninitialized") // Initialized in before
 @RunWith(Parameterized.class)
 public final class SerdeTest {
   @Rule public final SchemaRegistryRule registryTestResource;
@@ -46,6 +48,7 @@ public final class SerdeTest {
     return TestHelper.parameters();
   }
 
+  @EnsuresNonNull({"serializer", "deserializer"})
   @Before
   public void before() {
     var inputSerde = inputSerdes.get();
@@ -76,12 +79,14 @@ public final class SerdeTest {
 
   @Test
   public void nullEncoding() {
+    @SuppressWarnings("nullness:argument.type.incompatible") // Serializer is not annotated
     var encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, null);
     assertThat(encoded == null || encoded.length == 0).isTrue();
   }
 
   @Test
   public void nullDecoding() {
+    @SuppressWarnings("nullness:argument.type.incompatible") // Deserializer is not annotated
     var decoded = deserializer.deserialize(TestHelper.KAFKA_TOPIC, null);
     assertThat(decoded).isNull();
   }

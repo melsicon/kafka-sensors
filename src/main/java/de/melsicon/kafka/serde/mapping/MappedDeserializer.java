@@ -6,6 +6,10 @@ import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+@SuppressWarnings({
+  "nullness:argument.type.incompatible",
+  "nullness:override.return.invalid"
+}) // Deserializer is not annotated
 public final class MappedDeserializer<U, T> implements Deserializer<U> {
   private final Deserializer<T> deserializer;
   private final Function<T, U> mapper;

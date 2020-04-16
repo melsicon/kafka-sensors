@@ -6,7 +6,7 @@ import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.AvroEncode;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-@SuppressWarnings("NullAway")
+@SuppressWarnings({"NullAway", "nullness:initialization.fields.uninitialized"})
 @AvroDoc("State change of a sensor")
 public final class SensorState {
   public String id;

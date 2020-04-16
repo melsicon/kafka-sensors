@@ -7,6 +7,8 @@ import java.util.Map;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serializer;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -18,7 +20,7 @@ public final class SchemaRegistryRule implements TestRule {
 
   private final String registryScope;
 
-  private SchemaRegistryClient registryClient;
+  private @MonotonicNonNull SchemaRegistryClient registryClient;
 
   public SchemaRegistryRule(String registryScope) {
     this.registryScope = registryScope;
@@ -41,6 +43,7 @@ public final class SchemaRegistryRule implements TestRule {
   }
 
   public SchemaRegistryClient client() {
+    assert registryClient != null : "@AssumeAssertion(nullness): before not called";
     return registryClient;
   }
 
@@ -49,11 +52,13 @@ public final class SchemaRegistryRule implements TestRule {
   }
 
   @Initializer
+  @EnsuresNonNull("registryClient")
   private void before() throws Exception {
     registryClient = MockSchemaRegistry.getClientForScope(registryScope);
   }
 
   private void after() {
+    assert registryClient != null : "@AssumeAssertion(nullness): before not called";
     registryClient.reset();
     MockSchemaRegistry.dropScope(registryScope);
   }

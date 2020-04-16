@@ -129,6 +129,22 @@ java_library(
 # ---
 
 java_plugin(
+    name = "checker_processor",
+    processor_class = "org.checkerframework.checker.nullness.NullnessChecker",
+    deps = ["@maven//:org_checkerframework_checker"],
+)
+
+java_library(
+    name = "checker",
+    exported_plugins = ["checker_processor"],
+    neverlink = True,
+    visibility = ["//visibility:public"],
+    exports = ["@maven//:org_checkerframework_checker_qual"],
+)
+
+# ---
+
+java_plugin(
     name = "jmh_processor",
     processor_class = "org.openjdk.jmh.generators.BenchmarkProcessor",
     deps = ["@maven//:org_openjdk_jmh_jmh_generator_annprocess"],

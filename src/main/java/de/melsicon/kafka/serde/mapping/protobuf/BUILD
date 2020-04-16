@@ -5,6 +5,7 @@ java_library(
     srcs = ["ProtoTypesMapper.java"],
     visibility = ["//visibility:public"],
     deps = [
+        "//toolchain:checker",
         "//toolchain:nullaway",
         "@com_google_protobuf//:protobuf_java",
     ],
