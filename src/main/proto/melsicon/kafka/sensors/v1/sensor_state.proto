@@ -2,13 +2,13 @@ syntax = "proto3";
 
 package melsicon.kafka.sensors.v1;
 
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
 option go_package = "sensorsv1";
 option java_multiple_files = true;
 option java_outer_classname = "SensorStateProto";
 option java_package = "de.melsicon.kafka.sensors.v1";
-
-import "google/protobuf/duration.proto";
-import "google/protobuf/timestamp.proto";
 
 // State change of a sensor.
 message SensorState {
