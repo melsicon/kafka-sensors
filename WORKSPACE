@@ -107,7 +107,7 @@ maven_install(
         "com.google.guava:guava:29.0-jre",
         "com.uber.nullaway:nullaway:0.7.9",
         "info.picocli:picocli:4.2.0",
-        "io.github.classgraph:classgraph:4.8.69",
+        "io.github.classgraph:classgraph:4.8.71",
         "io.helidon.config:helidon-config-object-mapping:2.0.0-M2",
         "io.helidon.config:helidon-config-yaml:2.0.0-M2",
         "io.helidon.config:helidon-config:2.0.0-M2",
