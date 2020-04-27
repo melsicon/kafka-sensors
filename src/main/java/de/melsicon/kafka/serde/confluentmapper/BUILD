@@ -7,6 +7,7 @@ java_library(
     visibility = ["//visibility:public"],
     deps = [
         "//src/main/java/de/melsicon/kafka/model",
+        "//src/main/java/de/melsicon/kafka/sensors/confluent_json",
         "//src/main/java/de/melsicon/kafka/sensors/confluent_reflect",
         "//src/main/java/de/melsicon/kafka/sensors/generic",
         "//src/main/java/de/melsicon/kafka/serde",
