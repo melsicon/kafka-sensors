@@ -3,6 +3,7 @@ package de.melsicon.kafka.serde.avromapper;
 import com.google.errorprone.annotations.Immutable;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
+import de.melsicon.kafka.serde.SensorStateMapper;
 import de.melsicon.kafka.serde.mapping.MapStructConfig;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.mapstruct.Mapper;
@@ -10,7 +11,7 @@ import org.mapstruct.Mapper;
 @Immutable
 @Mapper(config = MapStructConfig.class)
 public abstract class ReflectMapper
-    implements AvroMapper<
+    implements SensorStateMapper<
         de.melsicon.kafka.sensors.reflect.SensorState,
         de.melsicon.kafka.sensors.reflect.SensorStateWithDuration> {
   public static ReflectMapper instance() {

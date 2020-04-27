@@ -62,13 +62,28 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
 
+bind(
+    name = "error_prone_annotations",
+    actual = "@maven//:com_google_errorprone_error_prone_annotations",
+)
+
+bind(
+    name = "gson",
+    actual = "@maven//:com_google_code_gson_gson",
+)
+
+bind(
+    name = "guava",
+    actual = "@maven//:com_google_guava_guava",
+)
+
 # ---
 
 load("//rules_avro:avro_deps.bzl", "AVRO_ARTIFACTS")
 
 # ---
 
-load("//rules_confluent:repositories.bzl", "confluent_repositories")
+load("//rules_confluent:repositories.bzl", "CONFLUENT_ARTIFACTS", "confluent_repositories")
 
 confluent_repositories()
 
@@ -78,7 +93,7 @@ confluent_repositories()
 container_pull(
     name = "java_base",
     architecture = "amd64",
-    digest = "sha256:eda9e5ae2facccc9c7016f0c2d718d2ee352743bda81234783b64aaa402679b6",
+    digest = "sha256:d0e367e4ec484ca1847368ecc16becda2930a3dc6799ba5ac78304985169b137",
     os = "linux",
     registry = "gcr.io",
     repository = "distroless/java-debian10",
@@ -89,16 +104,19 @@ container_pull(
 
 maven_install(
     artifacts = [
-        "com.fasterxml.jackson.core:jackson-annotations:2.11.0.rc1",
-        "com.fasterxml.jackson.core:jackson-core:2.11.0.rc1",
-        "com.fasterxml.jackson.core:jackson-databind:2.11.0.rc1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.11.0.rc1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.0.rc1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.0.rc1",
+        "com.fasterxml.jackson.core:jackson-annotations:2.11.0",
+        "com.fasterxml.jackson.core:jackson-core:2.11.0",
+        "com.fasterxml.jackson.core:jackson-databind:2.11.0",
+        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.11.0",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.0",
+        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.11.0",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.0",
+        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.0",
         "com.google.auto.service:auto-service-annotations:1.0-rc6",
         "com.google.auto.service:auto-service:1.0-rc6",
         "com.google.auto.value:auto-value-annotations:1.7",
         "com.google.auto.value:auto-value:1.7",
+        "com.google.code.gson:gson:2.8.6",
         "com.google.dagger:dagger-compiler:2.27",
         "com.google.dagger:dagger:2.27",
         "com.google.errorprone:error_prone_annotations:2.3.4",
@@ -107,7 +125,7 @@ maven_install(
         "com.google.guava:guava:29.0-jre",
         "com.uber.nullaway:nullaway:0.7.9",
         "info.picocli:picocli:4.2.0",
-        "io.github.classgraph:classgraph:4.8.72",
+        "io.github.classgraph:classgraph:4.8.77",
         "io.helidon.config:helidon-config-object-mapping:2.0.0-M2",
         "io.helidon.config:helidon-config-yaml:2.0.0-M2",
         "io.helidon.config:helidon-config:2.0.0-M2",
@@ -125,6 +143,7 @@ maven_install(
         "org.mapstruct:mapstruct:1.3.1.Final",
         "org.openjdk.jmh:jmh-core:1.23",
         "org.openjdk.jmh:jmh-generator-annprocess:1.23",
+        "org.slf4j:slf4j-api:1.7.30",
         "org.slf4j:slf4j-jdk14:1.7.30",
         maven.artifact(
             "com.google.truth",
@@ -174,13 +193,7 @@ maven_install(
             "8.0.1",
             testonly = True,
         ),
-        maven.artifact(
-            "org.jetbrains",
-            "annotations",
-            "19.0.0",
-            neverlink = True,
-        ),
-    ] + AVRO_ARTIFACTS,
+    ] + AVRO_ARTIFACTS + CONFLUENT_ARTIFACTS,
     fetch_sources = True,
     maven_install_json = "@de_melsicon_kafka_sensors//:maven_install.json",
     override_targets = {

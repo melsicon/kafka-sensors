@@ -11,14 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.TestOnly;
 
 /* package */ final class ProcessorTestHelper {
   private static final String SENSOR_ID = "7331";
 
   private ProcessorTestHelper() {}
 
-  @TestOnly
   /* package */ static DurationProcessor createProcessor() {
     var store = new HashMap<String, SensorState>();
     var kvStore = new MapStore<>(store);

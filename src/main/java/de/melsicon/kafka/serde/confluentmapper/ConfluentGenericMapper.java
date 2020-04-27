@@ -1,4 +1,4 @@
-package de.melsicon.kafka.serde.avromapper;
+package de.melsicon.kafka.serde.confluentmapper;
 
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_ID;
 import static de.melsicon.kafka.sensors.generic.SensorStateSchema.FIELD_STATE;
@@ -12,6 +12,7 @@ import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.generic.SensorStateSchema;
 import de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema;
+import de.melsicon.kafka.serde.SensorStateMapper;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
@@ -20,7 +21,8 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public final class ConfluentGenericMapper implements AvroMapper<GenericRecord, GenericRecord> {
+public final class ConfluentGenericMapper
+    implements SensorStateMapper<GenericRecord, GenericRecord> {
   public static ConfluentGenericMapper instance() {
     return new ConfluentGenericMapper();
   }

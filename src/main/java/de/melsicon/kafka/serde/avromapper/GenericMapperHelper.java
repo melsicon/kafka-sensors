@@ -8,10 +8,10 @@ import static de.melsicon.kafka.sensors.generic.SensorStateSchema.STATE_ON;
 import de.melsicon.kafka.model.SensorState.State;
 import org.apache.avro.generic.GenericEnumSymbol;
 
-/* package */ final class GenericMapperHelper {
+public final class GenericMapperHelper {
   private GenericMapperHelper() {}
 
-  /* package */ static State stateMap(GenericEnumSymbol<?> state) {
+  public static State stateMap(GenericEnumSymbol<?> state) {
     switch (state.toString()) {
       case STATE_OFF:
         return State.OFF;
@@ -24,7 +24,7 @@ import org.apache.avro.generic.GenericEnumSymbol;
     }
   }
 
-  /* package */ static GenericEnumSymbol<?> stateUnmap(State state) {
+  public static GenericEnumSymbol<?> stateUnmap(State state) {
     switch (state) {
       case OFF:
         return ENUM_OFF;

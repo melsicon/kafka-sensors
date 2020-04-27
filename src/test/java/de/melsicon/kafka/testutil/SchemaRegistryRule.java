@@ -1,5 +1,7 @@
 package de.melsicon.kafka.testutil;
 
+import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
+
 import de.melsicon.annotation.Initializer;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.testutil.MockSchemaRegistry;
@@ -14,10 +16,6 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 public final class SchemaRegistryRule implements TestRule {
-  @SuppressWarnings("deprecation")
-  public static final String SCHEMA_REGISTRY_URL_CONFIG =
-      io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
-
   private final String registryScope;
 
   private @MonotonicNonNull SchemaRegistryClient registryClient;

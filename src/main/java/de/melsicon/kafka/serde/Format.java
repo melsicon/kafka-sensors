@@ -4,5 +4,5 @@ public enum Format {
   JSON,
   PROTO,
   AVRO,
-  CONFLUENT
+  CONFLUENT_AVRO
 }

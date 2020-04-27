@@ -45,7 +45,6 @@ public final class DurationProcessor
     if (oldState == null) {
       return true;
     }
-
     return oldState.getState() != sensorState.getState();
   }
 

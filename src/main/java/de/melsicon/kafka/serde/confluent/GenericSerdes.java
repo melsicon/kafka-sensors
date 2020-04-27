@@ -6,9 +6,9 @@ import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.sensors.generic.SensorStateSchema;
 import de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema;
 import de.melsicon.kafka.serde.Format;
+import de.melsicon.kafka.serde.SensorStateMapper;
 import de.melsicon.kafka.serde.SensorStateSerdes;
-import de.melsicon.kafka.serde.avromapper.AvroMapper;
-import de.melsicon.kafka.serde.avromapper.ConfluentGenericMapper;
+import de.melsicon.kafka.serde.confluentmapper.ConfluentGenericMapper;
 import de.melsicon.kafka.serde.mapping.MappedDeserializer;
 import de.melsicon.kafka.serde.mapping.MappedSerializer;
 import io.confluent.kafka.streams.serdes.avro.GenericAvroSerializer;
@@ -17,7 +17,7 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.common.serialization.Serde;
 
 public final class GenericSerdes implements SensorStateSerdes {
-  private final AvroMapper<GenericRecord, GenericRecord> mapper;
+  private final SensorStateMapper<GenericRecord, GenericRecord> mapper;
 
   @Inject
   public GenericSerdes(ConfluentGenericMapper mapper) {
@@ -31,7 +31,7 @@ public final class GenericSerdes implements SensorStateSerdes {
 
   @Override
   public Format format() {
-    return Format.CONFLUENT;
+    return Format.CONFLUENT_AVRO;
   }
 
   @Override

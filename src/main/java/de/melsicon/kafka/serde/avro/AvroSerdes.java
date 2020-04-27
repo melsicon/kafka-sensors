@@ -3,20 +3,27 @@ package de.melsicon.kafka.serde.avro;
 import static de.melsicon.kafka.serde.avro.SchemaHelper.RESOLVER;
 import static de.melsicon.kafka.serde.avro.SchemaHelper.RESOLVER_WITH_DURATION;
 
-import de.melsicon.kafka.sensors.avro.SensorState;
-import de.melsicon.kafka.sensors.avro.SensorStateWithDuration;
+import de.melsicon.kafka.model.SensorState;
+import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.Format;
+import de.melsicon.kafka.serde.SensorStateMapper;
 import de.melsicon.kafka.serde.SensorStateSerdes;
-import de.melsicon.kafka.serde.avromapper.AvroMapper;
 import javax.inject.Inject;
 import org.apache.avro.specific.SpecificData;
 import org.apache.kafka.common.serialization.Serde;
 
 public final class AvroSerdes implements SensorStateSerdes {
-  private final AvroMapper<SensorState, SensorStateWithDuration> mapper;
+  private final SensorStateMapper<
+          de.melsicon.kafka.sensors.avro.SensorState,
+          de.melsicon.kafka.sensors.avro.SensorStateWithDuration>
+      mapper;
 
   @Inject
-  public AvroSerdes(AvroMapper<SensorState, SensorStateWithDuration> mapper) {
+  public AvroSerdes(
+      SensorStateMapper<
+              de.melsicon.kafka.sensors.avro.SensorState,
+              de.melsicon.kafka.sensors.avro.SensorStateWithDuration>
+          mapper) {
     this.mapper = mapper;
   }
 
@@ -31,20 +38,20 @@ public final class AvroSerdes implements SensorStateSerdes {
   }
 
   @Override
-  public Serde<de.melsicon.kafka.model.SensorState> createSensorStateSerde() {
-    var model = SpecificData.getForClass(SensorState.class);
+  public Serde<SensorState> createSensorStateSerde() {
+    var model = SpecificData.getForClass(de.melsicon.kafka.sensors.avro.SensorState.class);
     model.setFastReaderEnabled(true);
-    var schema = SensorState.getClassSchema();
+    var schema = de.melsicon.kafka.sensors.avro.SensorState.getClassSchema();
 
     return SerdeHelper.createSerde(model, schema, mapper::unmap, mapper::map, RESOLVER);
   }
 
   @Override
-  public Serde<de.melsicon.kafka.model.SensorStateWithDuration>
-      createSensorStateWithDurationSerde() {
-    var model = SpecificData.getForClass(SensorStateWithDuration.class);
+  public Serde<SensorStateWithDuration> createSensorStateWithDurationSerde() {
+    var model =
+        SpecificData.getForClass(de.melsicon.kafka.sensors.avro.SensorStateWithDuration.class);
     model.setFastReaderEnabled(true);
-    var schema = SensorStateWithDuration.getClassSchema();
+    var schema = de.melsicon.kafka.sensors.avro.SensorStateWithDuration.getClassSchema();
 
     return SerdeHelper.createSerde(
         model, schema, mapper::unmap2, mapper::map2, RESOLVER_WITH_DURATION);

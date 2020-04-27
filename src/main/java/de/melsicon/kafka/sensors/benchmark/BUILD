@@ -28,6 +28,7 @@ java_image(
         "//toolchain:nullaway",
         "@confluent_schema_registry//:kafka-avro-serializer",
         "@confluent_schema_registry//:kafka-schema-registry-client",
+        "@confluent_schema_registry//:kafka-schema-serializer",
         "@maven//:com_google_errorprone_error_prone_annotations",
     ],
 )

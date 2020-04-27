@@ -12,6 +12,7 @@ import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.generic.SensorStateSchema;
 import de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema;
+import de.melsicon.kafka.serde.SensorStateMapper;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
@@ -20,7 +21,7 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public final class GenericMapper implements AvroMapper<GenericRecord, GenericRecord> {
+public final class GenericMapper implements SensorStateMapper<GenericRecord, GenericRecord> {
   private GenericMapper() {}
 
   public static GenericMapper instance() {
