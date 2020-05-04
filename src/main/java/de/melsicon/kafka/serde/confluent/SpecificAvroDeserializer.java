@@ -11,16 +11,15 @@ import org.apache.kafka.common.serialization.Deserializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class SpecificAvroDeserializer<T extends SpecificRecord> implements Deserializer<T> {
-  private final KafkaAvroDeserializer inner;
+  private final Class<T> type;
   private final Schema schema;
-
-  public SpecificAvroDeserializer(Schema schema) {
-    this.inner = new KafkaAvroDeserializer();
-    this.schema = schema;
-  }
+  private final KafkaAvroDeserializer inner;
 
   public SpecificAvroDeserializer(Class<T> type) {
-    this(schemaForClass(type));
+    this.type = type;
+    this.schema = schemaForClass(type);
+
+    this.inner = new KafkaAvroDeserializer();
   }
 
   private static <T extends SpecificRecord> Schema schemaForClass(Class<T> type) {
@@ -44,10 +43,9 @@ public final class SpecificAvroDeserializer<T extends SpecificRecord> implements
     inner.configure(specificAvroEnabledConfig, isDeserializerForRecordKeys);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public T deserialize(String topic, byte[] bytes) {
-    return (T) inner.deserialize(topic, bytes, schema);
+    return type.cast(inner.deserialize(topic, bytes, schema));
   }
 
   @Override
