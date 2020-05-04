@@ -5,8 +5,9 @@ CONFLUENT_ARTIFACTS = [
     "com.damnhandy:handy-uri-templates:2.1.8",
     "com.google.re2j:re2j:1.3",
     "com.kjetland:mbknor-jackson-jsonschema_2.13:1.0.39",
-    "com.squareup.wire:wire-schema:3.2.0",
+    "com.squareup.wire:wire-schema:3.2.1",
     "commons-validator:commons-validator:1.6",
+    "io.swagger:swagger-annotations:1.6.1",
     "org.json:json:20190722",
 ]
 
@@ -15,6 +16,8 @@ def confluent_repositories_common():
         name = "org_everit_json_schema",
         artifact = "com.github.everit-org.json-schema:org.everit.json.schema:1.12.1",
         artifact_sha256 = "2444eadc87f6ad45b7434435f936bcfa9847fa52158f744b1f038d13d9aaec8e",
+        srcjar_sha256 = "5add4371ecfb0125d9b7ae88804ac39e10c43dd5bc431182b52f368ccc2c5e8b",
+        fetch_sources = True,
         server_urls = [
             "https://jitpack.io/",
         ],
@@ -42,14 +45,14 @@ def confluent_repositories_beta():
     http_archive(
         name = "confluent_common",
         build_file = "//:rules_confluent/common.bzl",
-        sha256 = "dccb316ccd5b6a349c6d79e60354bfed51cead296902398b5335c19b58f21f46",
-        strip_prefix = "common-6.0.0-beta200416181138",
-        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-beta200416181138.tar.gz"],
+        sha256 = "71b6daec4128ed1a9ddf12640d05874bcecb1ddc7fdb596875537cbef71efd11",
+        strip_prefix = "common-6.0.0-beta200503173959",
+        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-beta200503173959.tar.gz"],
     )
     http_archive(
         name = "confluent_schema_registry",
         build_file = "//:rules_confluent/schema_registry.bzl",
-        sha256 = "04360533c664fa9e7cd85c5735a5058040a70a86c8af17ec4c4fe7ef0fa19fb0",
-        strip_prefix = "schema-registry-6.0.0-beta200416181138",
-        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-beta200416181138.tar.gz"],
+        sha256 = "1519ebb37619b7338652b251e28d55fa10d378525e3f3c7f5d6cc0700d48c4e5",
+        strip_prefix = "schema-registry-6.0.0-beta200503173959",
+        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-beta200503173959.tar.gz"],
     )
