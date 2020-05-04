@@ -6,7 +6,6 @@ java_library(
     srcs = glob(["*.java"]),
     runtime_deps = [
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
-        "@maven//:org_slf4j_slf4j_jdk14",
     ],
     deps = [
         "//src/main/java/de/melsicon/kafka/sensors/generic",
@@ -22,5 +21,6 @@ java_test(
     size = "small",
     runtime_deps = [
         ":tests",
+        "@maven//:org_slf4j_slf4j_jdk14",
     ],
 )

@@ -4,9 +4,6 @@ java_library(
     name = "tests",
     testonly = True,
     srcs = glob(["*.java"]),
-    runtime_deps = [
-        "@maven//:org_slf4j_slf4j_jdk14",
-    ],
     deps = [
         "//src/main/avro/de/melsicon/kafka/sensors/avro",
         "//src/main/java/de/melsicon/kafka/sensors/generic",
@@ -24,5 +21,6 @@ java_test(
     size = "small",
     runtime_deps = [
         ":tests",
+        "@maven//:org_slf4j_slf4j_jdk14",
     ],
 )
