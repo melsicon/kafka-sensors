@@ -19,6 +19,7 @@ import java.util.Objects;
 import org.apache.avro.generic.GenericEnumSymbol;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
+import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class ConfluentGenericMapper
@@ -28,6 +29,7 @@ public final class ConfluentGenericMapper
   }
 
   @Override
+  @AssertNonNullIfNonNull("sensorState")
   @Nullable
   public SensorState map(@Nullable GenericRecord sensorState) {
     if (sensorState == null) {
@@ -41,6 +43,7 @@ public final class ConfluentGenericMapper
   }
 
   @Override
+  @AssertNonNullIfNonNull("sensorState")
   @Nullable
   public GenericRecord unmap(@Nullable SensorState sensorState) {
     if (sensorState == null) {
@@ -54,6 +57,7 @@ public final class ConfluentGenericMapper
   }
 
   @Override
+  @AssertNonNullIfNonNull("sensorState")
   @Nullable
   public SensorStateWithDuration map2(@Nullable GenericRecord sensorState) {
     if (sensorState == null) {
@@ -67,6 +71,7 @@ public final class ConfluentGenericMapper
   }
 
   @Override
+  @AssertNonNullIfNonNull("sensorState")
   @Nullable
   public GenericRecord unmap2(@Nullable SensorStateWithDuration sensorState) {
     if (sensorState == null) {
