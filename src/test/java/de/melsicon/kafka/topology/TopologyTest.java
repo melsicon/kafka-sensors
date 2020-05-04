@@ -1,33 +1,24 @@
 package de.melsicon.kafka.topology;
 
 import static com.google.common.truth.Truth.assertThat;
-import static de.melsicon.kafka.topology.TopologyTestHelper.APPLICATION_ID;
 import static de.melsicon.kafka.topology.TopologyTestHelper.INPUT_TOPIC;
 import static de.melsicon.kafka.topology.TopologyTestHelper.PARTITIONS;
 import static de.melsicon.kafka.topology.TopologyTestHelper.REGISTRY_SCOPE;
 import static de.melsicon.kafka.topology.TopologyTestHelper.REPLICATION_FACTOR;
 import static de.melsicon.kafka.topology.TopologyTestHelper.RESULT_TOPIC;
 import static de.melsicon.kafka.topology.TopologyTestHelper.newKafkaTestResource;
-import static org.apache.kafka.streams.StreamsConfig.APPLICATION_ID_CONFIG;
-import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
-import static org.apache.kafka.streams.StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG;
-import static org.apache.kafka.streams.StreamsConfig.NUM_STREAM_THREADS_CONFIG;
 
 import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import de.melsicon.kafka.serde.SensorStateSerdes;
-import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Properties;
 import java.util.function.Supplier;
 import org.apache.kafka.common.serialization.Serde;
-import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.streams.TestInputTopic;
@@ -68,19 +59,9 @@ public final class TopologyTest {
     this.registryTestResource = new SchemaRegistryRule(REGISTRY_SCOPE);
   }
 
-  private static SensorStateSerdes[] serdes() {
-    var specificMapper = SpecificMapper.instance();
-    return new SensorStateSerdes[] {
-      new de.melsicon.kafka.serde.json.JsonSerdes(),
-      new de.melsicon.kafka.serde.proto.ProtoSerdes(),
-      new de.melsicon.kafka.serde.avro.AvroSerdes(specificMapper),
-      new de.melsicon.kafka.serde.confluent.AvroSerdes(specificMapper)
-    };
-  }
-
   @Parameters(name = "{index}: {0}")
   public static Collection<?> parameters() {
-    var serdes = serdes();
+    var serdes = TopologyTestHelper.serdes();
     var combinations = new ArrayList<Object[]>(serdes.length * serdes.length * serdes.length);
     for (var inputSerdes : serdes) {
       for (var storeSerdes : serdes) {
@@ -98,17 +79,6 @@ public final class TopologyTest {
     }
 
     return combinations;
-  }
-
-  private static Properties settings() {
-    var settings = new Properties();
-    settings.put(APPLICATION_ID_CONFIG, APPLICATION_ID);
-    settings.put(BOOTSTRAP_SERVERS_CONFIG, KAFKA_TEST_RESOURCE.getKafkaConnectString());
-
-    settings.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde.class.getName());
-    settings.put(NUM_STREAM_THREADS_CONFIG, PARTITIONS);
-
-    return settings;
   }
 
   @Before
@@ -130,7 +100,7 @@ public final class TopologyTest {
         new TopologyFactory()
             .createTopology(INPUT_TOPIC, RESULT_TOPIC, inputSerde, storeSerde, resultSerde);
 
-    var settings = settings();
+    var settings = TopologyTestHelper.settings();
 
     testDriver = new TopologyTestDriver(topologyFactory, settings);
 

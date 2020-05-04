@@ -51,10 +51,10 @@ import org.apache.kafka.common.serialization.Serde;
     return new SensorStateSerdes[] {
       new de.melsicon.kafka.serde.json.JsonSerdes(),
       new de.melsicon.kafka.serde.proto.ProtoSerdes(),
-      new de.melsicon.kafka.serde.avro.AvroSerdes(specificMapper),
+      new de.melsicon.kafka.serde.avro.SpecificSerdes(specificMapper),
       new de.melsicon.kafka.serde.avro.ReflectSerdes(reflectMapper),
       new de.melsicon.kafka.serde.avro.GenericSerdes(genericMapper),
-      new de.melsicon.kafka.serde.confluent.AvroSerdes(specificMapper),
+      new de.melsicon.kafka.serde.confluent.SpecificSerdes(specificMapper),
       new de.melsicon.kafka.serde.confluent.ReflectSerdes(confluentReflectMapper),
       new de.melsicon.kafka.serde.confluent.GenericSerdes(confluentGenericMapper),
       new de.melsicon.kafka.serde.confluent.JsonSerdes(confluentJsonMapper),

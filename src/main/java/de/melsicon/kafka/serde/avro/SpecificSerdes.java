@@ -12,14 +12,14 @@ import javax.inject.Inject;
 import org.apache.avro.specific.SpecificData;
 import org.apache.kafka.common.serialization.Serde;
 
-public final class AvroSerdes implements SensorStateSerdes {
+public final class SpecificSerdes implements SensorStateSerdes {
   private final SensorStateMapper<
           de.melsicon.kafka.sensors.avro.SensorState,
           de.melsicon.kafka.sensors.avro.SensorStateWithDuration>
       mapper;
 
   @Inject
-  public AvroSerdes(
+  public SpecificSerdes(
       SensorStateMapper<
               de.melsicon.kafka.sensors.avro.SensorState,
               de.melsicon.kafka.sensors.avro.SensorStateWithDuration>
@@ -29,7 +29,7 @@ public final class AvroSerdes implements SensorStateSerdes {
 
   @Override
   public String name() {
-    return "avro";
+    return "specific";
   }
 
   @Override

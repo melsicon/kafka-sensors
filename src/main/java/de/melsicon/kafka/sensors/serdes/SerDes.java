@@ -31,7 +31,7 @@ public final class SerDes {
         serdeFactory = new de.melsicon.kafka.serde.proto.ProtoSerdes();
         break;
       case AVRO:
-        serdeFactory = new de.melsicon.kafka.serde.avro.AvroSerdes(SpecificMapper.instance());
+        serdeFactory = new de.melsicon.kafka.serde.avro.SpecificSerdes(SpecificMapper.instance());
         break;
       case AVRO_REFLECT:
         serdeFactory = new de.melsicon.kafka.serde.avro.ReflectSerdes(ReflectMapper.instance());
@@ -39,8 +39,9 @@ public final class SerDes {
       case AVRO_GENERIC:
         serdeFactory = new de.melsicon.kafka.serde.avro.GenericSerdes(GenericMapper.instance());
         break;
-      case CONFLUENT_AVRO:
-        serdeFactory = new de.melsicon.kafka.serde.confluent.AvroSerdes(SpecificMapper.instance());
+      case CONFLUENT_SPECIFIC:
+        serdeFactory =
+            new de.melsicon.kafka.serde.confluent.SpecificSerdes(SpecificMapper.instance());
         break;
       case CONFLUENT_REFLECT:
         serdeFactory =
