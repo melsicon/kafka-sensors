@@ -26,9 +26,9 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "a79d19dcdf9139fa4b81206e318e33d245c4c9da1ffed21c87288ed4380426f9",
-    strip_prefix = "protobuf-3.11.4",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.11.4.tar.gz"],
+    sha256 = "f9c6433581be5209085d7a347fbaf16477f423969922bdc2f31faa66e7e3c6d6",
+    strip_prefix = "protobuf-3.12.0-rc1",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.12.0-rc1.tar.gz"],
 )
 
 # ---
@@ -123,7 +123,7 @@ maven_install(
         "com.google.flogger:flogger-system-backend:0.5.1",
         "com.google.flogger:flogger:0.5.1",
         "com.google.guava:guava:29.0-jre",
-        "com.uber.nullaway:nullaway:0.7.9",
+        "com.uber.nullaway:nullaway:0.7.10",
         "info.picocli:picocli:4.2.0",
         "io.github.classgraph:classgraph:4.8.78",
         "io.helidon.config:helidon-config-object-mapping:2.0.0-M2",
