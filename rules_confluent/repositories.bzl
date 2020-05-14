@@ -45,14 +45,14 @@ def confluent_repositories_beta():
     http_archive(
         name = "confluent_common",
         build_file = "//:rules_confluent/common.bzl",
-        sha256 = "71b6daec4128ed1a9ddf12640d05874bcecb1ddc7fdb596875537cbef71efd11",
-        strip_prefix = "common-6.0.0-beta200503173959",
-        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-beta200503173959.tar.gz"],
+        sha256 = "265e428d799d29b7b4168c2252ef6eaa5f891bbea9dfbca0de75f15adb67fe1e",
+        strip_prefix = "common-6.0.0-beta200513180430",
+        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-beta200513180430.tar.gz"],
     )
     http_archive(
         name = "confluent_schema_registry",
         build_file = "//:rules_confluent/schema_registry.bzl",
-        sha256 = "1519ebb37619b7338652b251e28d55fa10d378525e3f3c7f5d6cc0700d48c4e5",
-        strip_prefix = "schema-registry-6.0.0-beta200503173959",
-        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-beta200503173959.tar.gz"],
+        sha256 = "3b21c09cb54059ce6992e1b7a75de591b5eac2090dab148462a313620a4bf922",
+        strip_prefix = "schema-registry-6.0.0-beta200513180430",
+        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-beta200513180430.tar.gz"],
     )

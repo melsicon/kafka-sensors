@@ -6,8 +6,11 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "7b9bbe3ea1fccb46dcfa6c3f3e29ba7ec740d8733370e21cdc8937467b4a4349",
-    urls = ["https://github.com/bazelbuild/rules_go/releases/download/v0.22.4/rules_go-v0.22.4.tar.gz"],
+    sha256 = "6a68e269802911fa419abb940c850734086869d7fe9bc8e12aaf60a09641c818",
+    urls = [
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.23.0/rules_go-v0.23.0.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.23.0/rules_go-v0.23.0.tar.gz",
+    ],
 )
 
 http_archive(
@@ -26,9 +29,9 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "f9c6433581be5209085d7a347fbaf16477f423969922bdc2f31faa66e7e3c6d6",
-    strip_prefix = "protobuf-3.12.0-rc1",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.12.0-rc1.tar.gz"],
+    sha256 = "afaa4f65e7e97adb10b32b7c699b7b6be4090912b471028ef0f40ccfb271f96a",
+    strip_prefix = "protobuf-3.12.0-rc2",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.12.0-rc2.tar.gz"],
 )
 
 # ---
@@ -93,7 +96,7 @@ confluent_repositories()
 container_pull(
     name = "java_base",
     architecture = "amd64",
-    digest = "sha256:d0e367e4ec484ca1847368ecc16becda2930a3dc6799ba5ac78304985169b137",
+    digest = "sha256:7e57b3476ae69407b26f39e2d1d78b54efef4db177104e1e3de7e9b5198827a9",
     os = "linux",
     registry = "gcr.io",
     repository = "distroless/java-debian10",
@@ -112,10 +115,10 @@ maven_install(
         "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.11.0",
         "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.0",
         "com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.0",
-        "com.google.auto.service:auto-service-annotations:1.0-rc6",
-        "com.google.auto.service:auto-service:1.0-rc6",
-        "com.google.auto.value:auto-value-annotations:1.7.1",
-        "com.google.auto.value:auto-value:1.7.1",
+        "com.google.auto.service:auto-service-annotations:1.0-rc7",
+        "com.google.auto.service:auto-service:1.0-rc7",
+        "com.google.auto.value:auto-value-annotations:1.7.2",
+        "com.google.auto.value:auto-value:1.7.2",
         "com.google.code.gson:gson:2.8.6",
         "com.google.dagger:dagger-compiler:2.27",
         "com.google.dagger:dagger:2.27",
@@ -124,11 +127,11 @@ maven_install(
         "com.google.flogger:flogger:0.5.1",
         "com.google.guava:guava:29.0-jre",
         "com.uber.nullaway:nullaway:0.7.10",
-        "info.picocli:picocli:4.2.0",
+        "info.picocli:picocli:4.3.0",
         "io.github.classgraph:classgraph:4.8.78",
-        "io.helidon.config:helidon-config-object-mapping:2.0.0-M2",
-        "io.helidon.config:helidon-config-yaml:2.0.0-M2",
-        "io.helidon.config:helidon-config:2.0.0-M2",
+        "io.helidon.config:helidon-config-object-mapping:2.0.0-M3",
+        "io.helidon.config:helidon-config-yaml:2.0.0-M3",
+        "io.helidon.config:helidon-config:2.0.0-M3",
         "jakarta.annotation:jakarta.annotation-api:1.3.5",
         "jakarta.servlet:jakarta.servlet-api:4.0.3",
         "jakarta.validation:jakarta.validation-api:2.0.2",
