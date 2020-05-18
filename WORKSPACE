@@ -6,10 +6,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "6a68e269802911fa419abb940c850734086869d7fe9bc8e12aaf60a09641c818",
+    sha256 = "87f0fb9747854cb76a0a82430adccb6269f7d394237104a4523b51061c469171",
     urls = [
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.23.0/rules_go-v0.23.0.tar.gz",
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.23.0/rules_go-v0.23.0.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.23.1/rules_go-v0.23.1.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.23.1/rules_go-v0.23.1.tar.gz",
     ],
 )
 
@@ -29,9 +29,9 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "afaa4f65e7e97adb10b32b7c699b7b6be4090912b471028ef0f40ccfb271f96a",
-    strip_prefix = "protobuf-3.12.0-rc2",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.12.0-rc2.tar.gz"],
+    sha256 = "946ba5371e423e1220d2cbefc1f65e69a1e81ca5bab62a03d66894172983cfcd",
+    strip_prefix = "protobuf-3.12.0",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.12.0.tar.gz"],
 )
 
 # ---
@@ -127,7 +127,7 @@ maven_install(
         "com.google.flogger:flogger:0.5.1",
         "com.google.guava:guava:29.0-jre",
         "com.uber.nullaway:nullaway:0.7.10",
-        "info.picocli:picocli:4.3.0",
+        "info.picocli:picocli:4.3.2",
         "io.github.classgraph:classgraph:4.8.78",
         "io.helidon.config:helidon-config-object-mapping:2.0.0-M3",
         "io.helidon.config:helidon-config-yaml:2.0.0-M3",

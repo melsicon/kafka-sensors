@@ -5,7 +5,7 @@ CONFLUENT_ARTIFACTS = [
     "com.damnhandy:handy-uri-templates:2.1.8",
     "com.google.re2j:re2j:1.3",
     "com.kjetland:mbknor-jackson-jsonschema_2.13:1.0.39",
-    "com.squareup.wire:wire-schema:3.2.1",
+    "com.squareup.wire:wire-schema:3.2.2",
     "commons-validator:commons-validator:1.6",
     "io.swagger:swagger-annotations:1.6.1",
     "org.json:json:20190722",
@@ -45,14 +45,14 @@ def confluent_repositories_beta():
     http_archive(
         name = "confluent_common",
         build_file = "//:rules_confluent/common.bzl",
-        sha256 = "265e428d799d29b7b4168c2252ef6eaa5f891bbea9dfbca0de75f15adb67fe1e",
-        strip_prefix = "common-6.0.0-beta200513180430",
-        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-beta200513180430.tar.gz"],
+        sha256 = "c656b4c6f82e44e51cb0490d4b9883d331a51c370ab8d0970a488a233a684689",
+        strip_prefix = "common-6.0.0-1",
+        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-1.tar.gz"],
     )
     http_archive(
         name = "confluent_schema_registry",
         build_file = "//:rules_confluent/schema_registry.bzl",
-        sha256 = "3b21c09cb54059ce6992e1b7a75de591b5eac2090dab148462a313620a4bf922",
-        strip_prefix = "schema-registry-6.0.0-beta200513180430",
-        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-beta200513180430.tar.gz"],
+        sha256 = "234572ba0cbb23c2ec06d1126fe2f7eebb6ef133af3c578c54b2f46ed2b81f5d",
+        strip_prefix = "schema-registry-6.0.0-1",
+        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-1.tar.gz"],
     )
