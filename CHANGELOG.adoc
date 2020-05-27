@@ -7,7 +7,7 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 == [Unreleased]
 - Update Bazel and Protobuf
 - Refactor business logic for testability
-- Update Kafka to 2.5.0, Scala 2.13
+- Update Kafka to 2.5.0, Scala 2.12
 - Use Checker Framework annotations instead of our own
 - Simplify Avro Schema
 - Add AVRO reflection serialization

@@ -4,11 +4,11 @@ load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 CONFLUENT_ARTIFACTS = [
     "com.damnhandy:handy-uri-templates:2.1.8",
     "com.google.re2j:re2j:1.3",
-    "com.kjetland:mbknor-jackson-jsonschema_2.13:1.0.39",
+    "com.kjetland:mbknor-jackson-jsonschema_2.12:1.0.39",
     "com.squareup.wire:wire-schema:3.2.2",
     "commons-validator:commons-validator:1.6",
     "io.swagger:swagger-annotations:1.6.1",
-    "org.json:json:20190722",
+    "org.json:json:20200518",
 ]
 
 def confluent_repositories_common():
@@ -45,14 +45,14 @@ def confluent_repositories_beta():
     http_archive(
         name = "confluent_common",
         build_file = "//:rules_confluent/common.bzl",
-        sha256 = "c656b4c6f82e44e51cb0490d4b9883d331a51c370ab8d0970a488a233a684689",
-        strip_prefix = "common-6.0.0-1",
-        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-1.tar.gz"],
+        sha256 = "d3c9ed3e419d9f65e1779146d3a9d7d12df99af09013344de7bf288d891f15a9",
+        strip_prefix = "common-6.0.0-4",
+        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-4.tar.gz"],
     )
     http_archive(
         name = "confluent_schema_registry",
         build_file = "//:rules_confluent/schema_registry.bzl",
-        sha256 = "234572ba0cbb23c2ec06d1126fe2f7eebb6ef133af3c578c54b2f46ed2b81f5d",
-        strip_prefix = "schema-registry-6.0.0-1",
-        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-1.tar.gz"],
+        sha256 = "53a21b3a9374183959a3f019bdaf6dec81b08fcae11f70ebb6ede5862cb56004",
+        strip_prefix = "schema-registry-6.0.0-4",
+        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-4.tar.gz"],
     )

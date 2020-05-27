@@ -24,7 +24,7 @@ java_library(
 java_library(
     name = "kafka-core",
     neverlink = True,
-    exports = ["@maven//:org_apache_kafka_kafka_2_13"],
+    exports = ["@maven//:org_apache_kafka_kafka_2_12"],
 )
 
 java_library(
@@ -88,7 +88,7 @@ java_library(
         "@maven//:com_fasterxml_jackson_datatype_jackson_datatype_joda",
         "@maven//:com_fasterxml_jackson_datatype_jackson_datatype_jsr310",
         "@maven//:com_fasterxml_jackson_module_jackson_module_parameter_names",
-        "@maven//:com_kjetland_mbknor_jackson_jsonschema_2_13",
+        "@maven//:com_kjetland_mbknor_jackson_jsonschema_2_12",
         "@maven//:org_json_json",
         "@maven//:org_slf4j_slf4j_api",
         "@org_everit_json_schema//jar",

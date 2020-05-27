@@ -15,9 +15,9 @@ http_archive(
 
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "dc97fccceacd4c6be14e800b2a00693d5e8d07f69ee187babfd04a80a9f8e250",
-    strip_prefix = "rules_docker-0.14.1",
-    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.14.1/rules_docker-v0.14.1.tar.gz"],
+    sha256 = "3efbd23e195727a67f87b2a04fb4388cc7a11a0c0c2cf33eec225fb8ffbb27ea",
+    strip_prefix = "rules_docker-0.14.2",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.14.2/rules_docker-v0.14.2.tar.gz"],
 )
 
 http_archive(
@@ -29,9 +29,9 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "946ba5371e423e1220d2cbefc1f65e69a1e81ca5bab62a03d66894172983cfcd",
-    strip_prefix = "protobuf-3.12.0",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.12.0.tar.gz"],
+    sha256 = "bb8ce9ba11eb7bccf080599fe7cad9cc461751c8dd1ba61701c0070d58cde973",
+    strip_prefix = "protobuf-3.12.2",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.12.2.tar.gz"],
 )
 
 # ---
@@ -120,8 +120,8 @@ maven_install(
         "com.google.auto.value:auto-value-annotations:1.7.2",
         "com.google.auto.value:auto-value:1.7.2",
         "com.google.code.gson:gson:2.8.6",
-        "com.google.dagger:dagger-compiler:2.27",
-        "com.google.dagger:dagger:2.27",
+        "com.google.dagger:dagger-compiler:2.28",
+        "com.google.dagger:dagger:2.28",
         "com.google.errorprone:error_prone_annotations:2.3.4",
         "com.google.flogger:flogger-system-backend:0.5.1",
         "com.google.flogger:flogger:0.5.1",
@@ -138,7 +138,7 @@ maven_install(
         "jakarta.ws.rs:jakarta.ws.rs-api:2.1.6",
         "org.apache.kafka:kafka-clients:2.5.0",
         "org.apache.kafka:kafka-streams:2.5.0",
-        "org.apache.kafka:kafka_2.13:2.5.0",
+        "org.apache.kafka:kafka_2.12:2.5.0",
         "org.checkerframework:checker-qual:3.4.0",
         "org.checkerframework:checker:3.4.0",
         "org.mapstruct:mapstruct-processor:1.3.1.Final",
