@@ -45,14 +45,14 @@ def confluent_repositories_beta():
     http_archive(
         name = "confluent_common",
         build_file = "//:rules_confluent/common.bzl",
-        sha256 = "d3c9ed3e419d9f65e1779146d3a9d7d12df99af09013344de7bf288d891f15a9",
-        strip_prefix = "common-6.0.0-4",
-        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-4.tar.gz"],
+        sha256 = "e6077f487d6f962d48e460fdf00d2e381a9390785f5a4baa61284750c7dc135c",
+        strip_prefix = "common-6.0.0-5",
+        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-5.tar.gz"],
     )
     http_archive(
         name = "confluent_schema_registry",
         build_file = "//:rules_confluent/schema_registry.bzl",
-        sha256 = "53a21b3a9374183959a3f019bdaf6dec81b08fcae11f70ebb6ede5862cb56004",
-        strip_prefix = "schema-registry-6.0.0-4",
-        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-4.tar.gz"],
+        sha256 = "e54bd277872ccf874ae00570f0799b478c66cd504a13cd4f245781971b07d2e0",
+        strip_prefix = "schema-registry-6.0.0-5",
+        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-5.tar.gz"],
     )
