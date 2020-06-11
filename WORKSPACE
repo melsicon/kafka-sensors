@@ -52,8 +52,6 @@ load("@io_bazel_rules_docker//go:image.bzl", go_repositories = "repositories")
 
 go_repositories()
 
-load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
-
 # ---
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
@@ -92,16 +90,9 @@ confluent_repositories()
 
 # ---
 
-# https://gcr.io/distroless/java-debian10:11
-container_pull(
-    name = "java_base",
-    architecture = "amd64",
-    digest = "sha256:7e57b3476ae69407b26f39e2d1d78b54efef4db177104e1e3de7e9b5198827a9",
-    os = "linux",
-    registry = "gcr.io",
-    repository = "distroless/java-debian10",
-    tag = "11",
-)
+load("//images:images.bzl", "base_images")
+
+base_images()
 
 # ---
 
@@ -117,8 +108,8 @@ maven_install(
         "com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.0",
         "com.google.auto.service:auto-service-annotations:1.0-rc7",
         "com.google.auto.service:auto-service:1.0-rc7",
-        "com.google.auto.value:auto-value-annotations:1.7.2",
-        "com.google.auto.value:auto-value:1.7.2",
+        "com.google.auto.value:auto-value-annotations:1.7.3",
+        "com.google.auto.value:auto-value:1.7.3",
         "com.google.code.gson:gson:2.8.6",
         "com.google.dagger:dagger-compiler:2.28",
         "com.google.dagger:dagger:2.28",
@@ -128,7 +119,7 @@ maven_install(
         "com.google.guava:guava:29.0-jre",
         "com.uber.nullaway:nullaway:0.7.10",
         "info.picocli:picocli:4.3.2",
-        "io.github.classgraph:classgraph:4.8.83",
+        "io.github.classgraph:classgraph:4.8.85",
         "io.helidon.config:helidon-config-object-mapping:2.0.0-RC1",
         "io.helidon.config:helidon-config-yaml:2.0.0-RC1",
         "io.helidon.config:helidon-config:2.0.0-RC1",

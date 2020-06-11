@@ -67,20 +67,13 @@ java_library(
     ],
 )
 
-# runtime dependencies of org_everit_json_schema
-SCHEMA_DEPS = [
-    "@maven//:com_damnhandy_handy_uri_templates",
-    "@maven//:com_google_re2j_re2j",
-    "@maven//:commons_validator_commons_validator",
-    "@maven//:org_json_json",
-]
-
 java_library(
     name = "kafka-json-schema-provider",
     srcs = glob(["json-schema-provider/src/main/java/**/*.java"]),
     visibility = ["//visibility:public"],
     deps = [
         ":kafka-schema-registry-client",
+        "@com_github_everit_org_json_schema_org_everit_json_schema//jar",
         "@maven//:com_fasterxml_jackson_core_jackson_core",
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
         "@maven//:com_fasterxml_jackson_datatype_jackson_datatype_guava",
@@ -91,9 +84,7 @@ java_library(
         "@maven//:com_kjetland_mbknor_jackson_jsonschema_2_12",
         "@maven//:org_json_json",
         "@maven//:org_slf4j_slf4j_api",
-        "@org_everit_json_schema//jar",
     ],
-    runtime_deps = SCHEMA_DEPS,
 )
 
 java_library(
@@ -105,14 +96,13 @@ java_library(
         ":kafka-json-schema-provider",
         ":kafka-schema-registry-client",
         ":kafka-schema-serializer",
+        "@com_github_everit_org_json_schema_org_everit_json_schema//jar",
         "@confluent_common//:common-config",
         "@maven//:com_fasterxml_jackson_core_jackson_core",
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
         "@maven//:com_google_guava_guava",
         "@maven//:org_apache_kafka_kafka_clients",
-        "@org_everit_json_schema//jar",
     ],
-    runtime_deps = SCHEMA_DEPS,
 )
 
 java_library(
