@@ -119,7 +119,7 @@ maven_install(
         "com.google.guava:guava:29.0-jre",
         "com.uber.nullaway:nullaway:0.7.10",
         "info.picocli:picocli:4.3.2",
-        "io.github.classgraph:classgraph:4.8.85",
+        "io.github.classgraph:classgraph:4.8.86",
         "io.helidon.config:helidon-config-object-mapping:2.0.0-RC1",
         "io.helidon.config:helidon-config-yaml:2.0.0-RC1",
         "io.helidon.config:helidon-config:2.0.0-RC1",
@@ -192,7 +192,7 @@ maven_install(
     override_targets = {
         # Java EE is now Jakarta EE
         "javax.annotation:javax.annotation-api": ":jakarta_annotation_jakarta_annotation_api",
-        "javax.servlet:javax.servlet-api": "jakarta_servlet_jakarta_servlet_api",
+        "javax.servlet:javax.servlet-api": ":jakarta_servlet_jakarta_servlet_api",
         "javax.validation:validation-api": ":jakarta_validation_jakarta_validation_api",
         "javax.ws.rs:javax.ws.rs-api": ":jakarta_ws_rs_jakarta_ws_rs_api",
     },
