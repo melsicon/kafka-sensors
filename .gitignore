@@ -1,4 +1,5 @@
 .*
+!/.bazelignore
 !/.bazelrc
 !/.bazelversion
 !/.envrc
@@ -7,3 +8,5 @@
 !/.yamllint
 # project specific
 /bazel-*
+/gradle-build/
+/bin/

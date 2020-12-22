@@ -58,7 +58,7 @@ public final class SerializationTest {
   }
 
   @Test
-  public void stateIsRequired() throws IOException {
+  public void stateIsRequired() {
     assertThrows(
         AvroMissingFieldException.class,
         () ->

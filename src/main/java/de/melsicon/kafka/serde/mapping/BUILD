@@ -2,6 +2,7 @@ load("@rules_java//java:defs.bzl", "java_library", "java_plugin")
 
 java_plugin(
     name = "mapstruct_processor",
+    javacopts = ["-Amapstruct.suppressGeneratorTimestamp=true"],
     processor_class = "org.mapstruct.ap.MappingProcessor",
     deps = ["@maven//:org_mapstruct_mapstruct_processor"],
 )

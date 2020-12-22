@@ -35,7 +35,7 @@ public final class MainCommand implements Callable<Integer> {
   }
 
   @Override
-  public Integer call() throws Exception {
+  public Integer call() {
     var startUpManager = createStartUpManager();
     startUpManager.startUp();
     return 0;

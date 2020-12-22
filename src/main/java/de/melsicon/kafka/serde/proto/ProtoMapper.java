@@ -16,6 +16,7 @@ import org.mapstruct.ValueMappings;
 
 @Immutable
 @Mapper(config = MapStructConfig.class, uses = ProtoTypesMapper.class)
+@SuppressWarnings("UnnecessarilyFullyQualified")
 public abstract class ProtoMapper {
   public static ProtoMapper instance() {
     return new ProtoMapperImpl();

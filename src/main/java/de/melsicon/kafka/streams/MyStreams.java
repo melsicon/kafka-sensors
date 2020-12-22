@@ -80,12 +80,12 @@ public final class MyStreams extends AbstractIdleService {
   }
 
   @Override
-  protected void startUp() throws Exception {
+  protected void startUp() {
     kafkaStreams.start();
   }
 
   @Override
-  protected void shutDown() throws Exception {
+  protected void shutDown() {
     kafkaStreams.close();
   }
 }

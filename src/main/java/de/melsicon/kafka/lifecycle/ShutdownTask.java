@@ -1,7 +1,7 @@
 package de.melsicon.kafka.lifecycle;
 
 import com.google.common.util.concurrent.ServiceManager;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 import java.util.concurrent.TimeoutException;
 
 /* package */ final class ShutdownTask extends Thread {
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeoutException;
 
   private void shutdownServices() {
     try {
-      manager.stopAsync().awaitStopped(5, TimeUnit.SECONDS);
+      manager.stopAsync().awaitStopped(Duration.ofSeconds(5L));
     } catch (TimeoutException ignored) {
       System.err.println("Timed out stopping services");
     }

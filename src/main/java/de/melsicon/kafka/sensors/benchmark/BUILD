@@ -3,7 +3,7 @@ load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 java_image(
     name = "benchmark",
     srcs = glob(["*.java"]),
-    base = "//images:java11_nonroot",
+    base = "@java_base//image",
     data = ["//conf"],
     jvm_flags = [
         "--add-opens",

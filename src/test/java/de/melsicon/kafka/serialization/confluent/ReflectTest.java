@@ -11,7 +11,6 @@ import de.melsicon.kafka.sensors.confluent_reflect.State;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import io.confluent.kafka.streams.serdes.avro.ReflectionAvroDeserializer;
 import io.confluent.kafka.streams.serdes.avro.ReflectionAvroSerializer;
-import java.io.IOException;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serializer;
@@ -56,7 +55,7 @@ public final class ReflectTest {
   }
 
   @Test
-  public void canDecode() throws IOException {
+  public void canDecode() {
     var sensorState = createSensorState();
 
     var encoded = encoder.serialize(KAFKA_TOPIC, sensorState);
@@ -71,7 +70,7 @@ public final class ReflectTest {
   }
 
   @Test
-  public void stateIsRequired() throws IOException {
+  public void stateIsRequired() {
     var sensorState = new SensorState();
     sensorState.id = "7331";
     sensorState.time = INSTANT;

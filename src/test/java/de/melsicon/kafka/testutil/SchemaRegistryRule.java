@@ -51,7 +51,7 @@ public final class SchemaRegistryRule implements TestRule {
 
   @Initializer
   @EnsuresNonNull("registryClient")
-  private void before() throws Exception {
+  private void before() {
     registryClient = MockSchemaRegistry.getClientForScope(registryScope);
   }
 

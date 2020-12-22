@@ -1,4 +1,5 @@
 load("@bazel_tools//tools/jdk:default_java_toolchain.bzl", "default_java_toolchain")
+load("@com_google_dagger//:workspace_defs.bzl", "dagger_rules")
 load("@rules_java//java:defs.bzl", "java_library", "java_package_configuration", "java_plugin")
 
 default_java_toolchain(
@@ -14,7 +15,7 @@ default_java_toolchain(
 java_package_configuration(
     name = "package_configuration",
     javacopts = [
-        "-Xlint:all,-processing",
+        "-Xlint:all,-processing,-cast",
         "-Werror",
         "-Xpkginfo:always",
         "-XepExcludedPaths:.*/bazel-out/.*",
@@ -97,18 +98,7 @@ java_library(
 
 # ---
 
-java_plugin(
-    name = "dagger_processor",
-    processor_class = "dagger.internal.codegen.ComponentProcessor",
-    deps = ["@maven//:com_google_dagger_dagger_compiler"],
-)
-
-java_library(
-    name = "dagger",
-    exported_plugins = ["dagger_processor"],
-    visibility = ["//visibility:public"],
-    exports = ["@maven//:com_google_dagger_dagger"],
-)
+dagger_rules("@maven")
 
 # ---
 

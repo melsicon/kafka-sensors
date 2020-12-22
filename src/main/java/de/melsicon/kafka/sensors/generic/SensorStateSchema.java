@@ -1,7 +1,6 @@
 package de.melsicon.kafka.sensors.generic;
 
 import org.apache.avro.Schema;
-import org.apache.avro.Schema.Type;
 import org.apache.avro.SchemaBuilder;
 import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
 import org.apache.avro.generic.GenericData;
@@ -46,7 +45,7 @@ public final class SensorStateSchema {
      *     .endString()
      */
 
-    var stringSchema = Schema.create(Type.STRING);
+    var stringSchema = Schema.create(Schema.Type.STRING);
     stringSchema.addProp(GenericData.STRING_PROP, StringType.String.name());
 
     var timestampSchema = timestampConversion.getRecommendedSchema();

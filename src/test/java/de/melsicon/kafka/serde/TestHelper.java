@@ -7,6 +7,7 @@ import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.avromapper.GenericMapper;
 import de.melsicon.kafka.serde.avromapper.ReflectMapper;
+import de.melsicon.kafka.serde.avromapper.SpecificDirectMapper;
 import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentGenericMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentJsonMapper;
@@ -41,6 +42,7 @@ import org.apache.kafka.common.serialization.Serde;
 
   private static SensorStateSerdes[] serdes() {
     var specificMapper = SpecificMapper.instance();
+    var specificMapper2 = SpecificDirectMapper.instance();
     var reflectMapper = ReflectMapper.instance();
     var genericMapper = GenericMapper.instance();
     var confluentReflectMapper = ConfluentReflectMapper.instance();
@@ -52,6 +54,7 @@ import org.apache.kafka.common.serialization.Serde;
       new de.melsicon.kafka.serde.json.JsonSerdes(),
       new de.melsicon.kafka.serde.proto.ProtoSerdes(),
       new de.melsicon.kafka.serde.avro.SpecificSerdes(specificMapper),
+      new de.melsicon.kafka.serde.avro.SpecificSerdes(specificMapper2),
       new de.melsicon.kafka.serde.avro.ReflectSerdes(reflectMapper),
       new de.melsicon.kafka.serde.avro.GenericSerdes(genericMapper),
       new de.melsicon.kafka.serde.confluent.SpecificSerdes(specificMapper),

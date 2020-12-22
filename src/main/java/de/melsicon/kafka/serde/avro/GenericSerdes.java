@@ -4,6 +4,7 @@ import static de.melsicon.kafka.serde.avro.SchemaHelper.RESOLVER;
 import static de.melsicon.kafka.serde.avro.SchemaHelper.RESOLVER_WITH_DURATION;
 
 import de.melsicon.kafka.model.SensorState;
+import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.generic.SensorStateSchema;
 import de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema;
 import de.melsicon.kafka.serde.Format;
@@ -41,8 +42,7 @@ public final class GenericSerdes implements SensorStateSerdes {
   }
 
   @Override
-  public Serde<de.melsicon.kafka.model.SensorStateWithDuration>
-      createSensorStateWithDurationSerde() {
+  public Serde<SensorStateWithDuration> createSensorStateWithDurationSerde() {
     var model = SensorStateWithDurationSchema.MODEL;
     model.setFastReaderEnabled(true);
     var schema = SensorStateWithDurationSchema.SCHEMA;

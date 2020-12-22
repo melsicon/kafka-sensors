@@ -10,7 +10,6 @@ import de.melsicon.kafka.sensors.avro.State;
 import de.melsicon.kafka.serde.confluent.SpecificAvroDeserializer;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerializer;
-import java.io.IOException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serializer;
 import org.junit.AfterClass;
@@ -50,7 +49,7 @@ public final class AvroTest {
   }
 
   @Test
-  public void canDecode() throws IOException {
+  public void canDecode() {
     var sensorState = createSensorState();
 
     var encoded = encoder.serialize(KAFKA_TOPIC, sensorState);

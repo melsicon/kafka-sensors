@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import org.apache.kafka.common.serialization.Serde;
 
 public final class JsonSerdes implements SensorStateSerdes {
-  SensorStateMapper<
+  private final SensorStateMapper<
           de.melsicon.kafka.sensors.confluent_json.SensorState,
           de.melsicon.kafka.sensors.confluent_json.SensorStateWithDuration>
       mapper;

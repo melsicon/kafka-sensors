@@ -6,39 +6,46 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "a8d6b1b354d371a646d2f7927319974e0f9e52f73a2452d2b3877118169eb6bb",
+    sha256 = "81eff5df9077783b18e93d0c7ff990d8ad7a3b8b3ca5b785e1c483aacdb342d7",
     urls = [
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.23.3/rules_go-v0.23.3.tar.gz",
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.23.3/rules_go-v0.23.3.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.9/rules_go-v0.24.9.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.9/rules_go-v0.24.9.tar.gz",
     ],
 )
 
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "6287241e033d247e9da5ff705dd6ef526bac39ae82f3d17de1b69f8cb313f9cd",
-    strip_prefix = "rules_docker-0.14.3",
-    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.14.3/rules_docker-v0.14.3.tar.gz"],
+    sha256 = "1698624e878b0607052ae6131aa216d45ebb63871ec497f26c67455b34119c80",
+    strip_prefix = "rules_docker-0.15.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.15.0/rules_docker-v0.15.0.tar.gz"]
 )
 
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "19d402ef15f58750352a1a38b694191209ebc7f0252104b81196124fdd43ffa0",
-    strip_prefix = "rules_jvm_external-3.2",
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/3.2.tar.gz",
+    sha256 = "2a547d8d5e99703de8de54b6188ff0ed470b3bfc88e346972d1c8865e2688391",
+    strip_prefix = "rules_jvm_external-3.3",
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/3.3.tar.gz",
 )
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "71030a04aedf9f612d2991c1c552317038c3c5a2b578ac4745267a45e7037c29",
-    strip_prefix = "protobuf-3.12.3",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.12.3.tar.gz"],
+    sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
+    strip_prefix = "protobuf-3.14.0",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz"],
+)
+
+http_archive(
+    name = "com_google_dagger",
+    sha256 = "d702271193448242fcb14131c86807299fc682432bf50258ec04c8e903c520d4",
+    strip_prefix = "dagger-dagger-2.30.1",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.30.1.tar.gz"],
 )
 
 # ---
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
-go_register_toolchains()
+go_register_toolchains(go_version="1.15.6")
 
 go_rules_dependencies()
 
@@ -47,6 +54,10 @@ go_rules_dependencies()
 load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories")
 
 container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
 
 load("@io_bazel_rules_docker//go:image.bzl", go_repositories = "repositories")
 
@@ -80,6 +91,10 @@ bind(
 
 # ---
 
+load("@com_google_dagger//:workspace_defs.bzl", "DAGGER_ARTIFACTS")
+
+# ---
+
 load("//rules_avro:avro_deps.bzl", "AVRO_ARTIFACTS")
 
 # ---
@@ -98,95 +113,93 @@ base_images()
 
 maven_install(
     artifacts = [
-        "com.fasterxml.jackson.core:jackson-annotations:2.11.0",
-        "com.fasterxml.jackson.core:jackson-core:2.11.0",
-        "com.fasterxml.jackson.core:jackson-databind:2.11.0",
-        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.11.0",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.0",
-        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.11.0",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.0",
-        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.0",
+        "com.fasterxml.jackson.core:jackson-annotations:2.12.0",
+        "com.fasterxml.jackson.core:jackson-core:2.12.0",
+        "com.fasterxml.jackson.core:jackson-databind:2.12.0",
+        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.12.0",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.0",
+        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.0",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.0",
+        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.0",
         "com.google.auto.service:auto-service-annotations:1.0-rc7",
         "com.google.auto.service:auto-service:1.0-rc7",
-        "com.google.auto.value:auto-value-annotations:1.7.3",
-        "com.google.auto.value:auto-value:1.7.3",
+        "com.google.auto.value:auto-value-annotations:1.7.4",
+        "com.google.auto.value:auto-value:1.7.4",
         "com.google.code.gson:gson:2.8.6",
-        "com.google.dagger:dagger-compiler:2.28",
-        "com.google.dagger:dagger:2.28",
         "com.google.errorprone:error_prone_annotations:2.4.0",
         "com.google.flogger:flogger-system-backend:0.5.1",
         "com.google.flogger:flogger:0.5.1",
-        "com.google.guava:guava:29.0-jre",
-        "com.uber.nullaway:nullaway:0.7.10",
-        "info.picocli:picocli:4.3.2",
-        "io.github.classgraph:classgraph:4.8.86",
-        "io.helidon.config:helidon-config-object-mapping:2.0.0-RC1",
-        "io.helidon.config:helidon-config-yaml:2.0.0-RC1",
-        "io.helidon.config:helidon-config:2.0.0-RC1",
+        "com.google.guava:guava:30.1-jre",
+        "com.uber.nullaway:nullaway:0.8.0",
+        "info.picocli:picocli:4.5.2",
+        "io.github.classgraph:classgraph:4.8.97",
+        "io.helidon.config:helidon-config-object-mapping:2.1.0",
+        "io.helidon.config:helidon-config-yaml:2.1.0",
+        "io.helidon.config:helidon-config:2.1.0",
         "jakarta.annotation:jakarta.annotation-api:1.3.5",
         "jakarta.servlet:jakarta.servlet-api:4.0.3",
         "jakarta.validation:jakarta.validation-api:2.0.2",
         "jakarta.ws.rs:jakarta.ws.rs-api:2.1.6",
-        "org.apache.kafka:kafka-clients:2.5.0",
-        "org.apache.kafka:kafka-streams:2.5.0",
-        "org.apache.kafka:kafka_2.12:2.5.0",
-        "org.checkerframework:checker-qual:3.4.1",
-        "org.checkerframework:checker:3.4.1",
-        "org.mapstruct:mapstruct-processor:1.3.1.Final",
-        "org.mapstruct:mapstruct:1.3.1.Final",
-        "org.openjdk.jmh:jmh-core:1.23",
-        "org.openjdk.jmh:jmh-generator-annprocess:1.23",
+        "org.apache.kafka:kafka-clients:2.7.0",
+        "org.apache.kafka:kafka-streams:2.7.0",
+        "org.apache.kafka:kafka_2.12:2.7.0",
+        "org.checkerframework:checker-qual:3.8.0",
+        "org.checkerframework:checker:3.8.0",
+        "org.mapstruct:mapstruct-processor:1.4.1.Final",
+        "org.mapstruct:mapstruct:1.4.1.Final",
+        "org.openjdk.jmh:jmh-core:1.27",
+        "org.openjdk.jmh:jmh-generator-annprocess:1.27",
         "org.slf4j:slf4j-api:1.7.30",
         "org.slf4j:slf4j-jdk14:1.7.30",
         maven.artifact(
             "com.google.truth",
             "truth",
-            "1.0.1",
+            "1.1",
             testonly = True,
         ),
         maven.artifact(
             "com.google.truth.extensions",
             "truth-java8-extension",
-            "1.0.1",
+            "1.1",
             testonly = True,
         ),
         maven.artifact(
             "com.google.truth.extensions",
             "truth-liteproto-extension",
-            "1.0.1",
+            "1.1",
             testonly = True,
         ),
         maven.artifact(
             "com.google.truth.extensions",
             "truth-proto-extension",
-            "1.0.1",
+            "1.1",
             testonly = True,
         ),
         maven.artifact(
             "com.salesforce.kafka.test",
             "kafka-junit4",
-            "3.2.1",
+            "3.2.2",
             testonly = True,
         ),
         maven.artifact(
             "junit",
             "junit",
-            "4.13",
+            "4.13.1",
             testonly = True,
         ),
         maven.artifact(
             "org.apache.kafka",
             "kafka-streams-test-utils",
-            "2.5.0",
+            "2.7.0",
             testonly = True,
         ),
         maven.artifact(
             "org.ow2.asm",
             "asm",
-            "8.0.1",
+            "9.0",
             testonly = True,
         ),
-    ] + AVRO_ARTIFACTS + CONFLUENT_ARTIFACTS,
+    ] + DAGGER_ARTIFACTS + AVRO_ARTIFACTS + CONFLUENT_ARTIFACTS,
     fetch_sources = True,
     maven_install_json = "@de_melsicon_kafka_sensors//:maven_install.json",
     override_targets = {

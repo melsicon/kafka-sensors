@@ -14,7 +14,6 @@ import de.melsicon.kafka.sensors.generic.SensorStateSchema;
 import de.melsicon.kafka.serde.confluent.GenericAvroDeserializer;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import io.confluent.kafka.streams.serdes.avro.GenericAvroSerializer;
-import java.io.IOException;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 import org.apache.kafka.common.serialization.Deserializer;
@@ -60,7 +59,7 @@ public final class GenericTest {
   }
 
   @Test
-  public void canDecode() throws IOException {
+  public void canDecode() {
     var sensorState = createSensorState();
 
     var encoded = encoder.serialize(KAFKA_TOPIC, sensorState);

@@ -6,7 +6,7 @@ java_library(
     srcs = glob(["*.java"]),
     runtime_deps = [
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
-        "@maven//:org_apache_kafka_kafka_2_13",
+        "@maven//:org_apache_kafka_kafka_2_12",
     ],
     deps = [
         "//src/main/java/de/melsicon/kafka/model",

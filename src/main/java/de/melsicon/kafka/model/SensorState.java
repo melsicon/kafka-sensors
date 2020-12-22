@@ -3,7 +3,6 @@ package de.melsicon.kafka.model;
 import com.google.auto.value.AutoValue;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
-import com.google.errorprone.annotations.DoNotCall;
 import com.google.errorprone.annotations.Immutable;
 import java.time.Instant;
 
@@ -41,7 +40,14 @@ public abstract class SensorState {
   @CanIgnoreReturnValue
   @AutoValue.Builder
   public abstract static class Builder {
-    @DoNotCall // Only for @com.fasterxml.jackson.annotation.JsonCreator
+
+    /**
+     * Only for {@link com.fasterxml.jackson.annotation.JsonCreator}
+     *
+     * @deprecated Use {@link SensorState#builder}
+     * @return A new Builder
+     */
+    @Deprecated
     public static final Builder newBuilder() {
       return SensorState.builder();
     }

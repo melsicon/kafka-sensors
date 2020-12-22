@@ -57,7 +57,7 @@ public final class SerializationTest {
   }
 
   @Test
-  public void stateIsRequired() throws IOException {
+  public void stateIsRequired() {
     var event = new SensorState();
     event.id = "7331";
     event.time = INSTANT;

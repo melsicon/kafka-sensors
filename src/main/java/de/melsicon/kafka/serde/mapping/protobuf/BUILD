@@ -23,6 +23,7 @@ java_library(
 
 java_plugin(
     name = "mapstruct_processor",
+    javacopts = ["-Amapstruct.suppressGeneratorTimestamp=true"],
     processor_class = "org.mapstruct.ap.MappingProcessor",
     deps = [
         "protobuf-naming",

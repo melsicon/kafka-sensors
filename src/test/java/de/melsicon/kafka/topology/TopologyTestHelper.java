@@ -29,6 +29,7 @@ import org.apache.kafka.common.serialization.Serdes;
         .withBrokers(BROKER_COUNT);
   }
 
+  @SuppressWarnings("UnnecessarilyFullyQualified")
   /* package */ static SensorStateSerdes[] serdes() {
     var specificMapper = SpecificMapper.instance();
     return new SensorStateSerdes[] {

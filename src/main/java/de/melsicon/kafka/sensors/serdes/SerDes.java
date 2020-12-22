@@ -5,6 +5,7 @@ import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.SensorStateSerdes;
 import de.melsicon.kafka.serde.avromapper.GenericMapper;
 import de.melsicon.kafka.serde.avromapper.ReflectMapper;
+import de.melsicon.kafka.serde.avromapper.SpecificDirectMapper;
 import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentGenericMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentJsonMapper;
@@ -33,6 +34,10 @@ public final class SerDes {
       case AVRO:
         serdeFactory = new de.melsicon.kafka.serde.avro.SpecificSerdes(SpecificMapper.instance());
         break;
+      case AVRO_DIRECT:
+        serdeFactory =
+            new de.melsicon.kafka.serde.avro.SpecificSerdes(SpecificDirectMapper.instance());
+        break;
       case AVRO_REFLECT:
         serdeFactory = new de.melsicon.kafka.serde.avro.ReflectSerdes(ReflectMapper.instance());
         break;
@@ -42,6 +47,10 @@ public final class SerDes {
       case CONFLUENT_SPECIFIC:
         serdeFactory =
             new de.melsicon.kafka.serde.confluent.SpecificSerdes(SpecificMapper.instance());
+        break;
+      case CONFLUENT_DIRECT:
+        serdeFactory =
+            new de.melsicon.kafka.serde.confluent.SpecificSerdes(SpecificDirectMapper.instance());
         break;
       case CONFLUENT_REFLECT:
         serdeFactory =

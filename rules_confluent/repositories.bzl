@@ -3,17 +3,18 @@ load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 
 CONFLUENT_ARTIFACTS = [
     "com.damnhandy:handy-uri-templates:2.1.8",
-    "com.google.re2j:re2j:1.4",
+    "com.google.re2j:re2j:1.5",
     "com.kjetland:mbknor-jackson-jsonschema_2.12:1.0.39",
-    "com.squareup.wire:wire-schema:3.2.2",
-    "commons-validator:commons-validator:1.6",
-    "io.swagger:swagger-annotations:1.6.1",
-    "org.json:json:20200518",
+    "com.squareup.wire:wire-schema:3.2.2", # Do not upgrade - used by kafka-protobuf-provider
+    "commons-validator:commons-validator:1.7",
+    "io.swagger:swagger-annotations:1.6.2",
+    "org.json:json:20201115",
 ]
 
 def confluent_repositories_common():
     jvm_maven_import_external(
         name = "com_github_everit_org_json_schema_org_everit_json_schema",
+        licenses = ["notice"],  # Apache 2.0
         artifact = "com.github.everit-org.json-schema:org.everit.json.schema:1.12.1",
         artifact_sha256 = "2444eadc87f6ad45b7434435f936bcfa9847fa52158f744b1f038d13d9aaec8e",
         srcjar_sha256 = "5add4371ecfb0125d9b7ae88804ac39e10c43dd5bc431182b52f368ccc2c5e8b",
@@ -27,7 +28,7 @@ def confluent_repositories_common():
         ],
     )
 
-def confluent_repositories():
+def confluent_repositories_old():
     confluent_repositories_common()
     http_archive(
         name = "confluent_common",
@@ -44,19 +45,19 @@ def confluent_repositories():
         urls = ["https://github.com/confluentinc/schema-registry/archive/v5.5.0.tar.gz"],
     )
 
-def confluent_repositories_beta():
+def confluent_repositories():
     confluent_repositories_common()
     http_archive(
         name = "confluent_common",
         build_file = "//:rules_confluent/common.bzl",
-        sha256 = "52cfe3e0cc242e2fc88af5170d069ccbb627d7c0e65369561a1bd9ec28423ddf",
-        strip_prefix = "common-6.0.0-6",
-        urls = ["https://github.com/confluentinc/common/archive/v6.0.0-6.tar.gz"],
+        sha256 = "dfbce1086f020a2b40fdc62ebb97e46c5aa1e6fe5ed342cceeb9379a946e6a94",
+        strip_prefix = "common-6.0.1",
+        urls = ["https://github.com/confluentinc/common/archive/v6.0.1.tar.gz"],
     )
     http_archive(
         name = "confluent_schema_registry",
         build_file = "//:rules_confluent/schema_registry.bzl",
-        sha256 = "4004ed2c478f660d750eb5c5153f791e431ef204d33bad43381873610206223f",
-        strip_prefix = "schema-registry-6.0.0-6",
-        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.0-6.tar.gz"],
+        sha256 = "e13e0010513bb96893dae23f2997ff4bee859b9452d03ce541f89135eb5d1ff6",
+        strip_prefix = "schema-registry-6.0.1",
+        urls = ["https://github.com/confluentinc/schema-registry/archive/v6.0.1.tar.gz"],
     )

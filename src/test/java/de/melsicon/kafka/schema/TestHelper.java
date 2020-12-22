@@ -1,6 +1,8 @@
 package de.melsicon.kafka.schema;
 
 import com.google.common.collect.ImmutableList;
+import de.melsicon.kafka.sensors.generic.SensorStateSchema;
+import de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema;
 import java.util.List;
 import org.apache.avro.Schema;
 
@@ -12,7 +14,7 @@ import org.apache.avro.Schema;
         List.of(
             de.melsicon.kafka.sensors.avro.SensorState.getClassSchema(),
             de.melsicon.kafka.sensors.reflect.SensorState.SCHEMA,
-            de.melsicon.kafka.sensors.generic.SensorStateSchema.SCHEMA);
+            SensorStateSchema.SCHEMA);
 
     var combinations1 = combinations(sensorStateSchemas);
 
@@ -20,7 +22,7 @@ import org.apache.avro.Schema;
         List.of(
             de.melsicon.kafka.sensors.avro.SensorStateWithDuration.getClassSchema(),
             de.melsicon.kafka.sensors.reflect.SensorStateWithDuration.SCHEMA,
-            de.melsicon.kafka.sensors.generic.SensorStateWithDurationSchema.SCHEMA);
+            SensorStateWithDurationSchema.SCHEMA);
 
     var combinations2 = combinations(sensorStateWithDurationSchemas);
 
