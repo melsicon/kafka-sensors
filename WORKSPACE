@@ -22,9 +22,9 @@ http_archive(
 
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "2a547d8d5e99703de8de54b6188ff0ed470b3bfc88e346972d1c8865e2688391",
-    strip_prefix = "rules_jvm_external-3.3",
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/3.3.tar.gz",
+    sha256 = "31d226a6b3f5362b59d261abf9601116094ea4ae2aa9f28789b6c105e4cada68",
+    strip_prefix = "rules_jvm_external-4.0",
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/4.0.tar.gz",
 )
 
 http_archive(
@@ -131,11 +131,11 @@ maven_install(
         "com.google.flogger:flogger:0.5.1",
         "com.google.guava:guava:30.1-jre",
         "com.uber.nullaway:nullaway:0.8.0",
-        "info.picocli:picocli:4.5.2",
+        "info.picocli:picocli:4.6.1",
         "io.github.classgraph:classgraph:4.8.97",
-        "io.helidon.config:helidon-config-object-mapping:2.1.0",
-        "io.helidon.config:helidon-config-yaml:2.1.0",
-        "io.helidon.config:helidon-config:2.1.0",
+        "io.helidon.config:helidon-config-object-mapping:2.2.0",
+        "io.helidon.config:helidon-config-yaml:2.2.0",
+        "io.helidon.config:helidon-config:2.2.0",
         "jakarta.annotation:jakarta.annotation-api:1.3.5",
         "jakarta.servlet:jakarta.servlet-api:4.0.3",
         "jakarta.validation:jakarta.validation-api:2.0.2",
@@ -143,8 +143,8 @@ maven_install(
         "org.apache.kafka:kafka-clients:2.7.0",
         "org.apache.kafka:kafka-streams:2.7.0",
         "org.apache.kafka:kafka_2.12:2.7.0",
-        "org.checkerframework:checker-qual:3.8.0",
-        "org.checkerframework:checker:3.8.0",
+        "org.checkerframework:checker-qual:3.9.0",
+        "org.checkerframework:checker:3.9.0",
         "org.mapstruct:mapstruct-processor:1.4.1.Final",
         "org.mapstruct:mapstruct:1.4.1.Final",
         "org.openjdk.jmh:jmh-core:1.27",
