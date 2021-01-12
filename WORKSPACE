@@ -17,7 +17,7 @@ http_archive(
     name = "io_bazel_rules_docker",
     sha256 = "1698624e878b0607052ae6131aa216d45ebb63871ec497f26c67455b34119c80",
     strip_prefix = "rules_docker-0.15.0",
-    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.15.0/rules_docker-v0.15.0.tar.gz"]
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.15.0/rules_docker-v0.15.0.tar.gz"],
 )
 
 http_archive(
@@ -45,7 +45,7 @@ http_archive(
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
-go_register_toolchains(go_version="1.15.6")
+go_register_toolchains(go_version = "1.15.6")
 
 go_rules_dependencies()
 
@@ -113,14 +113,14 @@ base_images()
 
 maven_install(
     artifacts = [
-        "com.fasterxml.jackson.core:jackson-annotations:2.12.0",
-        "com.fasterxml.jackson.core:jackson-core:2.12.0",
-        "com.fasterxml.jackson.core:jackson-databind:2.12.0",
-        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.12.0",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.0",
-        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.0",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.0",
-        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.0",
+        "com.fasterxml.jackson.core:jackson-annotations:2.12.1",
+        "com.fasterxml.jackson.core:jackson-core:2.12.1",
+        "com.fasterxml.jackson.core:jackson-databind:2.12.1",
+        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.12.1",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.1",
+        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.1",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.1",
+        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.1",
         "com.google.auto.service:auto-service-annotations:1.0-rc7",
         "com.google.auto.service:auto-service:1.0-rc7",
         "com.google.auto.value:auto-value-annotations:1.7.4",
@@ -142,7 +142,7 @@ maven_install(
         "jakarta.ws.rs:jakarta.ws.rs-api:2.1.6",
         "org.apache.kafka:kafka-clients:2.7.0",
         "org.apache.kafka:kafka-streams:2.7.0",
-        "org.apache.kafka:kafka_2.12:2.7.0",
+        "org.apache.kafka:kafka_2.13:2.7.0",
         "org.checkerframework:checker-qual:3.9.0",
         "org.checkerframework:checker:3.9.0",
         "org.mapstruct:mapstruct-processor:1.4.1.Final",

@@ -4,8 +4,8 @@ load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 CONFLUENT_ARTIFACTS = [
     "com.damnhandy:handy-uri-templates:2.1.8",
     "com.google.re2j:re2j:1.5",
-    "com.kjetland:mbknor-jackson-jsonschema_2.12:1.0.39",
-    "com.squareup.wire:wire-schema:3.2.2", # Do not upgrade - used by kafka-protobuf-provider
+    "com.kjetland:mbknor-jackson-jsonschema_2.13:1.0.39",
+    "com.squareup.wire:wire-schema:3.2.2",  # Do not upgrade - used by kafka-protobuf-provider
     "commons-validator:commons-validator:1.7",
     "io.swagger:swagger-annotations:1.6.2",
     "org.json:json:20201115",
@@ -26,23 +26,6 @@ def confluent_repositories_common():
             "@maven//:commons_validator_commons_validator",
             "@maven//:org_json_json",
         ],
-    )
-
-def confluent_repositories_old():
-    confluent_repositories_common()
-    http_archive(
-        name = "confluent_common",
-        build_file = "//:rules_confluent/common.bzl",
-        sha256 = "9d45f98e63106920bde8bb53986f974c629ca01f4156f2f16ebf64df71b5fc07",
-        strip_prefix = "common-5.5.0",
-        urls = ["https://github.com/confluentinc/common/archive/v5.5.0.tar.gz"],
-    )
-    http_archive(
-        name = "confluent_schema_registry",
-        build_file = "//:rules_confluent/schema_registry.bzl",
-        sha256 = "424156b79b633547a7b41c31ccd49ec5909c867e9b9a2975bb06dd95ad5d1c5a",
-        strip_prefix = "schema-registry-5.5.0",
-        urls = ["https://github.com/confluentinc/schema-registry/archive/v5.5.0.tar.gz"],
     )
 
 def confluent_repositories():
