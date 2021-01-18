@@ -36,9 +36,9 @@ http_archive(
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "d702271193448242fcb14131c86807299fc682432bf50258ec04c8e903c520d4",
-    strip_prefix = "dagger-dagger-2.30.1",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.30.1.tar.gz"],
+    sha256 = "0d3653413dc2d32e771290279426d21bc47c83a9ed41df7f1fbce074bb585152",
+    strip_prefix = "dagger-dagger-2.31",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.31.tar.gz"],
 )
 
 # ---
@@ -143,8 +143,8 @@ maven_install(
         "org.apache.kafka:kafka-clients:2.7.0",
         "org.apache.kafka:kafka-streams:2.7.0",
         "org.apache.kafka:kafka_2.13:2.7.0",
-        "org.checkerframework:checker-qual:3.9.0",
-        "org.checkerframework:checker:3.9.0",
+        "org.checkerframework:checker-qual:3.9.1",
+        "org.checkerframework:checker:3.9.1",
         "org.mapstruct:mapstruct-processor:1.4.1.Final",
         "org.mapstruct:mapstruct:1.4.1.Final",
         "org.openjdk.jmh:jmh-core:1.27",
