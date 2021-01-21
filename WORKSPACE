@@ -6,18 +6,18 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "81eff5df9077783b18e93d0c7ff990d8ad7a3b8b3ca5b785e1c483aacdb342d7",
+    sha256 = "dbf5a9ef855684f84cac2e7ae7886c5a001d4f66ae23f6904da0faaaef0d61fc",
     urls = [
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.9/rules_go-v0.24.9.tar.gz",
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.9/rules_go-v0.24.9.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.11/rules_go-v0.24.11.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.11/rules_go-v0.24.11.tar.gz",
     ],
 )
 
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "1698624e878b0607052ae6131aa216d45ebb63871ec497f26c67455b34119c80",
-    strip_prefix = "rules_docker-0.15.0",
-    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.15.0/rules_docker-v0.15.0.tar.gz"],
+    sha256 = "c15ef66698f5d2122a3e875c327d9ecd34a231a9dc4753b9500e70518464cc21",
+    strip_prefix = "rules_docker-7da0de3d094aae5601c45ae0855b64fb2771cd72",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/7da0de3d094aae5601c45ae0855b64fb2771cd72.tar.gz"],
 )
 
 http_archive(
@@ -36,9 +36,9 @@ http_archive(
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "0d3653413dc2d32e771290279426d21bc47c83a9ed41df7f1fbce074bb585152",
-    strip_prefix = "dagger-dagger-2.31",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.31.tar.gz"],
+    sha256 = "c422384f60539800254cc6a0a6650247f54245b3501919bb00f47b815f49708c",
+    strip_prefix = "dagger-dagger-2.31.1",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.31.1.tar.gz"],
 )
 
 # ---
@@ -126,7 +126,7 @@ maven_install(
         "com.google.auto.value:auto-value-annotations:1.7.4",
         "com.google.auto.value:auto-value:1.7.4",
         "com.google.code.gson:gson:2.8.6",
-        "com.google.errorprone:error_prone_annotations:2.4.0",
+        "com.google.errorprone:error_prone_annotations:2.5.1",
         "com.google.flogger:flogger-system-backend:0.5.1",
         "com.google.flogger:flogger:0.5.1",
         "com.google.guava:guava:30.1-jre",
@@ -210,8 +210,8 @@ maven_install(
         "javax.ws.rs:javax.ws.rs-api": ":jakarta_ws_rs_jakarta_ws_rs_api",
     },
     repositories = [
-        "https://jcenter.bintray.com/",
-        "https://repo1.maven.org/maven2/",
+        "https://jcenter.bintray.com",
+        "https://repo1.maven.org/maven2",
     ],
 )
 
