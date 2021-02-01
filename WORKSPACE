@@ -36,9 +36,9 @@ http_archive(
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "c422384f60539800254cc6a0a6650247f54245b3501919bb00f47b815f49708c",
-    strip_prefix = "dagger-dagger-2.31.1",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.31.1.tar.gz"],
+    sha256 = "cb419b43ea4adc946ffc964a9be142642f3b0f098a8edabbbdb04b5cd1d526f2",
+    strip_prefix = "dagger-dagger-2.31.2",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.31.2.tar.gz"],
 )
 
 # ---
@@ -132,7 +132,7 @@ maven_install(
         "com.google.guava:guava:30.1-jre",
         "com.uber.nullaway:nullaway:0.8.0",
         "info.picocli:picocli:4.6.1",
-        "io.github.classgraph:classgraph:4.8.97",
+        "io.github.classgraph:classgraph:4.8.102",
         "io.helidon.config:helidon-config-object-mapping:2.2.0",
         "io.helidon.config:helidon-config-yaml:2.2.0",
         "io.helidon.config:helidon-config:2.2.0",
@@ -145,8 +145,8 @@ maven_install(
         "org.apache.kafka:kafka_2.13:2.7.0",
         "org.checkerframework:checker-qual:3.9.1",
         "org.checkerframework:checker:3.9.1",
-        "org.mapstruct:mapstruct-processor:1.4.1.Final",
-        "org.mapstruct:mapstruct:1.4.1.Final",
+        "org.mapstruct:mapstruct-processor:1.4.2.Final",
+        "org.mapstruct:mapstruct:1.4.2.Final",
         "org.openjdk.jmh:jmh-core:1.27",
         "org.openjdk.jmh:jmh-generator-annprocess:1.27",
         "org.slf4j:slf4j-api:1.7.30",
@@ -154,25 +154,25 @@ maven_install(
         maven.artifact(
             "com.google.truth",
             "truth",
-            "1.1",
+            "1.1.2",
             testonly = True,
         ),
         maven.artifact(
             "com.google.truth.extensions",
             "truth-java8-extension",
-            "1.1",
+            "1.1.2",
             testonly = True,
         ),
         maven.artifact(
             "com.google.truth.extensions",
             "truth-liteproto-extension",
-            "1.1",
+            "1.1.2",
             testonly = True,
         ),
         maven.artifact(
             "com.google.truth.extensions",
             "truth-proto-extension",
-            "1.1",
+            "1.1.2",
             testonly = True,
         ),
         maven.artifact(
