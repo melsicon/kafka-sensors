@@ -1,0 +1,34 @@
+--- json-schema-provider/src/main/java/io/confluent/kafka/schemaregistry/json/JsonSchema.java	2021-02-04 17:11:17.000000000 +0100
++++ json-schema-provider/src/main/java/io/confluent/kafka/schemaregistry/json/JsonSchema.tmp	2021-02-04 17:11:17.000000000 +0100
+@@ -320,11 +320,11 @@
+         if (first) {
+           // Log first incompatible change as warning
+           log.warn("Found incompatible change: {}", incompatibleDiff);
+-          errorMessages.add(String.format("Found incompatible change: {}", incompatibleDiff));
++          errorMessages.add(String.format("Found incompatible change: %s", incompatibleDiff));
+           first = false;
+         } else {
+           log.debug("Found incompatible change: {}", incompatibleDiff);
+-          errorMessages.add(String.format("Found incompatible change: {}", incompatibleDiff));
++          errorMessages.add(String.format("Found incompatible change: %s", incompatibleDiff));
+         }
+       }
+       return errorMessages;
+
+--- protobuf-provider/src/main/java/io/confluent/kafka/schemaregistry/protobuf/ProtobufSchema.java	2021-02-04 17:11:17.000000000 +0100
++++ protobuf-provider/src/main/java/io/confluent/kafka/schemaregistry/protobuf/ProtobufSchema.tmp	2021-02-04 17:11:17.000000000 +0100
+@@ -807,11 +807,11 @@
+         if (first) {
+           // Log first incompatible change as warning
+           log.warn("Found incompatible change: {}", incompatibleDiff);
+-          errorMessages.add(String.format("Found incompatible change: {}", incompatibleDiff));
++          errorMessages.add(String.format("Found incompatible change: %s", incompatibleDiff));
+           first = false;
+         } else {
+           log.debug("Found incompatible change: {}", incompatibleDiff);
+-          errorMessages.add(String.format("Found incompatible change: {}", incompatibleDiff));
++          errorMessages.add(String.format("Found incompatible change: %s", incompatibleDiff));
+         }
+       }
+       return errorMessages;
+

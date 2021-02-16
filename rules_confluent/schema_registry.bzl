@@ -37,6 +37,7 @@ java_library(
         "@confluent_common//:common-config",
         "@maven//:com_fasterxml_jackson_core_jackson_core",
         "@maven//:org_apache_avro_avro",
+        "@maven//:jakarta_ws_rs_jakarta_ws_rs_api",
         "@maven//:org_apache_kafka_kafka_clients",
     ],
 )

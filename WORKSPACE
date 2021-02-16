@@ -6,10 +6,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "dbf5a9ef855684f84cac2e7ae7886c5a001d4f66ae23f6904da0faaaef0d61fc",
+    sha256 = "4d838e2d70b955ef9dd0d0648f673141df1bc1d7ecf5c2d621dcc163f47dd38a",
     urls = [
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.11/rules_go-v0.24.11.tar.gz",
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.11/rules_go-v0.24.11.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.12/rules_go-v0.24.12.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.12/rules_go-v0.24.12.tar.gz",
     ],
 )
 
@@ -36,16 +36,16 @@ http_archive(
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "cb419b43ea4adc946ffc964a9be142642f3b0f098a8edabbbdb04b5cd1d526f2",
-    strip_prefix = "dagger-dagger-2.31.2",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.31.2.tar.gz"],
+    sha256 = "486d506fa9c5ad458481cd2a24f51afeb2b58620d1f32e0382ecd5c43f72a7ac",
+    strip_prefix = "dagger-dagger-2.32",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.32.tar.gz"],
 )
 
 # ---
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
-go_register_toolchains(go_version = "1.15.6")
+go_register_toolchains(go_version = "1.15.8")
 
 go_rules_dependencies()
 
@@ -133,9 +133,9 @@ maven_install(
         "com.uber.nullaway:nullaway:0.8.0",
         "info.picocli:picocli:4.6.1",
         "io.github.classgraph:classgraph:4.8.102",
-        "io.helidon.config:helidon-config-object-mapping:2.2.0",
-        "io.helidon.config:helidon-config-yaml:2.2.0",
-        "io.helidon.config:helidon-config:2.2.0",
+        "io.helidon.config:helidon-config-object-mapping:2.2.1",
+        "io.helidon.config:helidon-config-yaml:2.2.1",
+        "io.helidon.config:helidon-config:2.2.1",
         "jakarta.annotation:jakarta.annotation-api:1.3.5",
         "jakarta.servlet:jakarta.servlet-api:4.0.3",
         "jakarta.validation:jakarta.validation-api:2.0.2",
@@ -143,8 +143,8 @@ maven_install(
         "org.apache.kafka:kafka-clients:2.7.0",
         "org.apache.kafka:kafka-streams:2.7.0",
         "org.apache.kafka:kafka_2.13:2.7.0",
-        "org.checkerframework:checker-qual:3.9.1",
-        "org.checkerframework:checker:3.9.1",
+        "org.checkerframework:checker-qual:3.10.0",
+        "org.checkerframework:checker:3.10.0",
         "org.mapstruct:mapstruct-processor:1.4.2.Final",
         "org.mapstruct:mapstruct:1.4.2.Final",
         "org.openjdk.jmh:jmh-core:1.27",
@@ -184,7 +184,7 @@ maven_install(
         maven.artifact(
             "junit",
             "junit",
-            "4.13.1",
+            "4.13.2",
             testonly = True,
         ),
         maven.artifact(
@@ -196,7 +196,7 @@ maven_install(
         maven.artifact(
             "org.ow2.asm",
             "asm",
-            "9.0",
+            "9.1",
             testonly = True,
         ),
     ] + DAGGER_ARTIFACTS + AVRO_ARTIFACTS + CONFLUENT_ARTIFACTS,
