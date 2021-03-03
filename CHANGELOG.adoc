@@ -14,7 +14,7 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 - Add JMH microbenchmark
 - Use Avro logical types
 - Add Avro schema compatibility test
-- Update Confluent schema registry to 6.0.1
+- Update Confluent schema registry to 6.1.0
 - Add Docker image for benchmark
 - Add Confluent JSON and Protocol Buffers
 - Use Checker Framework

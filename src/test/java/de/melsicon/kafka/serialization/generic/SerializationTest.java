@@ -23,7 +23,7 @@ import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-@SuppressWarnings("nullness:initialization.static.fields.uninitialized") // Initialized in before
+@SuppressWarnings("nullness:initialization.static.field.uninitialized") // Initialized in before
 public final class SerializationTest {
   private static final Instant INSTANT = Instant.ofEpochSecond(443634300L);
 

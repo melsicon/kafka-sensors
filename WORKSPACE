@@ -6,10 +6,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "4d838e2d70b955ef9dd0d0648f673141df1bc1d7ecf5c2d621dcc163f47dd38a",
+    sha256 = "52d0a57ea12139d727883c2fef03597970b89f2cc2a05722c42d1d7d41ec065b",
     urls = [
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.12/rules_go-v0.24.12.tar.gz",
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.12/rules_go-v0.24.12.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.13/rules_go-v0.24.13.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.13/rules_go-v0.24.13.tar.gz",
     ],
 )
 
@@ -29,23 +29,23 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
-    strip_prefix = "protobuf-3.14.0",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.14.0.tar.gz"],
+    sha256 = "b10bf4e2d1a7586f54e64a5d9e7837e5188fc75ae69e36f215eb01def4f9721b",
+    strip_prefix = "protobuf-3.15.3",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.15.3.tar.gz"],
 )
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "486d506fa9c5ad458481cd2a24f51afeb2b58620d1f32e0382ecd5c43f72a7ac",
-    strip_prefix = "dagger-dagger-2.32",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.32.tar.gz"],
+    sha256 = "bdcec99530c0b5f154f17798302757c5bd41cd0ebb06b1167b202d450b4c7df5",
+    strip_prefix = "dagger-dagger-2.33",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.33.tar.gz"],
 )
 
 # ---
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
-go_register_toolchains(go_version = "1.15.8")
+go_register_toolchains(go_version = "1.16")
 
 go_rules_dependencies()
 
@@ -137,20 +137,20 @@ maven_install(
         "io.helidon.config:helidon-config-yaml:2.2.1",
         "io.helidon.config:helidon-config:2.2.1",
         "jakarta.annotation:jakarta.annotation-api:1.3.5",
-        "jakarta.servlet:jakarta.servlet-api:4.0.3",
+        "jakarta.servlet:jakarta.servlet-api:4.0.4",
         "jakarta.validation:jakarta.validation-api:2.0.2",
         "jakarta.ws.rs:jakarta.ws.rs-api:2.1.6",
         "org.apache.kafka:kafka-clients:2.7.0",
         "org.apache.kafka:kafka-streams:2.7.0",
         "org.apache.kafka:kafka_2.13:2.7.0",
-        "org.checkerframework:checker-qual:3.10.0",
-        "org.checkerframework:checker:3.10.0",
+        "org.checkerframework:checker-qual:3.11.0",
+        "org.checkerframework:checker:3.11.0",
         "org.mapstruct:mapstruct-processor:1.4.2.Final",
         "org.mapstruct:mapstruct:1.4.2.Final",
-        "org.openjdk.jmh:jmh-core:1.27",
-        "org.openjdk.jmh:jmh-generator-annprocess:1.27",
-        "org.slf4j:slf4j-api:1.7.30",
-        "org.slf4j:slf4j-jdk14:1.7.30",
+        "org.openjdk.jmh:jmh-core:1.28",
+        "org.openjdk.jmh:jmh-generator-annprocess:1.28",
+        "org.slf4j:slf4j-api:1.8.0-beta4",
+        "org.slf4j:slf4j-jdk14:1.8.0-beta4",
         maven.artifact(
             "com.google.truth",
             "truth",
@@ -210,7 +210,7 @@ maven_install(
         "javax.ws.rs:javax.ws.rs-api": ":jakarta_ws_rs_jakarta_ws_rs_api",
     },
     repositories = [
-        "https://jcenter.bintray.com",
+        "https://maven-central-eu.storage-download.googleapis.com/maven2/",
         "https://repo1.maven.org/maven2",
     ],
 )

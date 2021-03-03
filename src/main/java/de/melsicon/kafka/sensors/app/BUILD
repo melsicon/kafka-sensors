@@ -44,26 +44,17 @@ java_binary(
 
 java_image(
     name = "kafka_sensors",
-    srcs = glob(
-        ["*.java"],
-        exclude = ["ClassCheck.java"],
-    ),
     base = "@java_base//image",
     data = ["//conf"],
     jvm_flags = [
         "-Djava.util.logging.config.file=conf/logging.properties",
         "-XX:+CrashOnOutOfMemoryError",
     ],
-    # layers = [":deps_layer"],
     main_class = "de.melsicon.kafka.sensors.app.Main",
     visibility = ["//visibility:public"],
-    runtime_deps = RUNTIME_DEPS,
-    deps = [
-        "//src/main/java/de/melsicon/kafka/context",
-        "//src/main/java/de/melsicon/kafka/lifecycle",
-        "//toolchain:checker",
-        "//toolchain:nullaway",
-    ] + APP_DEPS,
+    runtime_deps = [
+        ":app_library",
+    ] + RUNTIME_DEPS,
 )
 
 java_binary(
