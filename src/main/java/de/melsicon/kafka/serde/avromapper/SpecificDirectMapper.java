@@ -1,13 +1,11 @@
 package de.melsicon.kafka.serde.avromapper;
 
-import com.google.errorprone.annotations.ForOverride;
 import com.google.errorprone.annotations.Immutable;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.SensorStateMapper;
 import de.melsicon.kafka.serde.mapping.MapStructConfig;
-import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
@@ -32,13 +30,11 @@ public abstract class SpecificDirectMapper
   }
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  public abstract SensorState map(de.melsicon.kafka.sensors.avro.@Nullable SensorState sensorState);
+  public abstract @PolyNull SensorState map(
+      de.melsicon.kafka.sensors.avro.@PolyNull SensorState sensorState);
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  public de.melsicon.kafka.sensors.avro.@Nullable SensorState unmap(@Nullable SensorState from) {
+  public de.melsicon.kafka.sensors.avro.@PolyNull SensorState unmap(@PolyNull SensorState from) {
     if (from == null) {
       return null;
     }
@@ -48,15 +44,12 @@ public abstract class SpecificDirectMapper
   }
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  public abstract SensorStateWithDuration map2(
-      de.melsicon.kafka.sensors.avro.@Nullable SensorStateWithDuration sensorState);
+  public abstract @PolyNull SensorStateWithDuration map2(
+      de.melsicon.kafka.sensors.avro.@PolyNull SensorStateWithDuration sensorState);
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  public de.melsicon.kafka.sensors.avro.@Nullable SensorStateWithDuration unmap2(
-      @Nullable SensorStateWithDuration from) {
+  public de.melsicon.kafka.sensors.avro.@PolyNull SensorStateWithDuration unmap2(
+      @PolyNull SensorStateWithDuration from) {
     if (from == null) {
       return null;
     }
@@ -65,12 +58,10 @@ public abstract class SpecificDirectMapper
     return to;
   }
 
-  @ForOverride
   /* package */ abstract void unmapto(
       de.melsicon.kafka.model.SensorState from,
       @MappingTarget de.melsicon.kafka.sensors.avro.SensorState to);
 
-  @ForOverride
   /* package */ abstract void unmapto2(
       de.melsicon.kafka.model.SensorStateWithDuration from,
       @MappingTarget de.melsicon.kafka.sensors.avro.SensorStateWithDuration to);

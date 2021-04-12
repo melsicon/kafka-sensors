@@ -19,8 +19,7 @@ import java.util.Objects;
 import org.apache.avro.generic.GenericEnumSymbol;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
-import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 
 public final class GenericMapper implements SensorStateMapper<GenericRecord, GenericRecord> {
   private GenericMapper() {}
@@ -30,9 +29,7 @@ public final class GenericMapper implements SensorStateMapper<GenericRecord, Gen
   }
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  public SensorState map(@Nullable GenericRecord sensorState) {
+  public @PolyNull SensorState map(@PolyNull GenericRecord sensorState) {
     if (sensorState == null) {
       return null;
     }
@@ -44,9 +41,7 @@ public final class GenericMapper implements SensorStateMapper<GenericRecord, Gen
   }
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  public GenericRecord unmap(@Nullable SensorState sensorState) {
+  public @PolyNull GenericRecord unmap(@PolyNull SensorState sensorState) {
     if (sensorState == null) {
       return null;
     }
@@ -58,9 +53,7 @@ public final class GenericMapper implements SensorStateMapper<GenericRecord, Gen
   }
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  public SensorStateWithDuration map2(@Nullable GenericRecord sensorState) {
+  public @PolyNull SensorStateWithDuration map2(@PolyNull GenericRecord sensorState) {
     if (sensorState == null) {
       return null;
     }
@@ -72,9 +65,7 @@ public final class GenericMapper implements SensorStateMapper<GenericRecord, Gen
   }
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  public GenericRecord unmap2(@Nullable SensorStateWithDuration sensorState) {
+  public @PolyNull GenericRecord unmap2(@PolyNull SensorStateWithDuration sensorState) {
     if (sensorState == null) {
       return null;
     }

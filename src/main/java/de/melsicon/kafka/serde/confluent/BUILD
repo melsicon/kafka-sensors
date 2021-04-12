@@ -25,7 +25,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/serde/mapping",
         "//src/main/java/de/melsicon/kafka/serde/proto",
         "//src/main/proto/melsicon/kafka/sensors/v1:sensorsv1_java_proto",
-        "//toolchain:nullaway",
+        "//toolchain:checker",
         "@com_google_protobuf//:protobuf_java",
         "@confluent_schema_registry//:kafka-avro-serializer",
         "@confluent_schema_registry//:kafka-json-schema-serializer",

@@ -76,8 +76,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
     }
 
     @Override
-    @Nullable
-    public V get(@NonNull K key) {
+    public @Nullable V get(@NonNull K key) {
       return store.get(key);
     }
 

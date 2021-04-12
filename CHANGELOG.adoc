@@ -5,6 +5,7 @@ The format is based on https://keepachangelog.com/en/1.0.0/[Keep a Changelog],
 and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Versioning].
 
 == [Unreleased]
+
 - Update Bazel and Protobuf
 - Refactor business logic for testability
 - Update Kafka to 2.7.0, Scala 2.13

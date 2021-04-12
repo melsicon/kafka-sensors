@@ -15,7 +15,6 @@ java_library(
         "//src/main/java/de/melsicon/kafka/serde/proto",
         "//src/test/java/de/melsicon/kafka/testutil",
         "//toolchain:checker",
-        "//toolchain:nullaway",
         "//toolchain:truth",
         "@maven//:com_google_guava_guava",
         "@maven//:org_apache_kafka_kafka_clients",

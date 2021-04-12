@@ -7,7 +7,6 @@ java_library(
     deps = [
         "//src/main/java/de/melsicon/kafka/model",
         "//toolchain:checker",
-        "//toolchain:nullaway",
         "//toolchain:truth",
     ],
 )

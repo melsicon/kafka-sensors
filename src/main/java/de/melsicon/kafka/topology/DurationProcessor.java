@@ -1,7 +1,6 @@
 package de.melsicon.kafka.topology;
 
 import com.google.common.annotations.VisibleForTesting;
-import de.melsicon.annotation.Initializer;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import java.time.Duration;
@@ -12,7 +11,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 
-public final class DurationProcessor
+/* package */ final class DurationProcessor
     implements ValueTransformer<SensorState, SensorStateWithDuration> {
   public static final String SENSOR_STATES = "SensorStates";
 
@@ -55,7 +54,6 @@ public final class DurationProcessor
    * @param store State store
    */
   @VisibleForTesting
-  @Initializer
   /* package */ void initStore(KVStore<String, SensorState> store) {
     this.store = store;
   }
@@ -67,10 +65,9 @@ public final class DurationProcessor
     initStore(kvStore);
   }
 
-  @SuppressWarnings("nullness:override.return.invalid") // ValueTransformer is not annotated
   @Override
-  @Nullable
-  public SensorStateWithDuration transform(@Nullable SensorState sensorState) {
+  @SuppressWarnings("nullness:override.return.invalid") // ValueTransformer is not annotated
+  public @Nullable SensorStateWithDuration transform(@Nullable SensorState sensorState) {
     // init has to be called first
     assert store != null : "@AssumeAssertion(nullness): init not called";
 

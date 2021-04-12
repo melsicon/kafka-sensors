@@ -1,7 +1,6 @@
 package de.melsicon.kafka.serde.mapping.protobuf;
 
 import com.google.auto.service.AutoService;
-import de.melsicon.annotation.Initializer;
 import java.util.List;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -24,8 +23,12 @@ public final class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingS
   private TypeMirror protobufByteStringType;
   private TypeMirror protobufUnknownFieldsSetType;
 
+  @SuppressWarnings("nullness:initialization.fields.uninitialized")
+  public ProtobufAccessorNamingStrategy() {
+    super();
+  }
+
   @Override
-  @Initializer
   public void init(MapStructProcessingEnvironment processingEnvironment) {
     super.init(processingEnvironment);
 

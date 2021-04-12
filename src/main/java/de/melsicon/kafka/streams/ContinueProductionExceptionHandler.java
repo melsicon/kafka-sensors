@@ -5,6 +5,10 @@ import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.streams.errors.ProductionExceptionHandler;
 
+/**
+ * {@link ProductionExceptionHandler} that logs an exception while attempting to produce result
+ * records and then signals the processing pipeline to continue processing more records.
+ */
 public final class ContinueProductionExceptionHandler implements ProductionExceptionHandler {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 

@@ -1,16 +1,18 @@
-package de.melsicon.kafka.sensors.benchmark;
+package de.melsicon.kafka.benchmark;
 
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
 
-import de.melsicon.annotation.Initializer;
+import de.melsicon.kafka.benchmark.serdes.SerDeType;
+import de.melsicon.kafka.benchmark.serdes.SerDes;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import de.melsicon.kafka.sensors.serdes.SerDeType;
-import de.melsicon.kafka.sensors.serdes.SerDes;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.testutil.MockSchemaRegistry;
 import java.util.Map;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serializer;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
@@ -23,17 +25,18 @@ public class ExecutionPlan {
   private static final String REGISTRY_SCOPE = "test";
   private static final String REGISTRY_URL = "mock://" + REGISTRY_SCOPE;
 
-  @Param public SerDeType serdes;
+  @Param public @MonotonicNonNull SerDeType serdes;
 
-  public Serializer<SensorStateWithDuration> serializer;
-  public Deserializer<SensorStateWithDuration> deserializer;
-  public SensorStateWithDuration data;
-  public byte[] bytes;
+  public @MonotonicNonNull Serializer<SensorStateWithDuration> serializer;
+  public @MonotonicNonNull Deserializer<SensorStateWithDuration> deserializer;
+  public @MonotonicNonNull SensorStateWithDuration data;
+  public byte @MonotonicNonNull [] serialized;
 
-  private SchemaRegistryClient registryClient;
+  private @MonotonicNonNull SchemaRegistryClient registryClient;
 
-  @Initializer
   @Setup(Level.Iteration)
+  @RequiresNonNull("serdes")
+  @EnsuresNonNull({"serializer", "deserializer", "data", "serialized", "registryClient"})
   public void setup() {
     registryClient = MockSchemaRegistry.getClientForScope(REGISTRY_SCOPE);
 
@@ -46,10 +49,11 @@ public class ExecutionPlan {
 
     data = SerDes.createData();
 
-    bytes = serializer.serialize(SerDes.TOPIC, data);
+    serialized = serializer.serialize(SerDes.TOPIC, data);
   }
 
   @TearDown(Level.Iteration)
+  @RequiresNonNull({"serializer", "deserializer", "registryClient"})
   public void tearDown() {
     serializer.close();
     deserializer.close();

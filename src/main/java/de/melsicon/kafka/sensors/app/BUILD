@@ -24,7 +24,6 @@ java_library(
         "//src/main/java/de/melsicon/kafka/context",
         "//src/main/java/de/melsicon/kafka/lifecycle",
         "//toolchain:checker",
-        "//toolchain:nullaway",
     ] + APP_DEPS,
 )
 
@@ -68,7 +67,6 @@ java_binary(
         ":app_library",
     ] + RUNTIME_DEPS,
     deps = [
-        "//toolchain:nullaway",
         "@maven//:com_google_flogger_flogger",
         "@maven//:io_github_classgraph_classgraph",
     ],

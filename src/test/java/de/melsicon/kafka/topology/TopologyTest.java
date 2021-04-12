@@ -9,6 +9,7 @@ import static de.melsicon.kafka.topology.TopologyTestHelper.RESULT_TOPIC;
 import static de.melsicon.kafka.topology.TopologyTestHelper.newKafkaTestResource;
 
 import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
+import de.melsicon.kafka.context.TestComponent;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
@@ -24,6 +25,9 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.streams.TestInputTopic;
 import org.apache.kafka.streams.TestOutputTopic;
 import org.apache.kafka.streams.TopologyTestDriver;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -33,7 +37,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-@SuppressWarnings("nullness:initialization.fields.uninitialized") // Initialized in before
 @RunWith(Parameterized.class)
 public final class TopologyTest {
   @ClassRule
@@ -43,9 +46,9 @@ public final class TopologyTest {
   private final Supplier<Serde<SensorState>> inputSerdes;
   private final Supplier<Serde<SensorState>> storeSerdes;
   private final Supplier<Serde<SensorStateWithDuration>> resultSerdes;
-  private TopologyTestDriver testDriver;
-  private TestInputTopic<String, SensorState> inputTopic;
-  private TestOutputTopic<String, SensorStateWithDuration> outputTopic;
+  private @MonotonicNonNull TopologyTestDriver testDriver;
+  private @MonotonicNonNull TestInputTopic<String, SensorState> inputTopic;
+  private @MonotonicNonNull TestOutputTopic<String, SensorStateWithDuration> outputTopic;
 
   public TopologyTest(
       String description,
@@ -82,6 +85,7 @@ public final class TopologyTest {
   }
 
   @Before
+  @EnsuresNonNull({"testDriver", "inputTopic", "outputTopic"})
   public void before() {
     var inputSerde = inputSerdes.get();
     registryTestResource.configureSerde(inputSerde);
@@ -96,13 +100,13 @@ public final class TopologyTest {
     kafkaTestUtils.createTopic(INPUT_TOPIC, PARTITIONS, REPLICATION_FACTOR);
     kafkaTestUtils.createTopic(RESULT_TOPIC, PARTITIONS, REPLICATION_FACTOR);
 
-    var topologyFactory =
-        new TopologyFactory()
-            .createTopology(INPUT_TOPIC, RESULT_TOPIC, inputSerde, storeSerde, resultSerde);
-
-    var settings = TopologyTestHelper.settings();
-
-    testDriver = new TopologyTestDriver(topologyFactory, settings);
+    var configuration = TopologyTestHelper.configuration(KAFKA_TEST_RESOURCE);
+    var settings = TopologyTestHelper.settings(KAFKA_TEST_RESOURCE);
+    var testComponent =
+        TestComponent.factory()
+            .newTestComponent(configuration, inputSerde, storeSerde, resultSerde);
+    var topology = testComponent.topology();
+    testDriver = new TopologyTestDriver(topology, settings);
 
     inputTopic =
         testDriver.createInputTopic(INPUT_TOPIC, new StringSerializer(), inputSerde.serializer());
@@ -112,15 +116,18 @@ public final class TopologyTest {
   }
 
   @After
+  @RequiresNonNull("testDriver")
   public void after() {
     testDriver.close();
   }
 
+  @RequiresNonNull("inputTopic")
   private void pipeState(SensorState sensorState) {
     inputTopic.pipeInput(sensorState.getId(), sensorState);
   }
 
   @Test
+  @RequiresNonNull({"inputTopic", "outputTopic"})
   public void testTopology() {
     var instant = Instant.ofEpochSecond(443634300L);
 
@@ -146,6 +153,7 @@ public final class TopologyTest {
   }
 
   @Test
+  @RequiresNonNull({"inputTopic", "outputTopic"})
   public void testRepeated() {
     var instant = Instant.ofEpochSecond(443634300L);
 
@@ -192,8 +200,9 @@ public final class TopologyTest {
     assertThat(result4.value.getDuration()).isEqualTo(Duration.ofSeconds(15));
   }
 
-  @SuppressWarnings("nullness:argument.type.incompatible")
   @Test
+  @RequiresNonNull({"inputTopic", "outputTopic"})
+  @SuppressWarnings("nullness:argument.type.incompatible") // TestInputTopic is not annotated
   public void testTombstone() {
     inputTopic.pipeInput("7331", null);
 

@@ -6,13 +6,15 @@ import de.melsicon.kafka.configuration.KafkaConfiguration;
 import io.helidon.config.Config;
 import javax.inject.Singleton;
 
+/** Provides the {@link KafkaConfiguration} for our main app. */
 @Module
-/* package */ abstract class ConfigurationModule {
+public abstract class ConfigurationModule {
   private ConfigurationModule() {}
 
   @Provides
   @Singleton
   /* package */ static KafkaConfiguration kafkaConfiguration(Config config) {
-    return KafkaConfiguration.extract(config);
+    var subConfig = config.get(KafkaConfiguration.PREFIX);
+    return subConfig.as(KafkaConfiguration.class).get();
   }
 }

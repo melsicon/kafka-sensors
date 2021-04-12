@@ -5,10 +5,10 @@ java_library(
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//src/main/java/de/melsicon/annotation",
+        "//src/main/java/de/melsicon/kafka/configuration",
         "//src/main/java/de/melsicon/kafka/model",
         "//toolchain:checker",
-        "//toolchain:nullaway",
+        "//toolchain:dagger",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:com_google_guava_guava",
         "@maven//:javax_inject_javax_inject",

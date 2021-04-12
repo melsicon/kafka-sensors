@@ -14,33 +14,38 @@ import io.confluent.kafka.streams.serdes.avro.ReflectionAvroSerializer;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serializer;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-@SuppressWarnings("nullness:initialization.static.field.uninitialized") // Initialized in before
 public final class ReflectTest {
   @ClassRule
   public static final SchemaRegistryRule registryTestResource =
       new SchemaRegistryRule(REGISTRY_SCOPE);
 
-  private static Serializer<SensorState> encoder;
-  private static Deserializer<SensorState> decoder;
+  private static @MonotonicNonNull Serializer<SensorState> encoder;
+  private static @MonotonicNonNull Deserializer<SensorState> decoder;
 
   @BeforeClass
+  @EnsuresNonNull({"encoder", "decoder"})
   public static void before() {
     encoder = new ReflectionAvroSerializer<>();
     decoder = new ReflectionAvroDeserializer<>(SensorState.class);
     registerRegistry();
   }
 
+  @RequiresNonNull({"encoder", "decoder"})
   private static void registerRegistry() {
     registryTestResource.configureSerializer(encoder);
     registryTestResource.configureDeserializer(decoder);
   }
 
   @AfterClass
+  @RequiresNonNull({"encoder", "decoder"})
   public static void after() {
     encoder.close();
     decoder.close();
@@ -55,6 +60,7 @@ public final class ReflectTest {
   }
 
   @Test
+  @RequiresNonNull({"encoder", "decoder"})
   public void canDecode() {
     var sensorState = createSensorState();
 
@@ -70,11 +76,13 @@ public final class ReflectTest {
   }
 
   @Test
+  @RequiresNonNull("encoder")
   public void stateIsRequired() {
     var sensorState = new SensorState();
     sensorState.id = "7331";
     sensorState.time = INSTANT;
 
-    assertThrows(SerializationException.class, () -> encoder.serialize(KAFKA_TOPIC, sensorState));
+    var enc = encoder; // https://github.com/typetools/checker-framework/issues/1248
+    assertThrows(SerializationException.class, () -> enc.serialize(KAFKA_TOPIC, sensorState));
   }
 }

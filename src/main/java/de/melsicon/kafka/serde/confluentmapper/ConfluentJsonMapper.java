@@ -5,8 +5,7 @@ import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.SensorStateMapper;
 import de.melsicon.kafka.serde.mapping.MapStructConfig;
-import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.mapstruct.Mapper;
 
 @Immutable
@@ -20,24 +19,18 @@ public abstract class ConfluentJsonMapper
   }
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  public abstract SensorState map(
-      de.melsicon.kafka.sensors.confluent_json.@Nullable SensorState sensorState);
+  public abstract @PolyNull SensorState map(
+      de.melsicon.kafka.sensors.confluent_json.@PolyNull SensorState sensorState);
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  public abstract de.melsicon.kafka.sensors.confluent_json.@Nullable SensorState unmap(
-      @Nullable SensorState sensorState);
+  public abstract de.melsicon.kafka.sensors.confluent_json.@PolyNull SensorState unmap(
+      @PolyNull SensorState sensorState);
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  public abstract SensorStateWithDuration map2(
-      de.melsicon.kafka.sensors.confluent_json.@Nullable SensorStateWithDuration sensorState);
+  public abstract @PolyNull SensorStateWithDuration map2(
+      de.melsicon.kafka.sensors.confluent_json.@PolyNull SensorStateWithDuration sensorState);
 
   @Override
-  @AssertNonNullIfNonNull("sensorState")
-  public abstract de.melsicon.kafka.sensors.confluent_json.@Nullable SensorStateWithDuration unmap2(
-      @Nullable SensorStateWithDuration sensorState);
+  public abstract de.melsicon.kafka.sensors.confluent_json.@PolyNull SensorStateWithDuration unmap2(
+      @PolyNull SensorStateWithDuration sensorState);
 }

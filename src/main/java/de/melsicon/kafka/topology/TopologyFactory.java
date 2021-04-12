@@ -1,8 +1,8 @@
 package de.melsicon.kafka.topology;
 
+import de.melsicon.kafka.configuration.KafkaConfiguration;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import javax.inject.Inject;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -12,13 +12,11 @@ import org.apache.kafka.streams.kstream.Named;
 import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.state.Stores;
 
-public final class TopologyFactory {
-  @Inject
-  /* package */ TopologyFactory() {}
+/* package */ final class TopologyFactory {
+  private TopologyFactory() {}
 
-  public Topology createTopology(
-      String inputTopic,
-      String resultTopic,
+  /* package */ static Topology createTopology(
+      KafkaConfiguration configuration,
       Serde<SensorState> inputSerde,
       Serde<SensorState> storeSerde,
       Serde<SensorStateWithDuration> resultSerde) {
@@ -35,11 +33,11 @@ public final class TopologyFactory {
     // Register the store builder
     builder.addStateStore(storeBuilder);
 
-    String[] stateStoreNames = {DurationProcessor.SENSOR_STATES};
+    var stateStoreNames = new String[] {DurationProcessor.SENSOR_STATES};
 
-    builder.stream(inputTopic, Consumed.with(Serdes.String(), inputSerde))
+    builder.stream(configuration.inputTopic(), Consumed.with(Serdes.String(), inputSerde))
         .transformValues(DurationProcessor::new, Named.as("DURATION-PROCESSOR"), stateStoreNames)
-        .to(resultTopic, Produced.with(Serdes.String(), resultSerde));
+        .to(configuration.resultTopic(), Produced.with(Serdes.String(), resultSerde));
 
     return builder.build();
   }

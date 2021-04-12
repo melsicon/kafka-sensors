@@ -2,23 +2,18 @@ package de.melsicon.kafka.serde;
 
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 
 public interface SensorStateMapper<S, T> {
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  SensorState map(@Nullable S sensorState);
+  @PolyNull
+  SensorState map(@PolyNull S sensorState);
 
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  S unmap(@Nullable SensorState sensorState);
+  @PolyNull
+  S unmap(@PolyNull SensorState sensorState);
 
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  SensorStateWithDuration map2(@Nullable T sensorState);
+  @PolyNull
+  SensorStateWithDuration map2(@PolyNull T sensorState);
 
-  @AssertNonNullIfNonNull("sensorState")
-  @Nullable
-  T unmap2(@Nullable SensorStateWithDuration sensorState);
+  @PolyNull
+  T unmap2(@PolyNull SensorStateWithDuration sensorState);
 }

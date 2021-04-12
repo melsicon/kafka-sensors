@@ -10,7 +10,6 @@ java_plugin(
 java_library(
     name = "mapstruct",
     exported_plugins = ["mapstruct_processor"],
-    javacopts = ["-Amapstruct.suppressGeneratorTimestamp=true"],
     visibility = ["//visibility:public"],
     exports = ["@maven//:org_mapstruct_mapstruct"],
 )
@@ -20,8 +19,8 @@ java_library(
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
+        "//src/main/java/de/melsicon/kafka/serde",
         "//toolchain:checker",
-        "//toolchain:nullaway",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:org_apache_kafka_kafka_clients",
         "@maven//:org_mapstruct_mapstruct",

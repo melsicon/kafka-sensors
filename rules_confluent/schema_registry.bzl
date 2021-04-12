@@ -127,6 +127,7 @@ java_library(
         "@com_google_protobuf//:protobuf_java_util",
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
         "@maven//:com_google_guava_guava",
+        "@maven//:com_squareup_wire_wire_runtime",
         "@maven//:com_squareup_wire_wire_schema",
         "@maven//:org_apache_kafka_kafka_clients",
         "@maven//:org_jetbrains_kotlin_kotlin_stdlib",

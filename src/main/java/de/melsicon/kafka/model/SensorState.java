@@ -5,6 +5,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.time.Instant;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 @Immutable
 @AutoValue
@@ -20,6 +21,12 @@ public abstract class SensorState {
   public abstract Instant getTime();
 
   public abstract State getState();
+
+  @Override
+  public abstract int hashCode();
+
+  @Override
+  public abstract boolean equals(@Nullable Object o);
 
   public enum State {
     OFF("off"),

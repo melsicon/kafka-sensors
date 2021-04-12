@@ -5,6 +5,10 @@ java_image(
     srcs = glob(["*.java"]),
     base = "@java_base//image",
     data = ["//conf"],
+    javacopts = [
+        "-Xlint:-cast",
+        "-AskipDefs=\\.jmh_generated\\.",
+    ],
     jvm_flags = [
         "--add-opens",
         "java.base/java.io=ALL-UNNAMED",
@@ -20,12 +24,11 @@ java_image(
         "@maven//:org_slf4j_slf4j_jdk14",
     ],
     deps = [
-        "//src/main/java/de/melsicon/annotation",
+        "//src/main/java/de/melsicon/kafka/benchmark/serdes",
         "//src/main/java/de/melsicon/kafka/model",
-        "//src/main/java/de/melsicon/kafka/sensors/serdes",
         "//src/main/java/de/melsicon/kafka/serde",
+        "//toolchain:checker",
         "//toolchain:jmh",
-        "//toolchain:nullaway",
         "@confluent_schema_registry//:kafka-avro-serializer",
         "@confluent_schema_registry//:kafka-schema-registry-client",
         "@confluent_schema_registry//:kafka-schema-serializer",

@@ -1,8 +1,10 @@
 package de.melsicon.kafka.context;
 
 import dagger.Module;
+import de.melsicon.kafka.topology.TopologyModule;
 
-@Module(includes = {TestConfigurationModule.class})
+/** Provides the bindings for our tests. */
+@Module(includes = {TopologyModule.class})
 /* package */ abstract class TestModule {
   private TestModule() {}
 }

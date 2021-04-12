@@ -12,6 +12,9 @@ import java.util.function.Supplier;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serializer;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,7 +23,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-@SuppressWarnings("nullness:initialization.fields.uninitialized") // Initialized in before
 @RunWith(Parameterized.class)
 public final class SerdeWithDurationTest {
   @Rule public final SchemaRegistryRule registryTestResource;
@@ -29,8 +31,8 @@ public final class SerdeWithDurationTest {
   private final Supplier<Serde<SensorStateWithDuration>> inputSerdes;
   private final Supplier<Serde<SensorStateWithDuration>> resultSerdes;
 
-  private Serializer<SensorStateWithDuration> serializer;
-  private Deserializer<SensorStateWithDuration> deserializer;
+  private @MonotonicNonNull Serializer<SensorStateWithDuration> serializer;
+  private @MonotonicNonNull Deserializer<SensorStateWithDuration> deserializer;
 
   public SerdeWithDurationTest(
       String description,
@@ -48,6 +50,7 @@ public final class SerdeWithDurationTest {
   }
 
   @Before
+  @EnsuresNonNull({"serializer", "deserializer"})
   public void before() {
     var inputSerde = inputSerdes.get();
     registryTestResource.configureSerde(inputSerde);
@@ -59,12 +62,14 @@ public final class SerdeWithDurationTest {
   }
 
   @After
+  @RequiresNonNull({"serializer", "deserializer"})
   public void after() {
     serializer.close();
     deserializer.close();
   }
 
   @Test
+  @RequiresNonNull({"serializer", "deserializer"})
   public void compatability() {
     var sensorState = TestHelper.standardSensorStateWithDuration();
 
@@ -76,6 +81,7 @@ public final class SerdeWithDurationTest {
   }
 
   @Test
+  @RequiresNonNull("serializer")
   public void nullEncoding() {
     @SuppressWarnings("nullness:argument.type.incompatible") // Serializer is not annotated
     var encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, null);
@@ -83,6 +89,7 @@ public final class SerdeWithDurationTest {
   }
 
   @Test
+  @RequiresNonNull("deserializer")
   public void nullDecoding() {
     @SuppressWarnings("nullness:argument.type.incompatible") // Deserializer is not annotated
     var decoded = deserializer.deserialize(TestHelper.KAFKA_TOPIC, null);
@@ -90,6 +97,7 @@ public final class SerdeWithDurationTest {
   }
 
   @Test
+  @RequiresNonNull("deserializer")
   public void emptyDecoding() {
     assume().that(description).doesNotContain(" - confluent");
     var decoded = deserializer.deserialize(TestHelper.KAFKA_TOPIC, new byte[0]);

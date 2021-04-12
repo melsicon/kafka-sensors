@@ -5,7 +5,11 @@ import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.NUM_STREAM_THREADS_CONFIG;
 
+import com.google.common.collect.ImmutableList;
+import com.salesforce.kafka.test.AbstractKafkaTestResource;
+import com.salesforce.kafka.test.KafkaBroker;
 import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
+import de.melsicon.kafka.configuration.KafkaConfiguration;
 import de.melsicon.kafka.serde.SensorStateSerdes;
 import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import java.util.Properties;
@@ -40,15 +44,30 @@ import org.apache.kafka.common.serialization.Serdes;
     };
   }
 
-  /* package */ static Properties settings() {
+  /* package */ static Properties settings(AbstractKafkaTestResource<?> kafkaTestResource) {
     var settings = new Properties();
     settings.put(APPLICATION_ID_CONFIG, APPLICATION_ID);
-    settings.put(
-        BOOTSTRAP_SERVERS_CONFIG, TopologyTest.KAFKA_TEST_RESOURCE.getKafkaConnectString());
+    settings.put(BOOTSTRAP_SERVERS_CONFIG, kafkaTestResource.getKafkaConnectString());
 
     settings.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde.class.getName());
     settings.put(NUM_STREAM_THREADS_CONFIG, PARTITIONS);
 
     return settings;
+  }
+
+  /* package */ static KafkaConfiguration configuration(
+      AbstractKafkaTestResource<?> kafkaTestResource) {
+    return KafkaConfiguration.builder()
+        .inputTopic(INPUT_TOPIC)
+        .resultTopic(RESULT_TOPIC)
+        .bootstrapServers(bootstrapServers(kafkaTestResource))
+        .build();
+  }
+
+  private static ImmutableList<String> bootstrapServers(
+      AbstractKafkaTestResource<?> kafkaTestResource) {
+    return kafkaTestResource.getKafkaBrokers().stream()
+        .map(KafkaBroker::getConnectString)
+        .collect(ImmutableList.toImmutableList());
   }
 }

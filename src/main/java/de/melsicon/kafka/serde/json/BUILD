@@ -11,7 +11,6 @@ java_library(
         "//src/main/java/de/melsicon/kafka/model",
         "//src/main/java/de/melsicon/kafka/serde",
         "//toolchain:checker",
-        "//toolchain:nullaway",
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
         "@maven//:com_fasterxml_jackson_datatype_jackson_datatype_guava",

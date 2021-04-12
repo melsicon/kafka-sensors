@@ -8,19 +8,23 @@ import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.serde.json.JsonHelper;
 import java.io.IOException;
 import java.time.Instant;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("nullness:initialization.field.uninitialized") // Initialized in before
 public final class SerializationTest {
-  private ObjectMapper mapper;
+  private @MonotonicNonNull ObjectMapper mapper;
 
   @Before
+  @EnsuresNonNull("mapper")
   public void before() {
     mapper = JsonHelper.mapper();
   }
 
   @Test
+  @RequiresNonNull("mapper")
   public void canDecode() throws IOException {
     var instant = Instant.ofEpochSecond(443634300L);
 

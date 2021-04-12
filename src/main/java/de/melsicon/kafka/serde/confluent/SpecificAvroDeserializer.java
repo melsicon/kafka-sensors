@@ -37,14 +37,20 @@ public final class SpecificAvroDeserializer<T extends SpecificRecord> implements
   public void configure(
       @Nullable Map<String, ?> deserializerConfig, boolean isDeserializerForRecordKeys) {
     Map<String, Object> specificAvroEnabledConfig =
-        deserializerConfig == null ? new HashMap<>() : new HashMap<>(deserializerConfig);
+        deserializerConfig == null
+            ? new HashMap<>()
+            : new HashMap<>((Map<String, ? extends Object>) deserializerConfig);
     specificAvroEnabledConfig.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, true);
 
     inner.configure(specificAvroEnabledConfig, isDeserializerForRecordKeys);
   }
 
   @Override
-  public T deserialize(String topic, byte[] bytes) {
+  @SuppressWarnings({
+      "nullness:argument.type.incompatible",
+      "nullness:override.return.invalid"
+  }) // Deserializer and KafkaAvroDeserializer are not annotated
+  public @Nullable T deserialize(String topic, byte @Nullable [] bytes) {
     return type.cast(inner.deserialize(topic, bytes, schema));
   }
 

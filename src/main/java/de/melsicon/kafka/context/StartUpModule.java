@@ -7,6 +7,7 @@ import dagger.Provides;
 import java.util.Set;
 import javax.inject.Singleton;
 
+/** Bindings for our {@link Service}s. */
 @Module
 /* package */ abstract class StartUpModule {
   private StartUpModule() {}

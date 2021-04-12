@@ -1,7 +1,6 @@
 package de.melsicon.kafka.serde.mapping;
 
 import java.util.Map;
-import java.util.function.Function;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -12,9 +11,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 }) // Serializer is not annotated
 public final class MappedSerializer<U, T> implements Serializer<U> {
   private final Serializer<T> serializer;
-  private final Function<U, T> unmapper;
+  private final MapFunction<U, T> unmapper;
 
-  public MappedSerializer(Serializer<T> serializer, Function<U, T> unmapper) {
+  public MappedSerializer(Serializer<T> serializer, MapFunction<U, T> unmapper) {
     this.serializer = serializer;
     this.unmapper = unmapper;
   }

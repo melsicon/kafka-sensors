@@ -63,7 +63,8 @@ should produce
 |60s
 |===
 
-Which tells us that “Sensor 1” was “off” from 15:45:00 for 30 seconds and “on” from 15:45:30 for 60 seconds.
+Which tells us that “Sensor 1” was “off” from 15:45:00 for 30 seconds and “on” from 15:45:30 for 60
+seconds.
 
 Note that the second “off” reading produced an intermediate result.
 
@@ -84,9 +85,10 @@ logic in link:src/main/java/de/melsicon/kafka/topology[topology].
 
 The link:src/test/java/de/melsicon/kafka/topology[tests] test the topology with six different
 (de-)serializers, https://developers.google.com/protocol-buffers/[protocol buffers],
-https://json.org[JSON], http://avro.apache.org/docs/current/[Apache Avro] and the Confluent variants
-of them. Since the example needs an input format, a result format and a format for the state store
-we have 216 (6^3^) different combinations which are all tested.
+https://json.org[JSON], https://avro.apache.org/docs/current/[Apache Avro] and the
+https://docs.confluent.io/platform/current/schema-registry/[Confluent variants] of them. Since the
+example needs an input format, a result format and a format for the state store we have 216 (6^3^)
+different combinations which are all tested.
 
 While this abstraction might not be necessary in practice, it demonstrates two important design
 considerations:
@@ -113,8 +115,8 @@ for testing, but this would show up when using real world data and comparing wit
 
 By refactoring the business logic to depend only on an abstract store, we speed up testing by a
 factor of twenty ([source,shell]`bazel test //src/test/java/de/melsicon/kafka/topology:ProcessorTest`
-vs. `//src/test/java/de/melsicon/kafka/topology:TopologyTest`), which demonstrates a
-potential for improvement in development speed and testability.
+vs. `//src/test/java/de/melsicon/kafka/topology:TopologyTest`), which demonstrates a potential for
+improvement in development speed and testability.
 
 == Running
 
@@ -135,26 +137,28 @@ To run a single test, use
 [source,shell]
 bazel test //src/test/java/de/melsicon/kafka/topology:all
 
-
 The tests run with an embedded Kafka and mock schema registry, when necessary.
 
 === Main App
 
 The main app needs Kafka running at localhost, port 9092 (see
 link:conf/application.yaml[application.yaml]). Start it with
+
 [source,shell]
 bazel run //:kafka-sensors
 
-
 Watch the results with
+
 [source,shell]
 kafka-console-consumer --bootstrap-server localhost:9092 --topic result-topic
 
 and publish sensor values with
+
 [source,shell]
 kafka-console-producer --broker-list localhost:9092 --topic input-topic
 
 The main app runs with JSON in- and output, so you can use sample sensor values like
+
 [source,json]
 ----
 {"id":"7331","time":443634300.0,"state":"off"}
@@ -166,5 +170,6 @@ The main app runs with JSON in- and output, so you can use sample sensor values 
 === Benchmark
 
 Run the https://openjdk.java.net/projects/code-tools/jmh/[JMH] microbenchmarks with
+
 [source,shell]
 bazel run //:benchmark

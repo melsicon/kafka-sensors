@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.Objects;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-@SuppressWarnings({"NullAway", "nullness:initialization.field.uninitialized"})
+@SuppressWarnings("nullness:initialization.field.uninitialized")
 public final class SensorState {
   public String id;
 

@@ -5,20 +5,27 @@ load("@rules_java//java:defs.bzl", "java_library", "java_package_configuration",
 default_java_toolchain(
     name = "toolchain_java11",
     package_configuration = [
-        ":package_configuration",
+        ":src_package_configuration",
+        ":external_package_configuration",
     ],
     source_version = "11",
     target_version = "11",
     visibility = ["//visibility:public"],
+    xlint = [
+        "all",
+        "-processing",
+    ],
 )
 
 java_package_configuration(
-    name = "package_configuration",
+    name = "src_package_configuration",
     javacopts = [
-        "-Xlint:all,-processing,-cast",
+        "-ArequirePrefixInWarningSuppressions",
+        "-AwarnUnneededSuppressions",
+        "-AshowSuppressWarningsStrings",
         "-Werror",
-        "-Xpkginfo:always",
-        "-XepExcludedPaths:.*/bazel-out/.*",
+        "-Xpkginfo:nonempty",
+        "-XepExcludedPaths:.*/_javac/.*",
         "-XepDisableWarningsInGeneratedCode",
         "-XepAllDisabledChecksAsWarnings",
         "-Xep:Java7ApiChecker:OFF",
@@ -26,42 +33,51 @@ java_package_configuration(
         "-Xep:StaticOrDefaultInterfaceMethod:OFF",
         "-Xep:NoFunctionalReturnType:OFF",
         "-Xep:WildcardImport:OFF",
-        "-Xep:NullAway:ERROR",
-        "-XepOpt:NullAway:AnnotatedPackages=de.melsicon",
-        "-XepOpt:NullAway:TreatGeneratedAsUnannotated",
-        "-XepOpt:NullAway:CheckOptionalEmptiness",
-        "-XepOpt:NullAway:AcknowledgeRestrictiveAnnotations",
-        "-XepOpt:NullAway:CustomInitializerAnnotations=org.junit.Before,org.junit.BeforeClass",
-        "-XepOpt:NullAway:ExcludedFieldAnnotations=picocli.CommandLine.Option,org.openjdk.jmh.annotations.Param",
+        "-Xep:ReturnMissingNullable:OFF",  # Removed: https://github.com/google/error-prone/issues/1575
     ],
-    packages = [":package_group"],
+    packages = [":src_package_group"],
 )
 
 package_group(
-    name = "package_group",
+    name = "src_package_group",
     packages = [
         "//src/...",
     ],
 )
 
-# ---
-
-java_plugin(
-    name = "nullaway_processor",
-    deps = ["@maven//:com_uber_nullaway_nullaway"],
+java_package_configuration(
+    name = "external_package_configuration",
+    javacopts = ["-Xlint:none"],
+    packages = [":external_package_group"],
 )
 
-java_library(
-    name = "nullaway",
-    exported_plugins = ["nullaway_processor"],
-    neverlink = True,
-    visibility = ["//visibility:public"],
-    exports = [
-        "@maven//:org_checkerframework_checker_qual",
+package_group(
+    name = "external_package_group",
+    packages = [
+        "-//src/...",
+        "//...",
     ],
 )
 
 # ---
+# https://checkerframework.org/manual/#nullness-checker
+
+java_plugin(
+    name = "checker_processor",
+    processor_class = "org.checkerframework.checker.nullness.NullnessChecker",
+    deps = ["@maven//:org_checkerframework_checker"],
+)
+
+java_library(
+    name = "checker",
+    exported_plugins = ["checker_processor"],
+    neverlink = True,
+    visibility = ["//visibility:public"],
+    exports = ["@maven//:org_checkerframework_checker_qual"],
+)
+
+# ---
+# https://github.com/google/auto/blob/master/value/userguide/index.md
 
 java_plugin(
     name = "auto_value_processor",
@@ -97,10 +113,7 @@ java_library(
 )
 
 # ---
-
-dagger_rules("@maven")
-
-# ---
+# https://github.com/google/auto/tree/master/service
 
 java_plugin(
     name = "auto_service_processor",
@@ -117,22 +130,12 @@ java_library(
 )
 
 # ---
+# https://dagger.dev/dev-guide/
 
-java_plugin(
-    name = "checker_processor",
-    processor_class = "org.checkerframework.checker.nullness.NullnessChecker",
-    deps = ["@maven//:org_checkerframework_checker"],
-)
-
-java_library(
-    name = "checker",
-    exported_plugins = ["checker_processor"],
-    neverlink = True,
-    visibility = ["//visibility:public"],
-    exports = ["@maven//:org_checkerframework_checker_qual"],
-)
+dagger_rules("@maven")
 
 # ---
+# https://github.com/openjdk/jmh
 
 java_plugin(
     name = "jmh_processor",
@@ -148,6 +151,7 @@ java_library(
 )
 
 # ---
+# https://truth.dev
 
 java_library(
     name = "truth",

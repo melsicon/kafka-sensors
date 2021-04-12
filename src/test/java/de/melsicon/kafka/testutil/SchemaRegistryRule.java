@@ -2,7 +2,6 @@ package de.melsicon.kafka.testutil;
 
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
 
-import de.melsicon.annotation.Initializer;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.testutil.MockSchemaRegistry;
 import java.util.Map;
@@ -49,14 +48,13 @@ public final class SchemaRegistryRule implements TestRule {
     serde.configure(configs(), /* isKey= */ false);
   }
 
-  @Initializer
   @EnsuresNonNull("registryClient")
   private void before() {
     registryClient = MockSchemaRegistry.getClientForScope(registryScope);
   }
 
   private void after() {
-    assert registryClient != null : "@AssumeAssertion(nullness): before not called";
+    assert registryClient != null : "@AssumeAssertion(nullness): before() not called";
     registryClient.reset();
     MockSchemaRegistry.dropScope(registryScope);
   }

@@ -11,25 +11,30 @@ import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.topology.ProcessorTestHelper.Advancement;
 import java.time.Duration;
 import org.apache.kafka.streams.kstream.ValueTransformer;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("nullness:initialization.field.uninitialized") // Initialized in before
 public final class ProcessorTest {
-  private ValueTransformer<SensorState, SensorStateWithDuration> processor;
+  private @MonotonicNonNull ValueTransformer<SensorState, SensorStateWithDuration> processor;
 
   @Before
+  @EnsuresNonNull("processor")
   public void before() {
     processor = createProcessor();
   }
 
   @After
+  @RequiresNonNull("processor")
   public void after() {
     processor.close();
   }
 
   @Test
+  @RequiresNonNull("processor")
   public void testSimple() {
     var initialState = initial(State.OFF);
     var advancement = new Advancement(Duration.ofSeconds(30), State.ON);
@@ -44,6 +49,7 @@ public final class ProcessorTest {
   }
 
   @Test
+  @RequiresNonNull("processor")
   public void testRepeated() {
     var initialState = initial(State.OFF);
     var advancement1 = new Advancement(Duration.ofSeconds(30), State.OFF);
@@ -66,9 +72,10 @@ public final class ProcessorTest {
     assertStateWithDuration(result4, newState2, advancement3.duration);
   }
 
-  @SuppressWarnings("nullness:argument.type.incompatible")
   @Test
+  @RequiresNonNull("processor")
   public void nullHandling() {
+    @SuppressWarnings("nullness:argument.type.incompatible") // ValueTransformer is not annotated
     var result = processor.transform(null);
     assertStateWithDuration(result, null, Duration.ZERO);
   }

@@ -13,6 +13,8 @@ import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,7 +23,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-@SuppressWarnings("nullness:initialization.fields.uninitialized") // Initialized in before
 @RunWith(Parameterized.class)
 public final class SerdeTest {
   @Rule public final SchemaRegistryRule registryTestResource;
@@ -30,8 +31,8 @@ public final class SerdeTest {
   private final Supplier<Serde<SensorState>> inputSerdes;
   private final Supplier<Serde<SensorState>> resultSerdes;
 
-  private Serializer<SensorState> serializer;
-  private Deserializer<SensorState> deserializer;
+  private @MonotonicNonNull Serializer<SensorState> serializer;
+  private @MonotonicNonNull Deserializer<SensorState> deserializer;
 
   public SerdeTest(
       String description,
@@ -48,8 +49,8 @@ public final class SerdeTest {
     return TestHelper.parameters();
   }
 
-  @EnsuresNonNull({"serializer", "deserializer"})
   @Before
+  @EnsuresNonNull({"serializer", "deserializer"})
   public void before() {
     var inputSerde = inputSerdes.get();
     registryTestResource.configureSerde(inputSerde);
@@ -61,12 +62,14 @@ public final class SerdeTest {
   }
 
   @After
+  @RequiresNonNull({"serializer", "deserializer"})
   public void after() {
     serializer.close();
     deserializer.close();
   }
 
   @Test
+  @RequiresNonNull({"serializer", "deserializer"})
   public void compatability() {
     var sensorState = TestHelper.standardSensorState();
 
@@ -78,6 +81,7 @@ public final class SerdeTest {
   }
 
   @Test
+  @RequiresNonNull("serializer")
   public void nullEncoding() {
     @SuppressWarnings("nullness:argument.type.incompatible") // Serializer is not annotated
     var encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, null);
@@ -85,6 +89,7 @@ public final class SerdeTest {
   }
 
   @Test
+  @RequiresNonNull("deserializer")
   public void nullDecoding() {
     @SuppressWarnings("nullness:argument.type.incompatible") // Deserializer is not annotated
     var decoded = deserializer.deserialize(TestHelper.KAFKA_TOPIC, null);
@@ -92,6 +97,7 @@ public final class SerdeTest {
   }
 
   @Test
+  @RequiresNonNull("deserializer")
   public void emptyDecoding() {
     assume().that(description).doesNotContain(" - confluent");
 

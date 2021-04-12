@@ -6,6 +6,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class ProtoSerializer<T extends MessageLite> implements Serializer<T> {
   @Override
+  @SuppressWarnings("nullness:override.return.invalid") // Serializer is not annotated
   public byte @Nullable [] serialize(String topic, @Nullable T message) {
     if (message == null) {
       return null;

@@ -18,33 +18,38 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serializer;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-@SuppressWarnings("nullness:initialization.static.field.uninitialized") // Initialized in before
 public final class GenericTest {
   @ClassRule
   public static final SchemaRegistryRule registryTestResource =
       new SchemaRegistryRule(REGISTRY_SCOPE);
 
-  private static Serializer<GenericRecord> encoder;
-  private static Deserializer<GenericRecord> decoder;
+  private static @MonotonicNonNull Serializer<GenericRecord> encoder;
+  private static @MonotonicNonNull Deserializer<GenericRecord> decoder;
 
   @BeforeClass
+  @EnsuresNonNull({"encoder", "decoder"})
   public static void before() {
     encoder = new GenericAvroSerializer();
     decoder = new GenericAvroDeserializer(SensorStateSchema.SCHEMA);
     registerRegistry();
   }
 
+  @RequiresNonNull({"encoder", "decoder"})
   private static void registerRegistry() {
     registryTestResource.configureSerializer(encoder);
     registryTestResource.configureDeserializer(decoder);
   }
 
   @AfterClass
+  @RequiresNonNull({"encoder", "decoder"})
   public static void after() {
     encoder.close();
     decoder.close();
@@ -59,6 +64,7 @@ public final class GenericTest {
   }
 
   @Test
+  @RequiresNonNull({"encoder", "decoder"})
   public void canDecode() {
     var sensorState = createSensorState();
 

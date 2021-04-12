@@ -6,9 +6,7 @@ java_library(
     srcs = glob(["*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//src/main/java/de/melsicon/annotation",
         "//toolchain:checker",
-        "//toolchain:nullaway",
         "@confluent_schema_registry//:kafka-schema-registry-client",
         "@confluent_schema_registry//:kafka-schema-serializer",
         "@maven//:junit_junit",

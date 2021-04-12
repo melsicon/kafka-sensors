@@ -11,7 +11,6 @@ java_library(
     deps = [
         "//src/main/java/de/melsicon/kafka/model",
         "//toolchain:checker",
-        "//toolchain:nullaway",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:org_apache_kafka_kafka_clients",
     ],

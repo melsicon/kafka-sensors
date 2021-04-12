@@ -9,7 +9,6 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/generic",
         "//src/main/java/de/melsicon/kafka/sensors/reflect",
         "//toolchain:checker",
-        "//toolchain:nullaway",
         "//toolchain:truth",
         "@maven//:com_google_guava_guava",
         "@maven//:org_apache_avro_avro",

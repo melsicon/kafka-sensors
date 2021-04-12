@@ -17,15 +17,16 @@ import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.MessageDecoder;
 import org.apache.avro.message.MessageEncoder;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-@SuppressWarnings("nullness:initialization.static.field.uninitialized") // Initialized in before
 public final class SerializationTest {
   private static final Instant INSTANT = Instant.ofEpochSecond(443634300L);
 
-  private static MessageEncoder<SensorStateWithDuration> encoder;
-  private static MessageDecoder<SensorStateWithDuration> decoder;
+  private static @MonotonicNonNull MessageEncoder<SensorStateWithDuration> encoder;
+  private static @MonotonicNonNull MessageDecoder<SensorStateWithDuration> decoder;
 
   @BeforeClass
   @EnsuresNonNull({"encoder", "decoder"})
@@ -35,6 +36,7 @@ public final class SerializationTest {
   }
 
   @Test
+  @RequiresNonNull({"encoder", "decoder"})
   public void canDecode() throws IOException {
     var event = new SensorState();
     event.id = "7331";
@@ -48,7 +50,7 @@ public final class SerializationTest {
     var encoded = encoder.encode(sensorState);
 
     // Check for single-record format marker
-    // http://avro.apache.org/docs/1.9.2/spec.html#single_object_encoding
+    // https://avro.apache.org/docs/current/spec.html#single_object_encoding
     assertThat(encoded.getShort(0)).isEqualTo((short) 0xc301);
 
     var decoded = decoder.decode(encoded);
@@ -57,6 +59,7 @@ public final class SerializationTest {
   }
 
   @Test
+  @RequiresNonNull("encoder")
   public void stateIsRequired() {
     var event = new SensorState();
     event.id = "7331";
@@ -66,6 +69,7 @@ public final class SerializationTest {
     sensorState.event = event;
     sensorState.duration = Duration.ofSeconds(15);
 
-    assertThrows(AvroTypeException.class, () -> encoder.encode(sensorState));
+    var enc = encoder; // https://github.com/typetools/checker-framework/issues/1248
+    assertThrows(AvroTypeException.class, () -> enc.encode(sensorState));
   }
 }

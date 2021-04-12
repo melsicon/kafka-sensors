@@ -19,8 +19,7 @@ public final class JsonDeserializer<T> implements Deserializer<T> {
   }
 
   @Override
-  @Nullable
-  public T deserialize(String topic, byte @Nullable [] data) {
+  public @Nullable T deserialize(String topic, byte @Nullable [] data) {
     if (data == null || data.length == 0) {
       return null;
     }

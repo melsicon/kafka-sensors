@@ -14,7 +14,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/reflect",
         "//src/main/java/de/melsicon/kafka/serde",
         "//src/main/java/de/melsicon/kafka/serde/mapping",
-        "//toolchain:nullaway",
+        "//toolchain:checker",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:javax_inject_javax_inject",
         "@maven//:org_apache_avro_avro",

@@ -2,6 +2,8 @@ package de.melsicon.kafka.serde.confluent;
 
 import static org.apache.kafka.common.serialization.Serdes.serdeFrom;
 
+import de.melsicon.kafka.model.SensorState;
+import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.Format;
 import de.melsicon.kafka.serde.SensorStateSerdes;
 import de.melsicon.kafka.serde.mapping.MappedDeserializer;
@@ -30,7 +32,7 @@ public final class ProtoSerdes implements SensorStateSerdes {
   }
 
   @Override
-  public Serde<de.melsicon.kafka.model.SensorState> createSensorStateSerde() {
+  public Serde<SensorState> createSensorStateSerde() {
     var serializer = new KafkaProtobufSerializer<de.melsicon.kafka.sensors.v1.SensorState>();
     var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap);
 
@@ -42,8 +44,7 @@ public final class ProtoSerdes implements SensorStateSerdes {
   }
 
   @Override
-  public Serde<de.melsicon.kafka.model.SensorStateWithDuration>
-      createSensorStateWithDurationSerde() {
+  public Serde<SensorStateWithDuration> createSensorStateWithDurationSerde() {
     var serializer =
         new KafkaProtobufSerializer<de.melsicon.kafka.sensors.v1.SensorStateWithDuration>();
     var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap2);

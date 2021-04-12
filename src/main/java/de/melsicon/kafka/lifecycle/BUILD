@@ -6,7 +6,6 @@ java_library(
     visibility = ["//visibility:public"],
     deps = [
         "//toolchain:checker",
-        "//toolchain:nullaway",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:com_google_guava_guava",
         "@maven//:javax_inject_javax_inject",

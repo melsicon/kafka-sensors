@@ -5,6 +5,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.CheckReturnValue;
 import com.google.errorprone.annotations.Immutable;
 import java.time.Duration;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 @Immutable
 @AutoValue
@@ -18,6 +19,12 @@ public abstract class SensorStateWithDuration {
   public abstract SensorState getEvent();
 
   public abstract Duration getDuration();
+
+  @Override
+  public abstract int hashCode();
+
+  @Override
+  public abstract boolean equals(@Nullable Object o);
 
   @CanIgnoreReturnValue
   @AutoValue.Builder

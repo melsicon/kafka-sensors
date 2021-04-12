@@ -6,18 +6,18 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "52d0a57ea12139d727883c2fef03597970b89f2cc2a05722c42d1d7d41ec065b",
+    sha256 = "e0015762cdeb5a2a9c48f96fb079c6a98e001d44ec23ad4fa2ca27208c5be4fb",
     urls = [
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.13/rules_go-v0.24.13.tar.gz",
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.13/rules_go-v0.24.13.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.14/rules_go-v0.24.14.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.14/rules_go-v0.24.14.tar.gz",
     ],
 )
 
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "c15ef66698f5d2122a3e875c327d9ecd34a231a9dc4753b9500e70518464cc21",
-    strip_prefix = "rules_docker-7da0de3d094aae5601c45ae0855b64fb2771cd72",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/7da0de3d094aae5601c45ae0855b64fb2771cd72.tar.gz"],
+    sha256 = "95d39fd84ff4474babaf190450ee034d958202043e366b9fc38f438c9e6c3334",
+    strip_prefix = "rules_docker-0.16.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.16.0/rules_docker-v0.16.0.tar.gz"],
 )
 
 http_archive(
@@ -29,23 +29,23 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "b10bf4e2d1a7586f54e64a5d9e7837e5188fc75ae69e36f215eb01def4f9721b",
-    strip_prefix = "protobuf-3.15.3",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.15.3.tar.gz"],
+    sha256 = "0cbdc9adda01f6d2facc65a22a2be5cecefbefe5a09e5382ee8879b522c04441",
+    strip_prefix = "protobuf-3.15.8",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.15.8.tar.gz"],
 )
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "bdcec99530c0b5f154f17798302757c5bd41cd0ebb06b1167b202d450b4c7df5",
-    strip_prefix = "dagger-dagger-2.33",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.33.tar.gz"],
+    sha256 = "aa36d3ffb32258975f1b9eb2fbd2103e03fd6b3571cf0b5fe136a301acf7adbf",
+    strip_prefix = "dagger-dagger-2.34",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.34.tar.gz"],
 )
 
 # ---
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
-go_register_toolchains(go_version = "1.16")
+go_register_toolchains(go_version = "1.16.2")
 
 go_rules_dependencies()
 
@@ -113,29 +113,28 @@ base_images()
 
 maven_install(
     artifacts = [
-        "com.fasterxml.jackson.core:jackson-annotations:2.12.1",
-        "com.fasterxml.jackson.core:jackson-core:2.12.1",
-        "com.fasterxml.jackson.core:jackson-databind:2.12.1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.12.1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.1",
-        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.1",
-        "com.google.auto.service:auto-service-annotations:1.0-rc7",
-        "com.google.auto.service:auto-service:1.0-rc7",
-        "com.google.auto.value:auto-value-annotations:1.7.4",
-        "com.google.auto.value:auto-value:1.7.4",
+        "com.fasterxml.jackson.core:jackson-annotations:2.12.2",
+        "com.fasterxml.jackson.core:jackson-core:2.12.2",
+        "com.fasterxml.jackson.core:jackson-databind:2.12.2",
+        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.12.2",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.2",
+        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.2",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.2",
+        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.2",
+        "com.google.auto.service:auto-service-annotations:1.0",
+        "com.google.auto.service:auto-service:1.0",
+        "com.google.auto.value:auto-value-annotations:1.8",
+        "com.google.auto.value:auto-value:1.8",
         "com.google.code.gson:gson:2.8.6",
         "com.google.errorprone:error_prone_annotations:2.5.1",
-        "com.google.flogger:flogger-system-backend:0.5.1",
-        "com.google.flogger:flogger:0.5.1",
-        "com.google.guava:guava:30.1-jre",
-        "com.uber.nullaway:nullaway:0.8.0",
+        "com.google.flogger:flogger-system-backend:0.6",
+        "com.google.flogger:flogger:0.6",
+        "com.google.guava:guava:30.1.1-jre",
         "info.picocli:picocli:4.6.1",
-        "io.github.classgraph:classgraph:4.8.102",
-        "io.helidon.config:helidon-config-object-mapping:2.2.1",
-        "io.helidon.config:helidon-config-yaml:2.2.1",
-        "io.helidon.config:helidon-config:2.2.1",
+        "io.github.classgraph:classgraph:4.8.104",
+        "io.helidon.config:helidon-config-object-mapping:2.2.2",
+        "io.helidon.config:helidon-config-yaml:2.2.2",
+        "io.helidon.config:helidon-config:2.2.2",
         "jakarta.annotation:jakarta.annotation-api:1.3.5",
         "jakarta.servlet:jakarta.servlet-api:4.0.4",
         "jakarta.validation:jakarta.validation-api:2.0.2",
@@ -143,12 +142,13 @@ maven_install(
         "org.apache.kafka:kafka-clients:2.7.0",
         "org.apache.kafka:kafka-streams:2.7.0",
         "org.apache.kafka:kafka_2.13:2.7.0",
-        "org.checkerframework:checker-qual:3.11.0",
-        "org.checkerframework:checker:3.11.0",
+        "org.checkerframework:checker-compat-qual:2.5.5",
+        "org.checkerframework:checker-qual:3.12.0",
+        "org.checkerframework:checker:3.12.0",
         "org.mapstruct:mapstruct-processor:1.4.2.Final",
         "org.mapstruct:mapstruct:1.4.2.Final",
-        "org.openjdk.jmh:jmh-core:1.28",
-        "org.openjdk.jmh:jmh-generator-annprocess:1.28",
+        "org.openjdk.jmh:jmh-core:1.29",
+        "org.openjdk.jmh:jmh-generator-annprocess:1.29",
         "org.slf4j:slf4j-api:1.8.0-beta4",
         "org.slf4j:slf4j-jdk14:1.8.0-beta4",
         maven.artifact(
@@ -210,7 +210,7 @@ maven_install(
         "javax.ws.rs:javax.ws.rs-api": ":jakarta_ws_rs_jakarta_ws_rs_api",
     },
     repositories = [
-        "https://maven-central-eu.storage-download.googleapis.com/maven2/",
+        "https://maven-central-eu.storage-download.googleapis.com/maven2",
         "https://repo1.maven.org/maven2",
     ],
 )

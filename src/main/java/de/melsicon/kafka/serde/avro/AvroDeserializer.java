@@ -14,8 +14,11 @@ public final class AvroDeserializer<T> implements Deserializer<T> {
   }
 
   @Override
-  @Nullable
-  public T deserialize(String topic, byte @Nullable [] data) {
+  @SuppressWarnings({
+    "nullness:override.return.invalid",
+    "nullness:argument.type.incompatible"
+  }) // Deserializer is not annotated
+  public @Nullable T deserialize(String topic, byte @Nullable [] data) {
     if (data == null || data.length == 0) {
       return null;
     }

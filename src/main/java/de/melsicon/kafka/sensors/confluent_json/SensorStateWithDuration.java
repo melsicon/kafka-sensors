@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.util.Objects;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-@SuppressWarnings({"NullAway", "nullness:initialization.field.uninitialized"})
+@SuppressWarnings("nullness:initialization.field.uninitialized")
 public final class SensorStateWithDuration {
   @JsonUnwrapped public SensorState event;
 

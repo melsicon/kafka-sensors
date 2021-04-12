@@ -3,23 +3,18 @@ package de.melsicon.kafka.configuration;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.Immutable;
-import io.helidon.config.Config;
 import io.helidon.config.objectmapping.Value;
 import java.util.List;
 import java.util.Optional;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+/** The main Kafka configuration. */
 @Immutable
 @AutoValue
 public abstract class KafkaConfiguration {
-  private static final String PREFIX = "kafka";
+  public static final String PREFIX = "kafka";
 
   /* package */ KafkaConfiguration() {}
-
-  public static KafkaConfiguration extract(Config config) {
-    var subConfig = config.get(PREFIX);
-    return subConfig.as(KafkaConfiguration.class).get();
-  }
 
   public static Builder builder() {
     return new AutoValue_KafkaConfiguration.Builder();
@@ -32,6 +27,12 @@ public abstract class KafkaConfiguration {
   public abstract String resultTopic();
 
   public abstract Optional<String> clientID();
+
+  @Override
+  public abstract int hashCode();
+
+  @Override
+  public abstract boolean equals(@Nullable Object o);
 
   @AutoValue.Builder
   public abstract static class Builder {

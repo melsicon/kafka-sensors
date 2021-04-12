@@ -6,10 +6,8 @@ java_library(
     visibility = ["//visibility:public"],
     deps = [
         "//src/main/java/de/melsicon/kafka/configuration",
-        "//src/main/java/de/melsicon/kafka/model",
-        "//src/main/java/de/melsicon/kafka/topology",
         "//toolchain:checker",
-        "//toolchain:nullaway",
+        "//toolchain:dagger",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:com_google_flogger_flogger",
         "@maven//:com_google_guava_guava",

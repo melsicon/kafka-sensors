@@ -1,4 +1,4 @@
-package de.melsicon.kafka.sensors.serdes;
+package de.melsicon.kafka.benchmark.serdes;
 
 import java.util.Locale;
 
