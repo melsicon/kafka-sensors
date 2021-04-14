@@ -36,9 +36,9 @@ http_archive(
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "aa36d3ffb32258975f1b9eb2fbd2103e03fd6b3571cf0b5fe136a301acf7adbf",
-    strip_prefix = "dagger-dagger-2.34",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.34.tar.gz"],
+    sha256 = "d1318586447613d946132241705eda74e317a02298b939ac2fc43d2c2373cddd",
+    strip_prefix = "dagger-dagger-2.34.1",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.34.1.tar.gz"],
 )
 
 # ---
@@ -113,14 +113,14 @@ base_images()
 
 maven_install(
     artifacts = [
-        "com.fasterxml.jackson.core:jackson-annotations:2.12.2",
-        "com.fasterxml.jackson.core:jackson-core:2.12.2",
-        "com.fasterxml.jackson.core:jackson-databind:2.12.2",
-        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.12.2",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.2",
-        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.2",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.2",
-        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.2",
+        "com.fasterxml.jackson.core:jackson-annotations:2.12.3",
+        "com.fasterxml.jackson.core:jackson-core:2.12.3",
+        "com.fasterxml.jackson.core:jackson-databind:2.12.3",
+        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.12.3",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3",
+        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.3",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3",
+        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.3",
         "com.google.auto.service:auto-service-annotations:1.0",
         "com.google.auto.service:auto-service:1.0",
         "com.google.auto.value:auto-value-annotations:1.8",
