@@ -11,6 +11,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/serde/avromapper",
         "//src/main/java/de/melsicon/kafka/serde/confluent",
         "//src/main/java/de/melsicon/kafka/serde/confluentmapper",
+        "//src/main/java/de/melsicon/kafka/serde/ion",
         "//src/main/java/de/melsicon/kafka/serde/json",
         "//src/main/java/de/melsicon/kafka/serde/proto",
         "//toolchain:checker",

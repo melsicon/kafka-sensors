@@ -19,3 +19,4 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 - Add Docker image for benchmark
 - Add Confluent JSON and Protocol Buffers
 - Use Checker Framework
+- Added Amazon Ion

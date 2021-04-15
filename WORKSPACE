@@ -113,6 +113,7 @@ base_images()
 
 maven_install(
     artifacts = [
+        "com.amazon.ion:ion-java:1.8.1",
         "com.fasterxml.jackson.core:jackson-annotations:2.12.3",
         "com.fasterxml.jackson.core:jackson-core:2.12.3",
         "com.fasterxml.jackson.core:jackson-databind:2.12.3",

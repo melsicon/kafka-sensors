@@ -14,7 +14,9 @@ public enum SerDeType {
   CONFLUENT_REFLECT,
   CONFLUENT_GENERIC,
   CONFLUENT_JSON,
-  CONFLUENT_PROTO;
+  CONFLUENT_PROTO,
+  ION_TEXT,
+  ION_BINARY;
 
   @Override
   public String toString() {

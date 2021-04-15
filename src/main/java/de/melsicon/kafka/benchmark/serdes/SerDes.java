@@ -10,6 +10,8 @@ import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentGenericMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentJsonMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentReflectMapper;
+import de.melsicon.kafka.serde.ion.IonBinarySerdes;
+import de.melsicon.kafka.serde.ion.IonTextSerdes;
 import de.melsicon.kafka.serde.proto.ProtoMapper;
 import java.time.Duration;
 import java.time.Instant;
@@ -64,6 +66,12 @@ public final class SerDes {
         break;
       case CONFLUENT_PROTO:
         serdeFactory = new de.melsicon.kafka.serde.confluent.ProtoSerdes(ProtoMapper.instance());
+        break;
+      case ION_TEXT:
+        serdeFactory = new IonTextSerdes();
+        break;
+      case ION_BINARY:
+        serdeFactory = new IonBinarySerdes();
         break;
       default:
         throw new UnsupportedOperationException("Unknown type " + serdes.name());

@@ -6,5 +6,6 @@ public enum Format {
   AVRO,
   CONFLUENT_AVRO,
   CONFLUENT_JSON,
-  CONFLUENT_PROTO
+  CONFLUENT_PROTO,
+  ION
 }
