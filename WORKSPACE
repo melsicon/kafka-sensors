@@ -15,9 +15,9 @@ http_archive(
 
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "95d39fd84ff4474babaf190450ee034d958202043e366b9fc38f438c9e6c3334",
-    strip_prefix = "rules_docker-0.16.0",
-    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.16.0/rules_docker-v0.16.0.tar.gz"],
+    sha256 = "59d5b42ac315e7eadffa944e86e90c2990110a1c8075f1cd145f487e999d22b3",
+    strip_prefix = "rules_docker-0.17.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.17.0/rules_docker-v0.17.0.tar.gz"],
 )
 
 http_archive(
@@ -36,9 +36,16 @@ http_archive(
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "d1318586447613d946132241705eda74e317a02298b939ac2fc43d2c2373cddd",
-    strip_prefix = "dagger-dagger-2.34.1",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.34.1.tar.gz"],
+    sha256 = "de13558e2d7033378e1b812bd9d9e59cbda848621e528622c075867cbcb9ce31",
+    strip_prefix = "dagger-dagger-2.35",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.35.tar.gz"],
+)
+
+http_archive(
+    name = "io_bazel_rules_scala",
+    sha256 = "d20e23f0c4faa7a31514411e8c3a9a6ddfdd442eb870f13adc332a0094cd1239",
+    strip_prefix = "rules_scala-0ac75d3a044b8e316d1b11b90a7d044685bd72e8",
+    url = "https://github.com/bazelbuild/rules_scala/archive/0ac75d3a044b8e316d1b11b90a7d044685bd72e8.tar.gz",
 )
 
 # ---
@@ -67,6 +74,20 @@ go_repositories()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_jvm_external//:specs.bzl", "maven")
+
+# ---
+
+load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
+
+scala_config(scala_version = "2.13.3")
+
+load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
+
+scala_repositories()
+
+load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
+
+scala_register_toolchains()
 
 # ---
 
@@ -124,8 +145,8 @@ maven_install(
         "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.3",
         "com.google.auto.service:auto-service-annotations:1.0",
         "com.google.auto.service:auto-service:1.0",
-        "com.google.auto.value:auto-value-annotations:1.8",
-        "com.google.auto.value:auto-value:1.8",
+        "com.google.auto.value:auto-value-annotations:1.8.1",
+        "com.google.auto.value:auto-value:1.8.1",
         "com.google.code.gson:gson:2.8.6",
         "com.google.errorprone:error_prone_annotations:2.5.1",
         "com.google.flogger:flogger-system-backend:0.6",
@@ -140,9 +161,9 @@ maven_install(
         "jakarta.servlet:jakarta.servlet-api:4.0.4",
         "jakarta.validation:jakarta.validation-api:2.0.2",
         "jakarta.ws.rs:jakarta.ws.rs-api:2.1.6",
-        "org.apache.kafka:kafka-clients:2.7.0",
-        "org.apache.kafka:kafka-streams:2.7.0",
-        "org.apache.kafka:kafka_2.13:2.7.0",
+        "org.apache.kafka:kafka-clients:2.8.0",
+        "org.apache.kafka:kafka-streams:2.8.0",
+        "org.apache.kafka:kafka_2.13:2.8.0",
         "org.checkerframework:checker-compat-qual:2.5.5",
         "org.checkerframework:checker-qual:3.12.0",
         "org.checkerframework:checker:3.12.0",
@@ -191,7 +212,7 @@ maven_install(
         maven.artifact(
             "org.apache.kafka",
             "kafka-streams-test-utils",
-            "2.7.0",
+            "2.8.0",
             testonly = True,
         ),
         maven.artifact(

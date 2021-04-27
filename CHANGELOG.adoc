@@ -8,15 +8,15 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 
 - Update Bazel and Protobuf
 - Refactor business logic for testability
-- Update Kafka to 2.7.0, Scala 2.13
+- Update Kafka to 2.8.0, Scala 2.13
 - Use Checker Framework annotations instead of our own
 - Simplify Avro Schema
 - Add AVRO reflection serialization
 - Add JMH microbenchmark
 - Use Avro logical types
 - Add Avro schema compatibility test
-- Update Confluent schema registry to 6.1.0
+- Update Confluent schema registry to 6.1.1
 - Add Docker image for benchmark
 - Add Confluent JSON and Protocol Buffers
 - Use Checker Framework
-- Added Amazon Ion
+- Add Amazon Ion

@@ -9,7 +9,7 @@ def base_images():
     container_pull(
         name = "java_base",
         architecture = "amd64",
-        digest = "sha256:2d96a9a913bf3923f504dca3e91260371591bac0e679d30a9ab19cece86dcf25",
+        digest = "sha256:07d017944edb06f3c5351fdc82e55025c315fe312625c843bc25a0715e0c0a39",
         os = "linux",
         registry = "gcr.io",
         repository = "distroless/java-debian10",
@@ -20,7 +20,7 @@ def base_images():
     container_pull(
         name = "java_debug",
         architecture = "amd64",
-        digest = "sha256:02e65a9a13f876f997eb9a262c89c6f3ca660ab2eb6f6381d2c77e55d65b2ec4",
+        digest = "sha256:92b7b58e3ec748019d4c914135319e82b0e174ff97e7ee47e77857fb86538f05",
         os = "linux",
         registry = "gcr.io",
         repository = "distroless/java-debian10",

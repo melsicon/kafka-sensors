@@ -20,6 +20,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/topology",
         "//src/test/java/de/melsicon/kafka/context",
         "//src/test/java/de/melsicon/kafka/testutil",
+        "//src/test/scala/kafka/server",
         "//toolchain:checker",
         "//toolchain:truth",
         "@maven//:com_google_errorprone_error_prone_annotations",
