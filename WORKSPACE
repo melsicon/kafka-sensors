@@ -29,16 +29,16 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "0cbdc9adda01f6d2facc65a22a2be5cecefbefe5a09e5382ee8879b522c04441",
-    strip_prefix = "protobuf-3.15.8",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.15.8.tar.gz"],
+    sha256 = "fda92266e423cc6e729c7f507900ff9abb350dc90443ddd728f5e42b7a8b608e",
+    strip_prefix = "protobuf-3.16.0-rc2",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.16.0-rc2.tar.gz"],
 )
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "de13558e2d7033378e1b812bd9d9e59cbda848621e528622c075867cbcb9ce31",
-    strip_prefix = "dagger-dagger-2.35",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.35.tar.gz"],
+    sha256 = "c1f778c788dc3bc3759078e51331bf6b00bc79b4e23f56371fe3a333b0bee143",
+    strip_prefix = "dagger-dagger-2.35.1",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.35.1.tar.gz"],
 )
 
 http_archive(
@@ -153,7 +153,7 @@ maven_install(
         "com.google.flogger:flogger:0.6",
         "com.google.guava:guava:30.1.1-jre",
         "info.picocli:picocli:4.6.1",
-        "io.github.classgraph:classgraph:4.8.104",
+        "io.github.classgraph:classgraph:4.8.105",
         "io.helidon.config:helidon-config-object-mapping:2.2.2",
         "io.helidon.config:helidon-config-yaml:2.2.2",
         "io.helidon.config:helidon-config:2.2.2",
@@ -165,12 +165,12 @@ maven_install(
         "org.apache.kafka:kafka-streams:2.8.0",
         "org.apache.kafka:kafka_2.13:2.8.0",
         "org.checkerframework:checker-compat-qual:2.5.5",
-        "org.checkerframework:checker-qual:3.12.0",
-        "org.checkerframework:checker:3.12.0",
+        "org.checkerframework:checker-qual:3.13.0",
+        "org.checkerframework:checker:3.13.0",
         "org.mapstruct:mapstruct-processor:1.4.2.Final",
         "org.mapstruct:mapstruct:1.4.2.Final",
-        "org.openjdk.jmh:jmh-core:1.29",
-        "org.openjdk.jmh:jmh-generator-annprocess:1.29",
+        "org.openjdk.jmh:jmh-core:1.30",
+        "org.openjdk.jmh:jmh-generator-annprocess:1.30",
         "org.slf4j:slf4j-api:1.8.0-beta4",
         "org.slf4j:slf4j-jdk14:1.8.0-beta4",
         maven.artifact(

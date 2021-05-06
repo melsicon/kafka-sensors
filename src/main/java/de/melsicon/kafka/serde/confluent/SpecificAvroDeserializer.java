@@ -47,8 +47,8 @@ public final class SpecificAvroDeserializer<T extends SpecificRecord> implements
 
   @Override
   @SuppressWarnings({
-      "nullness:argument.type.incompatible",
-      "nullness:override.return.invalid"
+    "nullness:argument",
+    "nullness:override.return"
   }) // Deserializer and KafkaAvroDeserializer are not annotated
   public @Nullable T deserialize(String topic, byte @Nullable [] bytes) {
     return type.cast(inner.deserialize(topic, bytes, schema));

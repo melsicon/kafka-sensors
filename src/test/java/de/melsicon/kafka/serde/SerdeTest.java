@@ -83,7 +83,7 @@ public final class SerdeTest {
   @Test
   @RequiresNonNull("serializer")
   public void nullEncoding() {
-    @SuppressWarnings("nullness:argument.type.incompatible") // Serializer is not annotated
+    @SuppressWarnings("nullness:argument") // Serializer is not annotated
     var encoded = serializer.serialize(TestHelper.KAFKA_TOPIC, null);
     assertThat(encoded == null || encoded.length == 0).isTrue();
   }
@@ -91,7 +91,7 @@ public final class SerdeTest {
   @Test
   @RequiresNonNull("deserializer")
   public void nullDecoding() {
-    @SuppressWarnings("nullness:argument.type.incompatible") // Deserializer is not annotated
+    @SuppressWarnings("nullness:argument") // Deserializer is not annotated
     var decoded = deserializer.deserialize(TestHelper.KAFKA_TOPIC, null);
     assertThat(decoded).isNull();
   }

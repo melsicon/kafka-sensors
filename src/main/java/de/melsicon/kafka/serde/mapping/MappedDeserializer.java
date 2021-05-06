@@ -5,10 +5,6 @@ import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-@SuppressWarnings({
-  "nullness:argument.type.incompatible",
-  "nullness:override.return.invalid"
-}) // Deserializer is not annotated
 public final class MappedDeserializer<U, T> implements Deserializer<U> {
   private final Deserializer<T> deserializer;
   private final MapFunction<T, U> mapper;
@@ -24,11 +20,19 @@ public final class MappedDeserializer<U, T> implements Deserializer<U> {
   }
 
   @Override
+  @SuppressWarnings({
+    "nullness:argument",
+    "nullness:override.return"
+  }) // Deserializer is not annotated
   public @Nullable U deserialize(String topic, byte @Nullable [] data) {
     return mapper.apply(deserializer.deserialize(topic, data));
   }
 
-  @Override // FIXME: Check this
+  @Override
+  @SuppressWarnings({
+    "nullness:argument",
+    "nullness:override.return"
+  }) // Deserializer is not annotated
   public @Nullable U deserialize(String topic, Headers headers, byte @Nullable [] data) {
     return mapper.apply(deserializer.deserialize(topic, headers, data));
   }

@@ -17,7 +17,7 @@ public final class GenericAvroDeserializer implements Deserializer<GenericRecord
   }
 
   @Override
-  @SuppressWarnings("nullness:argument.type.incompatible") // KafkaAvroDeserializer is not annotated
+  @SuppressWarnings("nullness:argument") // KafkaAvroDeserializer is not annotated
   public void configure(
       @Nullable Map<String, ?> deserializerConfig, boolean isDeserializerForRecordKeys) {
     inner.configure(deserializerConfig, isDeserializerForRecordKeys);
@@ -25,8 +25,8 @@ public final class GenericAvroDeserializer implements Deserializer<GenericRecord
 
   @Override
   @SuppressWarnings({
-      "nullness:argument.type.incompatible",
-      "nullness:override.return.invalid"
+    "nullness:argument",
+    "nullness:override.return"
   }) // Deserializer and KafkaAvroDeserializer are not annotated
   public @Nullable GenericRecord deserialize(String topic, byte @Nullable [] bytes) {
     return (GenericRecord) inner.deserialize(topic, bytes, schema);

@@ -27,7 +27,7 @@ public final class SensorStateTest {
   }
 
   @Test
-  @SuppressWarnings("nullness:argument.type.incompatible")
+  @SuppressWarnings("nullness:argument")
   public void notNull() {
     assertThrows(NullPointerException.class, () -> SensorState.builder().setId(null).build());
   }

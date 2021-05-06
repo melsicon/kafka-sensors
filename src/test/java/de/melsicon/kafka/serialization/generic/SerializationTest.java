@@ -71,7 +71,7 @@ public final class SerializationTest {
   }
 
   @Test
-  @SuppressWarnings("nullness:argument.type.incompatible")
+  @SuppressWarnings("nullness:argument")
   public void notNull() {
     assertThrows(
         AvroRuntimeException.class,

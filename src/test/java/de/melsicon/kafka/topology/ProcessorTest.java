@@ -75,7 +75,7 @@ public final class ProcessorTest {
   @Test
   @RequiresNonNull("processor")
   public void nullHandling() {
-    @SuppressWarnings("nullness:argument.type.incompatible") // ValueTransformer is not annotated
+    @SuppressWarnings("nullness:argument") // ValueTransformer is not annotated
     var result = processor.transform(null);
     assertStateWithDuration(result, null, Duration.ZERO);
   }

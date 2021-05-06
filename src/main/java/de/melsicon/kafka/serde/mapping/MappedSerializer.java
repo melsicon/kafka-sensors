@@ -5,10 +5,6 @@ import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-@SuppressWarnings({
-  "nullness:argument.type.incompatible",
-  "nullness:override.return.invalid"
-}) // Serializer is not annotated
 public final class MappedSerializer<U, T> implements Serializer<U> {
   private final Serializer<T> serializer;
   private final MapFunction<U, T> unmapper;
@@ -24,11 +20,19 @@ public final class MappedSerializer<U, T> implements Serializer<U> {
   }
 
   @Override
+  @SuppressWarnings({
+    "nullness:argument",
+    "nullness:override.return"
+  }) // Serializer is not annotated
   public byte @Nullable [] serialize(String topic, @Nullable U data) {
     return serializer.serialize(topic, unmapper.apply(data));
   }
 
   @Override
+  @SuppressWarnings({
+    "nullness:argument",
+    "nullness:override.return"
+  }) // Serializer is not annotated
   public byte @Nullable [] serialize(String topic, Headers headers, @Nullable U data) {
     return serializer.serialize(topic, headers, unmapper.apply(data));
   }

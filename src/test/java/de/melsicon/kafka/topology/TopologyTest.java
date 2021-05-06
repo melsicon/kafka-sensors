@@ -202,7 +202,7 @@ public final class TopologyTest {
 
   @Test
   @RequiresNonNull({"inputTopic", "outputTopic"})
-  @SuppressWarnings("nullness:argument.type.incompatible") // TestInputTopic is not annotated
+  @SuppressWarnings("nullness:argument") // TestInputTopic is not annotated
   public void testTombstone() {
     inputTopic.pipeInput("7331", null);
 

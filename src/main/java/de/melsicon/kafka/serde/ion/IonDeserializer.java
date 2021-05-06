@@ -7,10 +7,6 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-@SuppressWarnings({
-  "nullness:argument.type.incompatible",
-  "nullness:override.return.invalid"
-}) // Deserializer is not annotated
 public final class IonDeserializer<T> implements Deserializer<T> {
   private final IonReaderBuilder builder;
   private final IonSerialReader<T> deserializer;
@@ -21,6 +17,7 @@ public final class IonDeserializer<T> implements Deserializer<T> {
   }
 
   @Override
+  @SuppressWarnings("nullness:override.return") // Deserializer is not annotated
   public @Nullable T deserialize(String topic, byte @Nullable [] data) {
     if (data == null || data.length == 0) {
       return null;

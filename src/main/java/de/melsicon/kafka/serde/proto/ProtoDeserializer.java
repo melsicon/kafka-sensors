@@ -15,7 +15,7 @@ public final class ProtoDeserializer<T extends MessageLite> implements Deseriali
   }
 
   @Override
-  @SuppressWarnings("nullness:override.return.invalid") // Deserializer is not annotated
+  @SuppressWarnings("nullness:override.return") // Deserializer is not annotated
   public @Nullable T deserialize(String topic, byte @Nullable [] data) {
     if (data == null || data.length == 0) {
       return null;

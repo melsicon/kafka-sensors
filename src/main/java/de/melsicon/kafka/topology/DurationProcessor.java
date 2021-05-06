@@ -66,7 +66,7 @@ import org.checkerframework.checker.nullness.qual.RequiresNonNull;
   }
 
   @Override
-  @SuppressWarnings("nullness:override.return.invalid") // ValueTransformer is not annotated
+  @SuppressWarnings("nullness:override.return") // ValueTransformer is not annotated
   public @Nullable SensorStateWithDuration transform(@Nullable SensorState sensorState) {
     // init has to be called first
     assert store != null : "@AssumeAssertion(nullness): init not called";

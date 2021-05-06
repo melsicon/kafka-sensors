@@ -14,16 +14,13 @@ public final class AvroDeserializer<T> implements Deserializer<T> {
   }
 
   @Override
-  @SuppressWarnings({
-    "nullness:override.return.invalid",
-    "nullness:argument.type.incompatible"
-  }) // Deserializer is not annotated
+  @SuppressWarnings("nullness:override.return") // Deserializer is not annotated
   public @Nullable T deserialize(String topic, byte @Nullable [] data) {
     if (data == null || data.length == 0) {
       return null;
     }
     try {
-      return decoder.decode(data, null);
+      return decoder.decode(data);
     } catch (IOException e) {
       var message = String.format("Error while parsing message from topic %s", topic);
       throw new SerializationException(message, e);

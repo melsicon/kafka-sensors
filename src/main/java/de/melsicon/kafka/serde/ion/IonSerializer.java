@@ -8,10 +8,6 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-@SuppressWarnings({
-  "nullness:argument.type.incompatible",
-  "nullness:override.return.invalid"
-}) // Serializer is not annotated
 public final class IonSerializer<T> implements Serializer<T> {
   private final IonWriterBuilder builder;
   private final IonSerialWriter<T> serializer;
@@ -29,6 +25,7 @@ public final class IonSerializer<T> implements Serializer<T> {
   }
 
   @Override
+  @SuppressWarnings("nullness:override.return") // Serializer is not annotated
   public byte @Nullable [] serialize(String topic, @Nullable T message) {
     if (message == null) {
       return null;

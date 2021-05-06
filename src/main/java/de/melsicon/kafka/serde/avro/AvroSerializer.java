@@ -15,7 +15,7 @@ public final class AvroSerializer<T> implements Serializer<T> {
   }
 
   @Override
-  @SuppressWarnings("nullness:override.return.invalid") // Serializer is not annotated
+  @SuppressWarnings("nullness:override.return") // Serializer is not annotated
   public byte @Nullable [] serialize(String topic, @Nullable T data) {
     if (data == null) {
       return null;
