@@ -22,30 +22,30 @@ http_archive(
 
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "31d226a6b3f5362b59d261abf9601116094ea4ae2aa9f28789b6c105e4cada68",
-    strip_prefix = "rules_jvm_external-4.0",
-    url = "https://github.com/bazelbuild/rules_jvm_external/archive/4.0.tar.gz",
+    sha256 = "995ea6b5f41e14e1a17088b727dcff342b2c6534104e73d6f06f1ae0422c2308",
+    strip_prefix = "rules_jvm_external-4.1",
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/4.1.tar.gz",
 )
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "fda92266e423cc6e729c7f507900ff9abb350dc90443ddd728f5e42b7a8b608e",
-    strip_prefix = "protobuf-3.16.0-rc2",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.16.0-rc2.tar.gz"],
+    sha256 = "036d66d6eec216160dd898cfb162e9d82c1904627642667cc32b104d407bb411",
+    strip_prefix = "protobuf-3.17.1",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.17.1.tar.gz"],
 )
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "c1f778c788dc3bc3759078e51331bf6b00bc79b4e23f56371fe3a333b0bee143",
-    strip_prefix = "dagger-dagger-2.35.1",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.35.1.tar.gz"],
+    sha256 = "15dd24cf713b5b5110e2f0ca1708ceaa44bab89c6bfca547806980c00c4393e0",
+    strip_prefix = "dagger-dagger-2.36",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.36.tar.gz"],
 )
 
 http_archive(
     name = "io_bazel_rules_scala",
-    sha256 = "d20e23f0c4faa7a31514411e8c3a9a6ddfdd442eb870f13adc332a0094cd1239",
-    strip_prefix = "rules_scala-0ac75d3a044b8e316d1b11b90a7d044685bd72e8",
-    url = "https://github.com/bazelbuild/rules_scala/archive/0ac75d3a044b8e316d1b11b90a7d044685bd72e8.tar.gz",
+    sha256 = "a09a6fa6d68174d904fe44a7bcfdcf4572862e65e673b933a9276b4846529a38",
+    strip_prefix = "rules_scala-c9cc7c261d3d740eb91ef8ef048b7cd2229d12ec",
+    url = "https://github.com/bazelbuild/rules_scala/archive/c9cc7c261d3d740eb91ef8ef048b7cd2229d12ec.tar.gz",
 )
 
 # ---
@@ -147,16 +147,16 @@ maven_install(
         "com.google.auto.service:auto-service:1.0",
         "com.google.auto.value:auto-value-annotations:1.8.1",
         "com.google.auto.value:auto-value:1.8.1",
-        "com.google.code.gson:gson:2.8.6",
+        "com.google.code.gson:gson:2.8.7",
         "com.google.errorprone:error_prone_annotations:2.5.1",
         "com.google.flogger:flogger-system-backend:0.6",
         "com.google.flogger:flogger:0.6",
         "com.google.guava:guava:30.1.1-jre",
         "info.picocli:picocli:4.6.1",
         "io.github.classgraph:classgraph:4.8.105",
-        "io.helidon.config:helidon-config-object-mapping:2.2.2",
-        "io.helidon.config:helidon-config-yaml:2.2.2",
-        "io.helidon.config:helidon-config:2.2.2",
+        "io.helidon.config:helidon-config-object-mapping:2.3.0",
+        "io.helidon.config:helidon-config-yaml:2.3.0",
+        "io.helidon.config:helidon-config:2.3.0",
         "jakarta.annotation:jakarta.annotation-api:1.3.5",
         "jakarta.servlet:jakarta.servlet-api:4.0.4",
         "jakarta.validation:jakarta.validation-api:2.0.2",
@@ -169,32 +169,32 @@ maven_install(
         "org.checkerframework:checker:3.13.0",
         "org.mapstruct:mapstruct-processor:1.4.2.Final",
         "org.mapstruct:mapstruct:1.4.2.Final",
-        "org.openjdk.jmh:jmh-core:1.30",
-        "org.openjdk.jmh:jmh-generator-annprocess:1.30",
+        "org.openjdk.jmh:jmh-core:1.31",
+        "org.openjdk.jmh:jmh-generator-annprocess:1.31",
         "org.slf4j:slf4j-api:1.8.0-beta4",
         "org.slf4j:slf4j-jdk14:1.8.0-beta4",
         maven.artifact(
             "com.google.truth",
             "truth",
-            "1.1.2",
+            "1.1.3",
             testonly = True,
         ),
         maven.artifact(
             "com.google.truth.extensions",
             "truth-java8-extension",
-            "1.1.2",
+            "1.1.3",
             testonly = True,
         ),
         maven.artifact(
             "com.google.truth.extensions",
             "truth-liteproto-extension",
-            "1.1.2",
+            "1.1.3",
             testonly = True,
         ),
         maven.artifact(
             "com.google.truth.extensions",
             "truth-proto-extension",
-            "1.1.2",
+            "1.1.3",
             testonly = True,
         ),
         maven.artifact(

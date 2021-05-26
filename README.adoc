@@ -173,3 +173,20 @@ Run the https://openjdk.java.net/projects/code-tools/jmh/[JMH] microbenchmarks w
 
 [source,shell]
 bazel run //:benchmark
+
+== Known Issues
+
+Warning during build:
+[subs="+quotes"]
+----
+[lime]#INFO:# From Compiling src/google/protobuf/descriptor.cc:
+*external/com_google_protobuf/src/google/protobuf/descriptor.cc:1038:9: [fuchsia]#warning:# passing variable 'unknown_enum_values_by_number_' by reference requires holding mutex 'unknown_enum_values_mu_' [-Wthread-safety-reference]*
+        unknown_enum_values_by_number_, std::make_pair(parent, number));
+        [lime]#^#
+*external/com_google_protobuf/src/google/protobuf/descriptor.cc:1048:9: [fuchsia]#warning:# passing variable 'unknown_enum_values_by_number_' by reference requires holding mutex 'unknown_enum_values_mu_' [-Wthread-safety-reference]*
+        unknown_enum_values_by_number_, std::make_pair(parent, number));
+        [lime]#^#
+2 warnings generated.
+----
+
+Tracked in https://github.com/protocolbuffers/protobuf/issues/8592[GitHub issue #8592].
