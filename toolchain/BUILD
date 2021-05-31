@@ -61,16 +61,23 @@ package_group(
 
 # ---
 # https://checkerframework.org/manual/#nullness-checker
+# https://checkerframework.org/manual/#optional-checker
 
 java_plugin(
-    name = "checker_processor",
+    name = "nullness_checker",
     processor_class = "org.checkerframework.checker.nullness.NullnessChecker",
+    deps = ["@maven//:org_checkerframework_checker"],
+)
+
+java_plugin(
+    name = "optional_checker",
+    processor_class = "org.checkerframework.checker.optional.OptionalChecker",
     deps = ["@maven//:org_checkerframework_checker"],
 )
 
 java_library(
     name = "checker",
-    exported_plugins = ["checker_processor"],
+    exported_plugins = ["nullness_checker", "optional_checker"],
     neverlink = True,
     visibility = ["//visibility:public"],
     exports = ["@maven//:org_checkerframework_checker_qual"],

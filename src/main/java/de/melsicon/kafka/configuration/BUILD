@@ -3,7 +3,7 @@ load("@rules_java//java:defs.bzl", "java_library")
 java_library(
     name = "configuration",
     srcs = glob(["*.java"]),
-    javacopts = ["-AskipDefs=\\.AutoValue_[A-Za-z]+\\.Builder$$"],
+    javacopts = ["-AskipDefs=\\.AutoValue_[A-Za-z]+(\\.Builder)?$$"],
     visibility = ["//visibility:public"],
     deps = [
         "//toolchain:autovalue",

@@ -6,7 +6,6 @@
 !/.gitattributes
 !/.gitignore
 !/.yamllint
-# project specific
+!/.github/
 /bazel-*
-/gradle-build/
 /bin/
