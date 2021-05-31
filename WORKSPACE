@@ -134,7 +134,7 @@ base_images()
 
 maven_install(
     artifacts = [
-        "com.amazon.ion:ion-java:1.8.1",
+        "com.amazon.ion:ion-java:1.8.2",
         "com.fasterxml.jackson.core:jackson-annotations:2.12.3",
         "com.fasterxml.jackson.core:jackson-core:2.12.3",
         "com.fasterxml.jackson.core:jackson-databind:2.12.3",
@@ -148,12 +148,12 @@ maven_install(
         "com.google.auto.value:auto-value-annotations:1.8.1",
         "com.google.auto.value:auto-value:1.8.1",
         "com.google.code.gson:gson:2.8.7",
-        "com.google.errorprone:error_prone_annotations:2.5.1",
+        "com.google.errorprone:error_prone_annotations:2.7.1",
         "com.google.flogger:flogger-system-backend:0.6",
         "com.google.flogger:flogger:0.6",
         "com.google.guava:guava:30.1.1-jre",
         "info.picocli:picocli:4.6.1",
-        "io.github.classgraph:classgraph:4.8.105",
+        "io.github.classgraph:classgraph:4.8.106",
         "io.helidon.config:helidon-config-object-mapping:2.3.0",
         "io.helidon.config:helidon-config-yaml:2.3.0",
         "io.helidon.config:helidon-config:2.3.0",
@@ -169,8 +169,8 @@ maven_install(
         "org.checkerframework:checker:3.13.0",
         "org.mapstruct:mapstruct-processor:1.4.2.Final",
         "org.mapstruct:mapstruct:1.4.2.Final",
-        "org.openjdk.jmh:jmh-core:1.31",
-        "org.openjdk.jmh:jmh-generator-annprocess:1.31",
+        "org.openjdk.jmh:jmh-core:1.32",
+        "org.openjdk.jmh:jmh-generator-annprocess:1.32",
         "org.slf4j:slf4j-api:1.8.0-beta4",
         "org.slf4j:slf4j-jdk14:1.8.0-beta4",
         maven.artifact(
