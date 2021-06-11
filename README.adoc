@@ -185,20 +185,3 @@ data model naming conventions. MapStruct uses a fixed und quite unflexible acces
 so you can't really decide that protocol buffers should have one convention but Immutables another.
 Especially for Immutables we are forced to use JavaBeans-style naming convention, although this is
 not a JEE application.
-
-== Known Issues
-
-Warning during build:
-[subs="+quotes"]
-----
-[lime]#INFO:# From Compiling src/google/protobuf/descriptor.cc:
-*external/com_google_protobuf/src/google/protobuf/descriptor.cc:1038:9: [fuchsia]#warning:# passing variable 'unknown_enum_values_by_number_' by reference requires holding mutex 'unknown_enum_values_mu_' [-Wthread-safety-reference]*
-        unknown_enum_values_by_number_, std::make_pair(parent, number));
-        [lime]#^#
-*external/com_google_protobuf/src/google/protobuf/descriptor.cc:1048:9: [fuchsia]#warning:# passing variable 'unknown_enum_values_by_number_' by reference requires holding mutex 'unknown_enum_values_mu_' [-Wthread-safety-reference]*
-        unknown_enum_values_by_number_, std::make_pair(parent, number));
-        [lime]#^#
-2 warnings generated.
-----
-
-Fixed in https://github.com/protocolbuffers/protobuf/pull/8714[GitHub pull request #8714].

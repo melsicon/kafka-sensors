@@ -3,6 +3,7 @@
 *.bzl text
 *.java text
 *.json text
+*.patch text
 *.proto text
 *.yaml text
 BUILD text
