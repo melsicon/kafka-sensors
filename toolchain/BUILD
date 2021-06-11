@@ -77,45 +77,33 @@ java_plugin(
 
 java_library(
     name = "checker",
-    exported_plugins = ["nullness_checker", "optional_checker"],
+    exported_plugins = [
+        "nullness_checker",
+        "optional_checker",
+    ],
     neverlink = True,
     visibility = ["//visibility:public"],
     exports = ["@maven//:org_checkerframework_checker_qual"],
 )
 
 # ---
-# https://github.com/google/auto/blob/master/value/userguide/index.md
+# https://immutables.github.io
 
 java_plugin(
-    name = "auto_value_processor",
-    processor_class = "com.google.auto.value.processor.AutoValueProcessor",
-    deps = ["@maven//:com_google_auto_value_auto_value"],
-)
-
-java_plugin(
-    name = "auto_oneof_processor",
-    processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
-    deps = ["@maven//:com_google_auto_value_auto_value"],
-)
-
-java_plugin(
-    name = "auto_annotation_processor",
-    processor_class = "com.google.auto.value.processor.AutoAnnotationProcessor",
-    deps = ["@maven//:com_google_auto_value_auto_value"],
+    name = "immutables_processor",
+    generates_api = True,
+    processor_class = "org.immutables.value.processor.Processor",
+    deps = ["@maven//:org_immutables_value_processor"],
 )
 
 java_library(
-    name = "autovalue",
-    exported_plugins = [
-        "auto_value_processor",
-        "auto_oneof_processor",
-        "auto_annotation_processor",
-    ],
+    name = "immutables",
+    exported_plugins = ["immutables_processor"],
     neverlink = True,
     visibility = ["//visibility:public"],
     exports = [
-        "@maven//:com_google_auto_value_auto_value_annotations",
-        "@maven//:jakarta_annotation_jakarta_annotation_api",
+        "@maven//:com_google_code_findbugs_jsr305",
+        "@maven//:org_immutables_value_annotations",
     ],
 )
 

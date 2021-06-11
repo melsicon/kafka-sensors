@@ -65,7 +65,7 @@ import java.time.Instant;
       var name = reader.getFieldName();
       switch (name) {
         case FIELD_EVENT:
-          builder.setEvent(deserializeSensorState2(reader));
+          builder.event(deserializeSensorState2(reader));
           break;
 
         case FIELD_DURATION:
@@ -74,7 +74,7 @@ import java.time.Instant;
           var seconds = components[0].longValueExact();
           var nanoAdjustment = components[1].movePointRight(9).longValue();
           var duration = Duration.ofSeconds(seconds, nanoAdjustment);
-          builder.setDuration(duration);
+          builder.duration(duration);
           break;
 
         default:
@@ -100,15 +100,15 @@ import java.time.Instant;
       var name = reader.getFieldName();
       switch (name) {
         case FIELD_ID:
-          builder.setId(reader.stringValue());
+          builder.id(reader.stringValue());
           break;
 
         case FIELD_STATE:
-          builder.setState(State.valueOf(reader.stringValue()));
+          builder.state(State.valueOf(reader.stringValue()));
           break;
 
         case FIELD_TIME:
-          builder.setTime(readInstant(reader));
+          builder.time(readInstant(reader));
           break;
 
         default:

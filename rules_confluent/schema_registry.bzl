@@ -118,14 +118,25 @@ java_library(
 )
 
 java_library(
+    name = "kafka-protobuf-types",
+    srcs = glob(["protobuf-types/src/main/java/**/*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_protobuf//:protobuf_java",
+    ],
+)
+
+java_library(
     name = "kafka-protobuf-provider",
     srcs = glob(["protobuf-provider/src/main/java/**/*.java"]),
     visibility = ["//visibility:public"],
     deps = [
+        ":kafka-protobuf-types",
         ":kafka-schema-registry-client",
         "@com_google_protobuf//:protobuf_java",
         "@com_google_protobuf//:protobuf_java_util",
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven//:com_google_api_grpc_proto_google_common_protos",
         "@maven//:com_google_guava_guava",
         "@maven//:com_squareup_wire_wire_runtime",
         "@maven//:com_squareup_wire_wire_schema",

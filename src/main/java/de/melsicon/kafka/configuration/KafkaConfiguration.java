@@ -1,23 +1,25 @@
 package de.melsicon.kafka.configuration;
 
-import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.Immutable;
 import io.helidon.config.objectmapping.Value;
-import java.util.List;
 import java.util.Optional;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.immutables.value.Value.Style;
 
 /** The main Kafka configuration. */
 @Immutable
-@AutoValue
-public abstract class KafkaConfiguration {
+@Style(
+    optionalAcceptNullable = true,
+    passAnnotations = {Immutable.class})
+@org.immutables.value.Value.Immutable
+public abstract class KafkaConfiguration implements WithKafkaConfiguration {
   public static final String PREFIX = "kafka";
 
   /* package */ KafkaConfiguration() {}
 
   public static Builder builder() {
-    return new AutoValue_KafkaConfiguration.Builder();
+    return ImmutableKafkaConfiguration.builder();
   }
 
   public abstract ImmutableList<String> bootstrapServers();
@@ -28,16 +30,9 @@ public abstract class KafkaConfiguration {
 
   public abstract Optional<String> clientID();
 
-  @Override
-  public abstract int hashCode();
-
-  @Override
-  public abstract boolean equals(@Nullable Object o);
-
-  @AutoValue.Builder
   public abstract static class Builder {
     @Value(key = "brokers")
-    public abstract Builder bootstrapServers(List<String> bootstrapServers);
+    public abstract Builder bootstrapServers(Iterable<String> bootstrapServers);
 
     @Value(key = "input-topic")
     public abstract Builder inputTopic(String inputTopic);

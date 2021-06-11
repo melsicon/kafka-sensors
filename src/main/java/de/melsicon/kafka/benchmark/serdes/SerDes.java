@@ -82,16 +82,11 @@ public final class SerDes {
   public static SensorStateWithDuration createData() {
     var instant = Instant.ofEpochSecond(443634300L);
 
-    var event =
-        SensorState.builder()
-            .setId("7331")
-            .setTime(instant)
-            .setState(SensorState.State.OFF)
-            .build();
+    var event = SensorState.builder().id("7331").time(instant).state(SensorState.State.OFF).build();
 
     return SensorStateWithDuration.builder()
-        .setEvent(event)
-        .setDuration(Duration.ofSeconds(15))
+        .event(event)
+        .duration(Duration.ofSeconds(15))
         .build();
   }
 }

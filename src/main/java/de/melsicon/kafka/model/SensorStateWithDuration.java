@@ -1,58 +1,27 @@
 package de.melsicon.kafka.model;
 
-import com.google.auto.value.AutoValue;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import com.google.errorprone.annotations.CheckReturnValue;
+import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.Immutable;
 import java.time.Duration;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.immutables.value.Value;
 
 @Immutable
-@AutoValue
-public abstract class SensorStateWithDuration {
+@Value.Style(passAnnotations = {Immutable.class})
+@Value.Immutable
+public abstract class SensorStateWithDuration implements WithSensorStateWithDuration {
   /* package */ SensorStateWithDuration() {}
 
-  public static Builder builder() {
-    return new AutoValue_SensorStateWithDuration.Builder();
+  public static ImmutableSensorStateWithDuration.Builder builder() {
+    return ImmutableSensorStateWithDuration.builder();
   }
 
   public abstract SensorState getEvent();
 
   public abstract Duration getDuration();
 
-  @Override
-  public abstract int hashCode();
-
-  @Override
-  public abstract boolean equals(@Nullable Object o);
-
-  @CanIgnoreReturnValue
-  @AutoValue.Builder
-  public abstract static class Builder {
-    /**
-     * Only for {@link com.fasterxml.jackson.annotation.JsonCreator}
-     *
-     * @deprecated Use {@link SensorState#builder}
-     * @return A new Builder
-     */
-    @Deprecated
-    public static final Builder newBuilder() {
-      return SensorStateWithDuration.builder();
-    }
-
-    public abstract Builder setEvent(SensorState sensorState);
-
-    public abstract Builder setDuration(Duration duration);
-
-    /* package */ abstract SensorStateWithDuration autoBuild();
-
-    @CheckReturnValue
-    public final SensorStateWithDuration build() {
-      var build = autoBuild();
-      if (build.getDuration().isNegative()) {
-        throw new IllegalStateException("Duration is negative");
-      }
-      return build;
-    }
+  @Value.Check
+  /* package */ void check() {
+    var duration = getDuration();
+    Preconditions.checkState(!duration.isNegative(), "Duration is negative");
   }
 }

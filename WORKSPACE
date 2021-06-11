@@ -29,23 +29,23 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "036d66d6eec216160dd898cfb162e9d82c1904627642667cc32b104d407bb411",
-    strip_prefix = "protobuf-3.17.1",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.17.1.tar.gz"],
+    sha256 = "c6003e1d2e7fefa78a3039f19f383b4f3a61e81be8c19356f85b6461998ad3db",
+    strip_prefix = "protobuf-3.17.3",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.17.3.tar.gz"],
 )
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "15dd24cf713b5b5110e2f0ca1708ceaa44bab89c6bfca547806980c00c4393e0",
-    strip_prefix = "dagger-dagger-2.36",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.36.tar.gz"],
+    sha256 = "9ec3c54d55f2fa9f59c71a28ab23ce00912c1b8b39f8512ff85df82a43904ddc",
+    strip_prefix = "dagger-dagger-2.37",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.37.tar.gz"],
 )
 
 http_archive(
     name = "io_bazel_rules_scala",
-    sha256 = "a09a6fa6d68174d904fe44a7bcfdcf4572862e65e673b933a9276b4846529a38",
-    strip_prefix = "rules_scala-c9cc7c261d3d740eb91ef8ef048b7cd2229d12ec",
-    url = "https://github.com/bazelbuild/rules_scala/archive/c9cc7c261d3d740eb91ef8ef048b7cd2229d12ec.tar.gz",
+    sha256 = "e749a8ade22828419e734e2fb94d8af747bcae1b35c1b664eff1f2dc35c1ab76",
+    strip_prefix = "rules_scala-2b7edf77c153f3fbb882005e0f199f95bd322880",
+    url = "https://github.com/bazelbuild/rules_scala/archive/2b7edf77c153f3fbb882005e0f199f95bd322880.tar.gz",
 )
 
 # ---
@@ -145,15 +145,13 @@ maven_install(
         "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.3",
         "com.google.auto.service:auto-service-annotations:1.0",
         "com.google.auto.service:auto-service:1.0",
-        "com.google.auto.value:auto-value-annotations:1.8.1",
-        "com.google.auto.value:auto-value:1.8.1",
         "com.google.code.gson:gson:2.8.7",
         "com.google.errorprone:error_prone_annotations:2.7.1",
         "com.google.flogger:flogger-system-backend:0.6",
         "com.google.flogger:flogger:0.6",
         "com.google.guava:guava:30.1.1-jre",
         "info.picocli:picocli:4.6.1",
-        "io.github.classgraph:classgraph:4.8.106",
+        "io.github.classgraph:classgraph:4.8.108",
         "io.helidon.config:helidon-config-object-mapping:2.3.0",
         "io.helidon.config:helidon-config-yaml:2.3.0",
         "io.helidon.config:helidon-config:2.3.0",
@@ -164,9 +162,10 @@ maven_install(
         "org.apache.kafka:kafka-clients:2.8.0",
         "org.apache.kafka:kafka-streams:2.8.0",
         "org.apache.kafka:kafka_2.13:2.8.0",
-        "org.checkerframework:checker-compat-qual:2.5.5",
-        "org.checkerframework:checker-qual:3.13.0",
-        "org.checkerframework:checker:3.13.0",
+        "org.checkerframework:checker-qual:3.14.0",
+        "org.checkerframework:checker:3.14.0",
+        "org.immutables:value-annotations:2.9.0-beta2",
+        "org.immutables:value-processor:2.9.0-beta2",
         "org.mapstruct:mapstruct-processor:1.4.2.Final",
         "org.mapstruct:mapstruct:1.4.2.Final",
         "org.openjdk.jmh:jmh-core:1.32",

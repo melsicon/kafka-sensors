@@ -131,8 +131,7 @@ public final class TopologyTest {
   public void testTopology() {
     var instant = Instant.ofEpochSecond(443634300L);
 
-    var initialState =
-        SensorState.builder().setId("7331").setTime(instant).setState(State.OFF).build();
+    var initialState = SensorState.builder().id("7331").time(instant).state(State.OFF).build();
 
     pipeState(initialState);
 
@@ -141,7 +140,7 @@ public final class TopologyTest {
     assertThat(result1.value).isNull();
 
     var next = instant.plusSeconds(30);
-    var newState = SensorState.builder().setId("7331").setTime(next).setState(State.ON).build();
+    var newState = SensorState.builder().id("7331").time(next).state(State.ON).build();
 
     pipeState(newState);
 
@@ -157,8 +156,7 @@ public final class TopologyTest {
   public void testRepeated() {
     var instant = Instant.ofEpochSecond(443634300L);
 
-    var initialState =
-        SensorState.builder().setId("7331").setTime(instant).setState(State.OFF).build();
+    var initialState = SensorState.builder().id("7331").time(instant).state(State.OFF).build();
 
     pipeState(initialState);
 
@@ -167,7 +165,7 @@ public final class TopologyTest {
     assertThat(result1.value).isNull();
 
     var next = instant.plusSeconds(30);
-    var newState = SensorState.builder().setId("7331").setTime(next).setState(State.OFF).build();
+    var newState = SensorState.builder().id("7331").time(next).state(State.OFF).build();
 
     pipeState(newState);
 
@@ -178,7 +176,7 @@ public final class TopologyTest {
     assertThat(result2.value.getDuration()).isEqualTo(Duration.ofSeconds(30));
 
     var next2 = next.plusSeconds(30);
-    var newState2 = SensorState.builder().setId("7331").setTime(next2).setState(State.ON).build();
+    var newState2 = SensorState.builder().id("7331").time(next2).state(State.ON).build();
 
     pipeState(newState2);
 
@@ -189,7 +187,7 @@ public final class TopologyTest {
     assertThat(result3.value.getDuration()).isEqualTo(Duration.ofSeconds(60));
 
     var next3 = next2.plusSeconds(15);
-    var newState3 = SensorState.builder().setId("7331").setTime(next3).setState(State.OFF).build();
+    var newState3 = SensorState.builder().id("7331").time(next3).state(State.OFF).build();
 
     pipeState(newState3);
 

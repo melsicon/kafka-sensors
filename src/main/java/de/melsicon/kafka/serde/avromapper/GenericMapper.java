@@ -34,9 +34,9 @@ public final class GenericMapper implements SensorStateMapper<GenericRecord, Gen
       return null;
     }
     return SensorState.builder()
-        .setId((String) sensorState.get(FIELD_ID))
-        .setTime((Instant) sensorState.get(FIELD_TIME))
-        .setState(stateMap((GenericEnumSymbol<?>) sensorState.get(FIELD_STATE)))
+        .id((String) sensorState.get(FIELD_ID))
+        .time((Instant) sensorState.get(FIELD_TIME))
+        .state(stateMap((GenericEnumSymbol<?>) sensorState.get(FIELD_STATE)))
         .build();
   }
 
@@ -59,8 +59,8 @@ public final class GenericMapper implements SensorStateMapper<GenericRecord, Gen
     }
     var event = Objects.requireNonNull(map((GenericRecord) sensorState.get(FIELD_EVENT)));
     return SensorStateWithDuration.builder()
-        .setEvent(event)
-        .setDuration((Duration) sensorState.get(FIELD_DURATION))
+        .event(event)
+        .duration((Duration) sensorState.get(FIELD_DURATION))
         .build();
   }
 

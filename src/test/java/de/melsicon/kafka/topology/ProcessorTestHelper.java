@@ -29,14 +29,14 @@ import org.checkerframework.checker.nullness.qual.Nullable;
   static SensorState initial(State state) {
     var instant = Instant.ofEpochSecond(443634300L);
 
-    return SensorState.builder().setId(SENSOR_ID).setTime(instant).setState(state).build();
+    return SensorState.builder().id(SENSOR_ID).time(instant).state(state).build();
   }
 
   static SensorState advance(SensorState old, Advancement advancement) {
     return SensorState.builder()
-        .setId(old.getId())
-        .setTime(old.getTime().plus(advancement.duration))
-        .setState(advancement.state)
+        .id(old.getId())
+        .time(old.getTime().plus(advancement.duration))
+        .state(advancement.state)
         .build();
   }
 

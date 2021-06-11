@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import de.melsicon.kafka.model.ImmutableSensorState;
+import de.melsicon.kafka.model.ImmutableSensorStateWithDuration;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 
@@ -19,10 +21,11 @@ public final class JsonHelper {
         .configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, /* state= */ true)
         .configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, /* state= */ true)
         .addMixIn(SensorState.class, SensorStateMixIn.class)
-        .addMixIn(SensorState.Builder.class, SensorStateMixIn.BuilderMixIn.class)
+        .addMixIn(ImmutableSensorState.Builder.class, SensorStateMixIn.BuilderMixIn.class)
         .addMixIn(SensorStateWithDuration.class, SensorStateWithDurationMixIn.class)
         .addMixIn(
-            SensorStateWithDuration.Builder.class, SensorStateWithDurationMixIn.BuilderMixIn.class)
+            ImmutableSensorStateWithDuration.Builder.class,
+            SensorStateWithDurationMixIn.BuilderMixIn.class)
         .build();
   }
 }

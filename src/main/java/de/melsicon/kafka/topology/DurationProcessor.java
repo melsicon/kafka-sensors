@@ -27,7 +27,7 @@ import org.checkerframework.checker.nullness.qual.RequiresNonNull;
   private static SensorStateWithDuration addDuration(
       SensorState oldState, SensorState sensorState) {
     var duration = Duration.between(oldState.getTime(), sensorState.getTime());
-    return SensorStateWithDuration.builder().setEvent(oldState).setDuration(duration).build();
+    return SensorStateWithDuration.builder().event(oldState).duration(duration).build();
   }
 
   /**

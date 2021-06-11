@@ -22,8 +22,17 @@ public abstract class ProtoMapper {
     return new ProtoMapperImpl();
   }
 
-  public abstract @PolyNull SensorState map(
-      de.melsicon.kafka.sensors.v1.@PolyNull SensorState sensorState);
+  public final @PolyNull SensorState map(
+      de.melsicon.kafka.sensors.v1.@PolyNull SensorState sensorState) {
+    if (sensorState == null) {
+      return null;
+    }
+    return SensorState.builder()
+        .id(sensorState.getId())
+        .state(mapState(sensorState.getState()))
+        .time(ProtoTypesMapper.timestamp2Instant(sensorState.getTime()))
+        .build();
+  }
 
   @InheritInverseConfiguration
   @ValueMapping(source = ANY_REMAINING, target = NULL)
@@ -40,8 +49,16 @@ public abstract class ProtoMapper {
   /* package */ abstract de.melsicon.kafka.sensors.v1.SensorState.State unmapState(
       SensorState.State state);
 
-  public abstract @PolyNull SensorStateWithDuration map2(
-      de.melsicon.kafka.sensors.v1.@PolyNull SensorStateWithDuration sensorState);
+  public final @PolyNull SensorStateWithDuration map2(
+      de.melsicon.kafka.sensors.v1.@PolyNull SensorStateWithDuration sensorState) {
+    if (sensorState == null) {
+      return null;
+    }
+    return SensorStateWithDuration.builder()
+        .event(map(sensorState.getEvent()))
+        .duration(ProtoTypesMapper.duration2Duration(sensorState.getDuration()))
+        .build();
+  }
 
   public abstract de.melsicon.kafka.sensors.v1.@PolyNull SensorStateWithDuration unmap2(
       @PolyNull SensorStateWithDuration sensorState);

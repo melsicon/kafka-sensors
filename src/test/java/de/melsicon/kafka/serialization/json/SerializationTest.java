@@ -28,8 +28,7 @@ public final class SerializationTest {
   public void canDecode() throws IOException {
     var instant = Instant.ofEpochSecond(443634300L);
 
-    var sensorState =
-        SensorState.builder().setId("7331").setTime(instant).setState(State.OFF).build();
+    var sensorState = SensorState.builder().id("7331").time(instant).state(State.OFF).build();
 
     var encoded = mapper.writeValueAsBytes(sensorState);
 

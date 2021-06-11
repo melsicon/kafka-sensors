@@ -3,11 +3,12 @@ load("@rules_java//java:defs.bzl", "java_library")
 java_library(
     name = "model",
     srcs = glob(["*.java"]),
-    javacopts = ["-AskipDefs=\\.AutoValue_[A-Za-z]+\\.Builder$$"],
+    javacopts = ["-AskipDefs=\\.(Immutable|With)[A-Z][A-Za-z0-9]*(\\.Builder)?$$"],
     visibility = ["//visibility:public"],
     deps = [
-        "//toolchain:autovalue",
         "//toolchain:checker",
+        "//toolchain:immutables",
         "@maven//:com_google_errorprone_error_prone_annotations",
+        "@maven//:com_google_guava_guava",
     ],
 )

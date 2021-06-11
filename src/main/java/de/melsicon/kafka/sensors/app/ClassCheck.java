@@ -31,7 +31,7 @@ public final class ClassCheck {
         logger.atWarning().log("Duplicate resource: %s", duplicate.getKey());
         try (var duplicates = duplicate.getValue()) {
           for (var resource : duplicates) {
-            logger.atWarning().log(" -> %s", resource.getURI());
+            logger.atWarning().log(" -> %s", resource.getClasspathElementFile());
           }
         }
       }

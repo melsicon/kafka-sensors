@@ -13,8 +13,7 @@ public final class SensorStateTest {
   public void creation() {
     var instant = Instant.ofEpochSecond(443634300L);
 
-    var sensorState =
-        SensorState.builder().setId("7331").setTime(instant).setState(State.OFF).build();
+    var sensorState = SensorState.builder().id("7331").time(instant).state(State.OFF).build();
 
     assertThat(sensorState.getId()).isEqualTo("7331");
     assertThat(sensorState.getTime()).isEqualTo(instant);
@@ -29,22 +28,21 @@ public final class SensorStateTest {
   @Test
   @SuppressWarnings("nullness:argument")
   public void notNull() {
-    assertThrows(NullPointerException.class, () -> SensorState.builder().setId(null).build());
+    assertThrows(NullPointerException.class, () -> SensorState.builder().id(null).build());
   }
 
   @Test
   public void durationShouldNotBeNegative() {
     var instant = Instant.ofEpochSecond(443634300L);
 
-    var sensorState =
-        SensorState.builder().setId("7331").setTime(instant).setState(State.OFF).build();
+    var sensorState = SensorState.builder().id("7331").time(instant).state(State.OFF).build();
 
     assertThrows(
         IllegalStateException.class,
         () ->
             SensorStateWithDuration.builder()
-                .setEvent(sensorState)
-                .setDuration(Duration.ofMillis(-1))
+                .event(sensorState)
+                .duration(Duration.ofMillis(-1))
                 .build());
   }
 }

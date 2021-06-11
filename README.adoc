@@ -83,12 +83,13 @@ serialization formats.
 The data model is in the link:src/main/java/de/melsicon/kafka/model[model directory], the business
 logic in link:src/main/java/de/melsicon/kafka/topology[topology].
 
-The link:src/test/java/de/melsicon/kafka/topology[tests] test the topology with six different
+The link:src/test/java/de/melsicon/kafka/topology[tests] test the topology with seven different
 (de-)serializers, https://developers.google.com/protocol-buffers/[protocol buffers],
-https://json.org[JSON], https://avro.apache.org/docs/current/[Apache Avro] and the
-https://docs.confluent.io/platform/current/schema-registry/[Confluent variants] of them. Since the
-example needs an input format, a result format and a format for the state store we have 216 (6^3^)
-different combinations which are all tested.
+https://json.org[JSON], https://avro.apache.org/docs/current/[Apache Avro], the
+https://docs.confluent.io/platform/current/schema-registry/[Confluent variants] of them and
+https://amzn.github.io/ion-docs/[Amazon Ion]. Since the  example needs an input format, a result
+format and a format for the state store we have 343 (7^3^) different combinations which are all
+tested.
 
 While this abstraction might not be necessary in practice, it demonstrates two important design
 considerations:
@@ -174,6 +175,17 @@ Run the https://openjdk.java.net/projects/code-tools/jmh/[JMH] microbenchmarks w
 [source,shell]
 bazel run //:benchmark
 
+== Notes
+=== Mapping
+
+As noted in <<Implementation of Business Logic>> the business login is independent of the
+serialization, in the spirit of hexagonal architecture. This of course requires some mapping,
+where we mostly use https://mapstruct.org[MapStruct] for. This necessitates some limitations in
+data model naming conventions. MapStruct uses a fixed und quite unflexible accessor naming strategy,
+so you can't really decide that protocol buffers should have one convention but Immutables another.
+Especially for Immutables we are forced to use JavaBeans-style naming convention, although this is
+not a JEE application.
+
 == Known Issues
 
 Warning during build:
@@ -189,4 +201,4 @@ Warning during build:
 2 warnings generated.
 ----
 
-Tracked in https://github.com/protocolbuffers/protobuf/issues/8592[GitHub issue #8592].
+Fixed in https://github.com/protocolbuffers/protobuf/pull/8714[GitHub pull request #8714].

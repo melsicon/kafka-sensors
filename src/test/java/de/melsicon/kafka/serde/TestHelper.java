@@ -30,15 +30,15 @@ import org.apache.kafka.common.serialization.Serde;
   /* package */ static SensorState standardSensorState() {
     var instant = Instant.ofEpochSecond(443634300L);
 
-    return SensorState.builder().setId("7331").setTime(instant).setState(State.OFF).build();
+    return SensorState.builder().id("7331").time(instant).state(State.OFF).build();
   }
 
   /* package */ static SensorStateWithDuration standardSensorStateWithDuration() {
     var event = standardSensorState();
 
     return SensorStateWithDuration.builder()
-        .setEvent(event)
-        .setDuration(Duration.ofSeconds(15))
+        .event(event)
+        .duration(Duration.ofSeconds(15))
         .build();
   }
 

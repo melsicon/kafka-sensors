@@ -114,7 +114,7 @@ public final class ProtobufAccessorNamingStrategy extends DefaultAccessorNamingS
 
   @Override
   protected boolean isFluentSetter(ExecutableElement method) {
-    return false;
+    return super.isFluentSetter(method) && !method.getSimpleName().toString().equals("from");
   }
 
   @Override

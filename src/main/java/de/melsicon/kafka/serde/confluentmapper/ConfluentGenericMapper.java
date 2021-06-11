@@ -33,9 +33,9 @@ public final class ConfluentGenericMapper
       return null;
     }
     return SensorState.builder()
-        .setId((String) sensorState.get(FIELD_ID))
-        .setTime(Instant.ofEpochMilli((Long) sensorState.get(FIELD_TIME)))
-        .setState(stateMap((GenericEnumSymbol<?>) sensorState.get(FIELD_STATE)))
+        .id((String) sensorState.get(FIELD_ID))
+        .time(Instant.ofEpochMilli((Long) sensorState.get(FIELD_TIME)))
+        .state(stateMap((GenericEnumSymbol<?>) sensorState.get(FIELD_STATE)))
         .build();
   }
 
@@ -58,8 +58,8 @@ public final class ConfluentGenericMapper
     }
     var event = Objects.requireNonNull(map((GenericRecord) sensorState.get(FIELD_EVENT)));
     return SensorStateWithDuration.builder()
-        .setEvent(event)
-        .setDuration(Duration.ofMillis((Long) sensorState.get(FIELD_DURATION)))
+        .event(event)
+        .duration(Duration.ofMillis((Long) sensorState.get(FIELD_DURATION)))
         .build();
   }
 

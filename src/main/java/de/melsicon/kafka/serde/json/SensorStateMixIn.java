@@ -3,18 +3,18 @@ package de.melsicon.kafka.serde.json;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import de.melsicon.kafka.model.SensorState;
+import de.melsicon.kafka.model.ImmutableSensorState;
 
-@JsonDeserialize(builder = SensorState.Builder.class)
+@JsonDeserialize(builder = ImmutableSensorState.Builder.class)
 public abstract class SensorStateMixIn {
   private SensorStateMixIn() {}
 
-  @JsonPOJOBuilder(withPrefix = "set")
+  @JsonPOJOBuilder(withPrefix = "")
   public abstract static class BuilderMixIn {
     private BuilderMixIn() {}
 
     @JsonCreator
-    public static SensorState.Builder newBuilder() {
+    public static ImmutableSensorState.Builder builder() {
       throw new UnsupportedOperationException();
     }
   }
