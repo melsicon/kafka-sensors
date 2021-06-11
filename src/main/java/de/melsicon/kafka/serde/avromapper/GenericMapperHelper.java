@@ -20,7 +20,7 @@ public final class GenericMapperHelper {
         return State.ON;
 
       default:
-        throw new IllegalArgumentException("Unexpected Enum value: " + state.toString());
+        throw new IllegalArgumentException("Unexpected Enum value: " + state);
     }
   }
 

@@ -8,6 +8,7 @@ import org.apache.avro.Schema;
 import org.apache.avro.specific.SpecificRecord;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class SpecificAvroDeserializer<T extends SpecificRecord> implements Deserializer<T> {
@@ -34,12 +35,13 @@ public final class SpecificAvroDeserializer<T extends SpecificRecord> implements
   }
 
   @Override
+  @SuppressWarnings("nullness:override.param")
   public void configure(
-      @Nullable Map<String, ?> deserializerConfig, boolean isDeserializerForRecordKeys) {
+      @Nullable Map<String, ? extends @NonNull Object> deserializerConfig, boolean isDeserializerForRecordKeys) {
     Map<String, Object> specificAvroEnabledConfig =
         deserializerConfig == null
             ? new HashMap<>()
-            : new HashMap<>((Map<String, ? extends Object>) deserializerConfig);
+            : new HashMap<>(deserializerConfig);
     specificAvroEnabledConfig.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, true);
 
     inner.configure(specificAvroEnabledConfig, isDeserializerForRecordKeys);
