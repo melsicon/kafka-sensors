@@ -6,10 +6,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "e0015762cdeb5a2a9c48f96fb079c6a98e001d44ec23ad4fa2ca27208c5be4fb",
+    sha256 = "69de5c704a05ff37862f7e0f5534d4f479418afc21806c887db544a316f3cb6b",
     urls = [
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.14/rules_go-v0.24.14.tar.gz",
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.14/rules_go-v0.24.14.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
     ],
 )
 
@@ -53,7 +53,7 @@ http_archive(
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
-go_register_toolchains(go_version = "1.16.2")
+go_register_toolchains(go_version = "1.16.5")
 
 go_rules_dependencies()
 
@@ -163,10 +163,10 @@ maven_install(
         "org.apache.kafka:kafka-clients:2.8.0",
         "org.apache.kafka:kafka-streams:2.8.0",
         "org.apache.kafka:kafka_2.13:2.8.0",
-        "org.checkerframework:checker-qual:3.14.0",
-        "org.checkerframework:checker:3.14.0",
-        "org.immutables:value-annotations:2.9.0-beta2",
-        "org.immutables:value-processor:2.9.0-beta2",
+        "org.checkerframework:checker-qual:3.15.0",
+        "org.checkerframework:checker:3.15.0",
+        "org.immutables:value-annotations:2.9.0-beta3",
+        "org.immutables:value-processor:2.9.0-beta3",
         "org.mapstruct:mapstruct-processor:1.4.2.Final",
         "org.mapstruct:mapstruct:1.4.2.Final",
         "org.openjdk.jmh:jmh-core:1.32",
@@ -232,8 +232,8 @@ maven_install(
         "javax.ws.rs:javax.ws.rs-api": ":jakarta_ws_rs_jakarta_ws_rs_api",
     },
     repositories = [
-        "https://maven-central-eu.storage-download.googleapis.com/maven2",
         "https://repo1.maven.org/maven2",
+        "https://maven-central-eu.storage-download.googleapis.com/maven2",
     ],
 )
 

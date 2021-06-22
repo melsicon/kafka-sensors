@@ -16,9 +16,9 @@ def confluent_repositories_common():
     jvm_maven_import_external(
         name = "com_github_everit_org_json_schema_org_everit_json_schema",
         licenses = ["notice"],  # Apache 2.0
-        artifact = "com.github.everit-org.json-schema:org.everit.json.schema:1.12.2",
-        artifact_sha256 = "b8df44b274c3230bdc004f138f4a820cb86ea09a42d1ca9f5074dd432aeea198",
-        srcjar_sha256 = "b740f5df19b7c5ba99c368962821558591be869b5ee39b69f77d0f6c7a8d7b84",
+        artifact = "com.github.everit-org.json-schema:org.everit.json.schema:1.12.3",
+        artifact_sha256 = "66c84d7293d65debe425a08cef7bdea5a38c90dac080df17ff558fa310b66783",
+        srcjar_sha256 = "474d73ce922eea6d98a29f866802d1252d33782185084d3747618017e2e15778",
         fetch_sources = True,
         server_urls = ["https://jitpack.io/"],
         deps = [
