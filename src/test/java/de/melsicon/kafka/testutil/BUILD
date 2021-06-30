@@ -10,6 +10,7 @@ java_library(
         "@confluent_schema_registry//:kafka-schema-registry-client",
         "@confluent_schema_registry//:kafka-schema-serializer",
         "@maven//:junit_junit",
+        "@maven//:net_mguenther_kafka_kafka_junit",
         "@maven//:org_apache_kafka_kafka_clients",
     ],
 )

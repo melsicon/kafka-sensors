@@ -42,13 +42,6 @@ http_archive(
     urls = ["https://github.com/google/dagger/archive/dagger-2.37.tar.gz"],
 )
 
-http_archive(
-    name = "io_bazel_rules_scala",
-    sha256 = "e749a8ade22828419e734e2fb94d8af747bcae1b35c1b664eff1f2dc35c1ab76",
-    strip_prefix = "rules_scala-2b7edf77c153f3fbb882005e0f199f95bd322880",
-    url = "https://github.com/bazelbuild/rules_scala/archive/2b7edf77c153f3fbb882005e0f199f95bd322880.tar.gz",
-)
-
 # ---
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
@@ -75,20 +68,6 @@ go_repositories()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_jvm_external//:specs.bzl", "maven")
-
-# ---
-
-load("@io_bazel_rules_scala//:scala_config.bzl", "scala_config")
-
-scala_config(scala_version = "2.13.3")
-
-load("@io_bazel_rules_scala//scala:scala.bzl", "scala_repositories")
-
-scala_repositories()
-
-load("@io_bazel_rules_scala//scala:toolchains.bzl", "scala_register_toolchains")
-
-scala_register_toolchains()
 
 # ---
 
@@ -198,15 +177,15 @@ maven_install(
             testonly = True,
         ),
         maven.artifact(
-            "com.salesforce.kafka.test",
-            "kafka-junit4",
-            "3.2.2",
-            testonly = True,
-        ),
-        maven.artifact(
             "junit",
             "junit",
             "4.13.2",
+            testonly = True,
+        ),
+        maven.artifact(
+            "net.mguenther.kafka",
+            "kafka-junit",
+            "2.8.0",
             testonly = True,
         ),
         maven.artifact(
@@ -218,7 +197,7 @@ maven_install(
         maven.artifact(
             "org.ow2.asm",
             "asm",
-            "9.1",
+            "9.2",
             testonly = True,
         ),
     ] + DAGGER_ARTIFACTS + AVRO_ARTIFACTS + CONFLUENT_ARTIFACTS,

@@ -2,17 +2,15 @@ package de.melsicon.kafka.topology;
 
 import static com.google.common.truth.Truth.assertThat;
 import static de.melsicon.kafka.topology.TopologyTestHelper.INPUT_TOPIC;
-import static de.melsicon.kafka.topology.TopologyTestHelper.PARTITIONS;
 import static de.melsicon.kafka.topology.TopologyTestHelper.REGISTRY_SCOPE;
-import static de.melsicon.kafka.topology.TopologyTestHelper.REPLICATION_FACTOR;
 import static de.melsicon.kafka.topology.TopologyTestHelper.RESULT_TOPIC;
 import static de.melsicon.kafka.topology.TopologyTestHelper.newKafkaTestResource;
 
-import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
 import de.melsicon.kafka.context.TestComponent;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
+import de.melsicon.kafka.testutil.EmbeddedKafkaRule;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
 import java.time.Duration;
 import java.time.Instant;
@@ -40,7 +38,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public final class TopologyTest {
   @ClassRule
-  public static final SharedKafkaTestResource KAFKA_TEST_RESOURCE = newKafkaTestResource();
+  public static final EmbeddedKafkaRule KAFKA_TEST_RESOURCE = newKafkaTestResource();
 
   @Rule public final SchemaRegistryRule registryTestResource;
   private final Supplier<Serde<SensorState>> inputSerdes;
@@ -95,10 +93,6 @@ public final class TopologyTest {
 
     var resultSerde = resultSerdes.get();
     registryTestResource.configureSerde(resultSerde);
-
-    var kafkaTestUtils = KAFKA_TEST_RESOURCE.getKafkaTestUtils();
-    kafkaTestUtils.createTopic(INPUT_TOPIC, PARTITIONS, REPLICATION_FACTOR);
-    kafkaTestUtils.createTopic(RESULT_TOPIC, PARTITIONS, REPLICATION_FACTOR);
 
     var configuration = TopologyTestHelper.configuration(KAFKA_TEST_RESOURCE);
     var settings = TopologyTestHelper.settings(KAFKA_TEST_RESOURCE);

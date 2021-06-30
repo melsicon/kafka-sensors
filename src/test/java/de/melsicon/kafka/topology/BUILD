@@ -24,8 +24,7 @@ java_library(
         "//toolchain:truth",
         "@maven//:com_google_errorprone_error_prone_annotations",
         "@maven//:com_google_guava_guava",
-        "@maven//:com_salesforce_kafka_test_kafka_junit4",
-        "@maven//:com_salesforce_kafka_test_kafka_junit_core",
+        "@maven//:net_mguenther_kafka_kafka_junit",
         "@maven//:org_apache_kafka_kafka_clients",
         "@maven//:org_apache_kafka_kafka_streams",
         "@maven//:org_apache_kafka_kafka_streams_test_utils",
@@ -46,7 +45,6 @@ java_test(
     size = "medium",
     runtime_deps = [
         ":tests",
-        "//src/test/scala/kafka/server",
         "@maven//:org_slf4j_slf4j_jdk14",
     ],
 )

@@ -5,14 +5,15 @@ import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG;
 import static org.apache.kafka.streams.StreamsConfig.NUM_STREAM_THREADS_CONFIG;
 
-import com.google.common.collect.ImmutableList;
-import com.salesforce.kafka.test.AbstractKafkaTestResource;
-import com.salesforce.kafka.test.KafkaBroker;
-import com.salesforce.kafka.test.junit4.SharedKafkaTestResource;
+import com.google.common.base.Splitter;
 import de.melsicon.kafka.configuration.KafkaConfiguration;
 import de.melsicon.kafka.serde.SensorStateSerdes;
 import de.melsicon.kafka.serde.avromapper.SpecificMapper;
+import de.melsicon.kafka.testutil.EmbeddedKafkaRule;
 import java.util.Properties;
+import kafka.server.KafkaConfig$;
+import net.mguenther.kafka.junit.EmbeddedKafkaClusterConfig;
+import net.mguenther.kafka.junit.EmbeddedKafkaConfig;
 import org.apache.kafka.common.serialization.Serdes;
 
 /* package */ final class TopologyTestHelper {
@@ -27,10 +28,15 @@ import org.apache.kafka.common.serialization.Serdes;
 
   private TopologyTestHelper() {}
 
-  /* package */ static SharedKafkaTestResource newKafkaTestResource() {
-    return new SharedKafkaTestResource()
-        .withBrokerProperty(AUTO_CREATE_TOPICS_ENABLE_CONFIG, "false")
-        .withBrokers(BROKER_COUNT);
+  /* package */ static EmbeddedKafkaRule newKafkaTestResource() {
+    var kafkaConfig =
+        EmbeddedKafkaConfig.brokers()
+            .with(AUTO_CREATE_TOPICS_ENABLE_CONFIG, false)
+            .withNumberOfBrokers(BROKER_COUNT)
+            .build();
+    var kafkaClusterConfig =
+        EmbeddedKafkaClusterConfig.newClusterConfig().configure(kafkaConfig).build();
+    return new EmbeddedKafkaRule(kafkaClusterConfig);
   }
 
   @SuppressWarnings("UnnecessarilyFullyQualified")
@@ -44,19 +50,18 @@ import org.apache.kafka.common.serialization.Serdes;
     };
   }
 
-  /* package */ static Properties settings(AbstractKafkaTestResource<?> kafkaTestResource) {
+  /* package */ static Properties settings(EmbeddedKafkaRule kafkaTestResource) {
     var settings = new Properties();
     settings.put(APPLICATION_ID_CONFIG, APPLICATION_ID);
-    settings.put(BOOTSTRAP_SERVERS_CONFIG, kafkaTestResource.getKafkaConnectString());
-
+    settings.put(BOOTSTRAP_SERVERS_CONFIG, kafkaTestResource.getBrokerList());
     settings.put(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde.class.getName());
     settings.put(NUM_STREAM_THREADS_CONFIG, PARTITIONS);
 
     return settings;
   }
 
-  /* package */ static KafkaConfiguration configuration(
-      AbstractKafkaTestResource<?> kafkaTestResource) {
+  /* package */ static KafkaConfiguration configuration(EmbeddedKafkaRule kafkaTestResource) {
+
     return KafkaConfiguration.builder()
         .inputTopic(INPUT_TOPIC)
         .resultTopic(RESULT_TOPIC)
@@ -64,10 +69,7 @@ import org.apache.kafka.common.serialization.Serdes;
         .build();
   }
 
-  private static ImmutableList<String> bootstrapServers(
-      AbstractKafkaTestResource<?> kafkaTestResource) {
-    return kafkaTestResource.getKafkaBrokers().stream()
-        .map(KafkaBroker::getConnectString)
-        .collect(ImmutableList.toImmutableList());
+  private static Iterable<String> bootstrapServers(EmbeddedKafkaRule kafkaTestResource) {
+    return Splitter.on(',').split(kafkaTestResource.getBrokerList());
   }
 }
