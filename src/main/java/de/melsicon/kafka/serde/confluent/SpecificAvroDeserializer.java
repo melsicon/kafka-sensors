@@ -35,7 +35,7 @@ public final class SpecificAvroDeserializer<T extends SpecificRecord> implements
   }
 
   @Override
-  @SuppressWarnings("nullness:override.param")
+  @SuppressWarnings("nullness:override.param") // Deserializer is not annotated
   public void configure(
       @Nullable Map<String, ? extends @NonNull Object> deserializerConfig, boolean isDeserializerForRecordKeys) {
     Map<String, Object> specificAvroEnabledConfig =

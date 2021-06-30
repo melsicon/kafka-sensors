@@ -10,8 +10,7 @@ import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentGenericMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentJsonMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentReflectMapper;
-import de.melsicon.kafka.serde.ion.IonBinarySerdes;
-import de.melsicon.kafka.serde.ion.IonTextSerdes;
+import de.melsicon.kafka.serde.ion.IonSerdes;
 import de.melsicon.kafka.serde.proto.ProtoMapper;
 import java.time.Duration;
 import java.time.Instant;
@@ -68,10 +67,10 @@ public final class SerDes {
         serdeFactory = new de.melsicon.kafka.serde.confluent.ProtoSerdes(ProtoMapper.instance());
         break;
       case ION_TEXT:
-        serdeFactory = new IonTextSerdes();
+        serdeFactory = IonSerdes.textSerdes();
         break;
       case ION_BINARY:
-        serdeFactory = new IonBinarySerdes();
+        serdeFactory = IonSerdes.binarySerdes();
         break;
       default:
         throw new UnsupportedOperationException("Unknown type " + serdes.name());
@@ -84,9 +83,6 @@ public final class SerDes {
 
     var event = SensorState.builder().id("7331").time(instant).state(SensorState.State.OFF).build();
 
-    return SensorStateWithDuration.builder()
-        .event(event)
-        .duration(Duration.ofSeconds(15))
-        .build();
+    return SensorStateWithDuration.builder().event(event).duration(Duration.ofSeconds(15)).build();
   }
 }

@@ -12,8 +12,7 @@ import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentGenericMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentJsonMapper;
 import de.melsicon.kafka.serde.confluentmapper.ConfluentReflectMapper;
-import de.melsicon.kafka.serde.ion.IonBinarySerdes;
-import de.melsicon.kafka.serde.ion.IonTextSerdes;
+import de.melsicon.kafka.serde.ion.IonSerdes;
 import de.melsicon.kafka.serde.proto.ProtoMapper;
 import java.time.Duration;
 import java.time.Instant;
@@ -36,10 +35,7 @@ import org.apache.kafka.common.serialization.Serde;
   /* package */ static SensorStateWithDuration standardSensorStateWithDuration() {
     var event = standardSensorState();
 
-    return SensorStateWithDuration.builder()
-        .event(event)
-        .duration(Duration.ofSeconds(15))
-        .build();
+    return SensorStateWithDuration.builder().event(event).duration(Duration.ofSeconds(15)).build();
   }
 
   private static SensorStateSerdes[] serdes() {
@@ -64,8 +60,8 @@ import org.apache.kafka.common.serialization.Serde;
       new de.melsicon.kafka.serde.confluent.GenericSerdes(confluentGenericMapper),
       new de.melsicon.kafka.serde.confluent.JsonSerdes(confluentJsonMapper),
       new de.melsicon.kafka.serde.confluent.ProtoSerdes(confluentProtoMapper),
-      new IonTextSerdes(),
-      new IonBinarySerdes()
+      IonSerdes.textSerdes(),
+      IonSerdes.binarySerdes()
     };
   }
 
