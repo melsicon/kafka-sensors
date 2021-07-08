@@ -11,7 +11,6 @@ import de.melsicon.kafka.serde.SensorStateSerdes;
 import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import de.melsicon.kafka.testutil.EmbeddedKafkaRule;
 import java.util.Properties;
-import kafka.server.KafkaConfig$;
 import net.mguenther.kafka.junit.EmbeddedKafkaClusterConfig;
 import net.mguenther.kafka.junit.EmbeddedKafkaConfig;
 import org.apache.kafka.common.serialization.Serdes;

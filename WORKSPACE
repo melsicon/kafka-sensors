@@ -6,10 +6,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "69de5c704a05ff37862f7e0f5534d4f479418afc21806c887db544a316f3cb6b",
+    sha256 = "8e968b5fcea1d2d64071872b12737bbb5514524ee5f0a4f54f5920266c261acb",
     urls = [
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.28.0/rules_go-v0.28.0.zip",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.28.0/rules_go-v0.28.0.zip",
     ],
 )
 
@@ -115,14 +115,14 @@ base_images()
 maven_install(
     artifacts = [
         "com.amazon.ion:ion-java:1.8.2",
-        "com.fasterxml.jackson.core:jackson-annotations:2.12.3",
-        "com.fasterxml.jackson.core:jackson-core:2.12.3",
-        "com.fasterxml.jackson.core:jackson-databind:2.12.3",
-        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.12.3",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3",
-        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.3",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3",
-        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.3",
+        "com.fasterxml.jackson.core:jackson-annotations:2.12.4",
+        "com.fasterxml.jackson.core:jackson-core:2.12.4",
+        "com.fasterxml.jackson.core:jackson-databind:2.12.4",
+        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.12.4",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.4",
+        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.4",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.4",
+        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.4",
         "com.google.auto.service:auto-service-annotations:1.0",
         "com.google.auto.service:auto-service:1.0",
         "com.google.code.gson:gson:2.8.7",
@@ -131,7 +131,7 @@ maven_install(
         "com.google.flogger:flogger:0.6",
         "com.google.guava:guava:30.1.1-jre",
         "info.picocli:picocli:4.6.1",
-        "io.github.classgraph:classgraph:4.8.108",
+        "io.github.classgraph:classgraph:4.8.110",
         "io.helidon.config:helidon-config-object-mapping:2.3.1",
         "io.helidon.config:helidon-config-yaml:2.3.1",
         "io.helidon.config:helidon-config:2.3.1",
