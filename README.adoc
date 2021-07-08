@@ -5,6 +5,8 @@
 :Revision:  v0.1
 :toc: macro
 
+image:https://badge.buildkite.com/1248ca89f2ef2569421bc1f990cc51a007a521141544f671ba.svg?branch=main[title="Buildkite build status",link=https://buildkite.com/melsicon/kafka-streams]
+
 toc::[]
 
 == Purpose
