@@ -1,6 +1,6 @@
+---
 protoc:
-  version: 3.14.0
-
+  version: 3.17.3
 lint:
   group: uber2
   rules:
@@ -10,7 +10,6 @@ lint:
       - FILE_OPTIONS_REQUIRE_OBJC_CLASS_PREFIX
       - FILE_OPTIONS_REQUIRE_PHP_NAMESPACE
   java_package_prefix: de
-
 break:
   include_beta: true
   allow_beta_deps: false
