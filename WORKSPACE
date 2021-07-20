@@ -37,16 +37,16 @@ http_archive(
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "9ec3c54d55f2fa9f59c71a28ab23ce00912c1b8b39f8512ff85df82a43904ddc",
-    strip_prefix = "dagger-dagger-2.37",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.37.tar.gz"],
+    sha256 = "f41d043f76062b80c88e3b5611132df7c2c22b3bf372e217fa22f350d3725265",
+    strip_prefix = "dagger-dagger-2.38",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.38.tar.gz"],
 )
 
 # ---
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
-go_register_toolchains(go_version = "1.16.5")
+go_register_toolchains(go_version = "1.16.6")
 
 go_rules_dependencies()
 
@@ -146,8 +146,8 @@ maven_install(
         "org.checkerframework:checker:3.16.0",
         "org.immutables:value-annotations:2.9.0-beta3",
         "org.immutables:value-processor:2.9.0-beta3",
-        "org.mapstruct:mapstruct-processor:1.4.2.Final",
-        "org.mapstruct:mapstruct:1.4.2.Final",
+        "org.mapstruct:mapstruct-processor:1.5.0.Beta1",
+        "org.mapstruct:mapstruct:1.5.0.Beta1",
         "org.openjdk.jmh:jmh-core:1.32",
         "org.openjdk.jmh:jmh-generator-annprocess:1.32",
         "org.slf4j:slf4j-api:1.8.0-beta4",
@@ -212,7 +212,9 @@ maven_install(
     },
     repositories = [
         "https://repo1.maven.org/maven2",
+        "https://repo.maven.apache.org/maven2",
         "https://maven-central-eu.storage-download.googleapis.com/maven2",
+        "https://maven.google.com/",
     ],
 )
 
