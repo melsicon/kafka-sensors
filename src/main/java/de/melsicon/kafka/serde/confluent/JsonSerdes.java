@@ -20,17 +20,12 @@ public final class JsonSerdes implements SensorStateSerdes {
       mapper;
 
   @Inject
-  public JsonSerdes(
+  /* package */ JsonSerdes(
       SensorStateMapper<
               de.melsicon.kafka.sensors.confluent_json.SensorState,
               de.melsicon.kafka.sensors.confluent_json.SensorStateWithDuration>
           mapper) {
     this.mapper = mapper;
-  }
-
-  @Override
-  public String name() {
-    return "confluent-json";
   }
 
   @Override

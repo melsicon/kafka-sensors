@@ -6,12 +6,13 @@ import static de.melsicon.kafka.topology.TopologyTestHelper.REGISTRY_SCOPE;
 import static de.melsicon.kafka.topology.TopologyTestHelper.RESULT_TOPIC;
 import static de.melsicon.kafka.topology.TopologyTestHelper.newKafkaTestResource;
 
-import de.melsicon.kafka.context.TestComponent;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.testutil.EmbeddedKafkaRule;
 import de.melsicon.kafka.testutil.SchemaRegistryRule;
+import de.melsicon.kafka.topology.context.ParameterComponent;
+import de.melsicon.kafka.topology.context.TopologyComponent;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -37,8 +38,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public final class TopologyTest {
-  @ClassRule
-  public static final EmbeddedKafkaRule KAFKA_TEST_RESOURCE = newKafkaTestResource();
+  @ClassRule public static final EmbeddedKafkaRule KAFKA_TEST_RESOURCE = newKafkaTestResource();
 
   @Rule public final SchemaRegistryRule registryTestResource;
   private final Supplier<Serde<SensorState>> inputSerdes;
@@ -62,18 +62,19 @@ public final class TopologyTest {
 
   @Parameters(name = "{index}: {0}")
   public static Collection<?> parameters() {
-    var serdes = TopologyTestHelper.serdes();
-    var combinations = new ArrayList<Object[]>(serdes.length * serdes.length * serdes.length);
+    var testComponent = ParameterComponent.create();
+    var serdes = testComponent.serdes();
+    var combinations = new ArrayList<Object[]>(serdes.size() * serdes.size() * serdes.size());
     for (var inputSerdes : serdes) {
       for (var storeSerdes : serdes) {
         for (var resultSerdes : serdes) {
           var o = new Object[4];
           o[0] = inputSerdes.name() + " - " + storeSerdes.name() + " - " + resultSerdes.name();
-          o[1] = (Supplier<Serde<SensorState>>) inputSerdes::createSensorStateSerde;
-          o[2] = (Supplier<Serde<SensorState>>) storeSerdes::createSensorStateSerde;
+          o[1] = (Supplier<Serde<SensorState>>) inputSerdes.serdes()::createSensorStateSerde;
+          o[2] = (Supplier<Serde<SensorState>>) storeSerdes.serdes()::createSensorStateSerde;
           o[3] =
               (Supplier<Serde<SensorStateWithDuration>>)
-                  resultSerdes::createSensorStateWithDurationSerde;
+                  resultSerdes.serdes()::createSensorStateWithDurationSerde;
           combinations.add(o);
         }
       }
@@ -97,8 +98,12 @@ public final class TopologyTest {
     var configuration = TopologyTestHelper.configuration(KAFKA_TEST_RESOURCE);
     var settings = TopologyTestHelper.settings(KAFKA_TEST_RESOURCE);
     var testComponent =
-        TestComponent.factory()
-            .newTestComponent(configuration, inputSerde, storeSerde, resultSerde);
+        TopologyComponent.builder()
+            .configuration(configuration)
+            .inputSerde(inputSerde)
+            .storeSerde(storeSerde)
+            .resultSerde(resultSerde)
+            .build();
     var topology = testComponent.topology();
     testDriver = new TopologyTestDriver(topology, settings);
 

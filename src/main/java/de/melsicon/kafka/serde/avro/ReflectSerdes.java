@@ -18,17 +18,12 @@ public final class ReflectSerdes implements SensorStateSerdes {
       mapper;
 
   @Inject
-  public ReflectSerdes(
+  /* package */ ReflectSerdes(
       SensorStateMapper<
               de.melsicon.kafka.sensors.reflect.SensorState,
               de.melsicon.kafka.sensors.reflect.SensorStateWithDuration>
           mapper) {
     this.mapper = mapper;
-  }
-
-  @Override
-  public String name() {
-    return "reflect";
   }
 
   @Override

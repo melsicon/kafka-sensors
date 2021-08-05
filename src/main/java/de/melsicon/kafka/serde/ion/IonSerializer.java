@@ -8,11 +8,11 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public final class IonSerializer<T> implements Serializer<T> {
+/* package */ final class IonSerializer<T> implements Serializer<T> {
   private final IonWriterBuilder builder;
   private final IonSerialWriter<T> serializer;
 
-  public IonSerializer(IonWriterBuilder builder, IonSerialWriter<T> serializer) {
+  /* package */ IonSerializer(IonWriterBuilder builder, IonSerialWriter<T> serializer) {
     this.builder = builder;
     this.serializer = serializer;
   }

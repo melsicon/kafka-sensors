@@ -2,6 +2,8 @@ package de.melsicon.kafka.serde.confluent;
 
 import static org.apache.kafka.common.serialization.Serdes.serdeFrom;
 
+import dagger.assisted.Assisted;
+import dagger.assisted.AssistedInject;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.Format;
@@ -10,7 +12,6 @@ import de.melsicon.kafka.serde.SensorStateSerdes;
 import de.melsicon.kafka.serde.mapping.MappedDeserializer;
 import de.melsicon.kafka.serde.mapping.MappedSerializer;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerializer;
-import javax.inject.Inject;
 import org.apache.kafka.common.serialization.Serde;
 
 public final class SpecificSerdes implements SensorStateSerdes {
@@ -19,18 +20,14 @@ public final class SpecificSerdes implements SensorStateSerdes {
           de.melsicon.kafka.sensors.avro.SensorStateWithDuration>
       mapper;
 
-  @Inject
-  public SpecificSerdes(
-      SensorStateMapper<
-              de.melsicon.kafka.sensors.avro.SensorState,
-              de.melsicon.kafka.sensors.avro.SensorStateWithDuration>
-          mapper) {
+  @AssistedInject
+  /* package */ SpecificSerdes(
+      @Assisted
+          SensorStateMapper<
+                  de.melsicon.kafka.sensors.avro.SensorState,
+                  de.melsicon.kafka.sensors.avro.SensorStateWithDuration>
+              mapper) {
     this.mapper = mapper;
-  }
-
-  @Override
-  public String name() {
-    return "confluent-specific";
   }
 
   @Override

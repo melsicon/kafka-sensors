@@ -7,10 +7,10 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public final class AvroSerializer<T> implements Serializer<T> {
+/* package */ final class AvroSerializer<T> implements Serializer<T> {
   private final MessageEncoder<T> encoder;
 
-  public AvroSerializer(MessageEncoder<T> encoder) {
+  /* package */ AvroSerializer(MessageEncoder<T> encoder) {
     this.encoder = encoder;
   }
 

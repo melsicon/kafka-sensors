@@ -7,10 +7,10 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public final class JsonDeserializer<T> implements Deserializer<T> {
+/* package */ final class JsonDeserializer<T> implements Deserializer<T> {
   private final ObjectReader objectReader;
 
-  public JsonDeserializer(ObjectMapper objectMapper, Class<T> type) {
+  /* package */ JsonDeserializer(ObjectMapper objectMapper, Class<T> type) {
     this.objectReader = objectMapper.readerFor(type);
   }
 

@@ -1,4 +1,4 @@
-package de.melsicon.kafka.context;
+package de.melsicon.kafka.sensors.app.context;
 
 import com.google.common.util.concurrent.Service;
 import com.google.common.util.concurrent.ServiceManager;

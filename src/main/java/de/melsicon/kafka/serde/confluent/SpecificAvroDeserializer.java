@@ -37,11 +37,10 @@ public final class SpecificAvroDeserializer<T extends SpecificRecord> implements
   @Override
   @SuppressWarnings("nullness:override.param") // Deserializer is not annotated
   public void configure(
-      @Nullable Map<String, ? extends @NonNull Object> deserializerConfig, boolean isDeserializerForRecordKeys) {
+      @Nullable Map<String, ? extends @NonNull Object> deserializerConfig,
+      boolean isDeserializerForRecordKeys) {
     Map<String, Object> specificAvroEnabledConfig =
-        deserializerConfig == null
-            ? new HashMap<>()
-            : new HashMap<>(deserializerConfig);
+        deserializerConfig == null ? new HashMap<>() : new HashMap<>(deserializerConfig);
     specificAvroEnabledConfig.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, true);
 
     inner.configure(specificAvroEnabledConfig, isDeserializerForRecordKeys);

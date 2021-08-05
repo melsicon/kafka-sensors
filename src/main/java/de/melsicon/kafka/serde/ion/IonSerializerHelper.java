@@ -1,9 +1,13 @@
 package de.melsicon.kafka.serde.ion;
 
+import static org.apache.kafka.common.serialization.Serdes.serdeFrom;
+
 import com.amazon.ion.IonReader;
 import com.amazon.ion.IonType;
 import com.amazon.ion.IonWriter;
 import com.amazon.ion.Timestamp;
+import com.amazon.ion.system.IonReaderBuilder;
+import com.amazon.ion.system.IonWriterBuilder;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
@@ -11,6 +15,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.Instant;
+import org.apache.kafka.common.serialization.Serde;
 
 /* package */ final class IonSerializerHelper {
   private static final String FIELD_ID = "id";
@@ -21,7 +26,27 @@ import java.time.Instant;
 
   private IonSerializerHelper() {}
 
-  /* package */ static void serializeSensorStateWithDuration(
+  /* package */ static Serde<SensorState> createSensorStateSerde(
+      IonWriterBuilder writerBuilder, IonReaderBuilder readerBuilder) {
+    var serializer = new IonSerializer<>(writerBuilder, IonSerializerHelper::serializeSensorState);
+    var deserializer =
+        new IonDeserializer<>(readerBuilder, IonSerializerHelper::deserializeSensorState);
+
+    return serdeFrom(serializer, deserializer);
+  }
+
+  /* package */ static Serde<SensorStateWithDuration> createSensorStateWithDurationSerde(
+      IonWriterBuilder writerBuilder, IonReaderBuilder readerBuilder) {
+    var serializer =
+        new IonSerializer<>(writerBuilder, IonSerializerHelper::serializeSensorStateWithDuration);
+    var deserializer =
+        new IonDeserializer<>(
+            readerBuilder, IonSerializerHelper::deserializeSensorStateWithDuration);
+
+    return serdeFrom(serializer, deserializer);
+  }
+
+  private static void serializeSensorStateWithDuration(
       IonWriter writer, SensorStateWithDuration message) throws IOException {
     writer.stepIn(IonType.STRUCT);
     writer.setFieldName(FIELD_EVENT);
@@ -31,7 +56,7 @@ import java.time.Instant;
     writer.stepOut();
   }
 
-  /* package */ static void serializeSensorState(IonWriter writer, SensorState message)
+  private static void serializeSensorState(IonWriter writer, SensorState message)
       throws IOException {
     writer.stepIn(IonType.STRUCT);
     writer.setFieldName(FIELD_ID);
@@ -87,7 +112,7 @@ import java.time.Instant;
     return builder.build();
   }
 
-  /* package */ static SensorState deserializeSensorState(IonReader reader) {
+  private static SensorState deserializeSensorState(IonReader reader) {
     reader.next();
     return deserializeSensorState2(reader);
   }

@@ -16,17 +16,15 @@ import de.melsicon.kafka.serde.SensorStateMapper;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
+import javax.inject.Inject;
 import org.apache.avro.generic.GenericEnumSymbol;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 
-public final class GenericMapper implements SensorStateMapper<GenericRecord, GenericRecord> {
-  private GenericMapper() {}
-
-  public static GenericMapper instance() {
-    return new GenericMapper();
-  }
+/* package */ final class GenericMapper implements SensorStateMapper<GenericRecord, GenericRecord> {
+  @Inject
+  /* package */ GenericMapper() {}
 
   @Override
   public @PolyNull SensorState map(@PolyNull GenericRecord sensorState) {

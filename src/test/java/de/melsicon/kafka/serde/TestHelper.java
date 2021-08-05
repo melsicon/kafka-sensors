@@ -5,15 +5,7 @@ import com.google.common.collect.ImmutableMultimap;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorState.State;
 import de.melsicon.kafka.model.SensorStateWithDuration;
-import de.melsicon.kafka.serde.avromapper.GenericMapper;
-import de.melsicon.kafka.serde.avromapper.ReflectMapper;
-import de.melsicon.kafka.serde.avromapper.SpecificDirectMapper;
-import de.melsicon.kafka.serde.avromapper.SpecificMapper;
-import de.melsicon.kafka.serde.confluentmapper.ConfluentGenericMapper;
-import de.melsicon.kafka.serde.confluentmapper.ConfluentJsonMapper;
-import de.melsicon.kafka.serde.confluentmapper.ConfluentReflectMapper;
-import de.melsicon.kafka.serde.ion.IonSerdes;
-import de.melsicon.kafka.serde.proto.ProtoMapper;
+import de.melsicon.kafka.serde.context.TestComponent;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.function.Function;
@@ -38,41 +30,20 @@ import org.apache.kafka.common.serialization.Serde;
     return SensorStateWithDuration.builder().event(event).duration(Duration.ofSeconds(15)).build();
   }
 
-  private static SensorStateSerdes[] serdes() {
-    var specificMapper = SpecificMapper.instance();
-    var specificMapper2 = SpecificDirectMapper.instance();
-    var reflectMapper = ReflectMapper.instance();
-    var genericMapper = GenericMapper.instance();
-    var confluentReflectMapper = ConfluentReflectMapper.instance();
-    var confluentGenericMapper = ConfluentGenericMapper.instance();
-    var confluentJsonMapper = ConfluentJsonMapper.instance();
-    var confluentProtoMapper = ProtoMapper.instance();
+  private static ImmutableMultimap<Format, NamedSerDes> serdesByFormat() {
+    var builder = ImmutableMultimap.<Format, NamedSerDes>builder();
 
-    return new SensorStateSerdes[] {
-      new de.melsicon.kafka.serde.json.JsonSerdes(),
-      new de.melsicon.kafka.serde.proto.ProtoSerdes(),
-      new de.melsicon.kafka.serde.avro.SpecificSerdes(specificMapper),
-      new de.melsicon.kafka.serde.avro.SpecificSerdes(specificMapper2),
-      new de.melsicon.kafka.serde.avro.ReflectSerdes(reflectMapper),
-      new de.melsicon.kafka.serde.avro.GenericSerdes(genericMapper),
-      new de.melsicon.kafka.serde.confluent.SpecificSerdes(specificMapper),
-      new de.melsicon.kafka.serde.confluent.ReflectSerdes(confluentReflectMapper),
-      new de.melsicon.kafka.serde.confluent.GenericSerdes(confluentGenericMapper),
-      new de.melsicon.kafka.serde.confluent.JsonSerdes(confluentJsonMapper),
-      new de.melsicon.kafka.serde.confluent.ProtoSerdes(confluentProtoMapper),
-      IonSerdes.textSerdes(),
-      IonSerdes.binarySerdes()
-    };
-  }
+    var testComponent = TestComponent.create();
+    var serdesByName = testComponent.sensorStateSerdesByName();
 
-  private static ImmutableMultimap<Format, SensorStateSerdes> serdesByFormat() {
-    var serdesByFormat = ImmutableMultimap.<Format, SensorStateSerdes>builder();
+    serdesByName.forEach(
+        (name, provider) -> {
+          var serde = provider.get();
+          var format = serde.format();
+          builder.put(format, new NamedSerDes(name, serde));
+        });
 
-    for (var serde : serdes()) {
-      serdesByFormat.put(serde.format(), serde);
-    }
-
-    return serdesByFormat.build();
+    return builder.build();
   }
 
   /**
@@ -84,17 +55,18 @@ import org.apache.kafka.common.serialization.Serde;
    */
   /* package */ static <T> ImmutableList<Object[]> createParameters(
       Function<SensorStateSerdes, Supplier<Serde<T>>> create) {
+
     var combinations = ImmutableList.<Object[]>builder();
 
     var groupedSerdes = serdesByFormat().asMap().values();
     for (var serdes : groupedSerdes) {
       for (var inputSerdes : serdes) {
         for (var resultSerdes : serdes) {
-          assert inputSerdes.format() == resultSerdes.format();
+          assert inputSerdes.serdes.format() == resultSerdes.serdes.format();
           var o = new Object[3];
-          o[0] = inputSerdes.name() + " - " + resultSerdes.name();
-          o[1] = create.apply(inputSerdes);
-          o[2] = create.apply(resultSerdes);
+          o[0] = inputSerdes.name + " - " + resultSerdes.name;
+          o[1] = create.apply(inputSerdes.serdes);
+          o[2] = create.apply(resultSerdes.serdes);
           combinations.add(o);
         }
       }
@@ -109,5 +81,15 @@ import org.apache.kafka.common.serialization.Serde;
 
   /* package */ static ImmutableList<Object[]> parametersWithDuration() {
     return createParameters(serdes -> serdes::createSensorStateWithDurationSerde);
+  }
+
+  private static final class NamedSerDes {
+    public final String name;
+    public final SensorStateSerdes serdes;
+
+    private NamedSerDes(String name, SensorStateSerdes serdes) {
+      this.name = name;
+      this.serdes = serdes;
+    }
   }
 }

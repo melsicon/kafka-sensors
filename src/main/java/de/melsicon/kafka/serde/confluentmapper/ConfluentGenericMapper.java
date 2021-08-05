@@ -16,16 +16,17 @@ import de.melsicon.kafka.serde.SensorStateMapper;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
+import javax.inject.Inject;
 import org.apache.avro.generic.GenericEnumSymbol;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 
-public final class ConfluentGenericMapper
+// TODO: Explain differences
+/* package */ final class ConfluentGenericMapper
     implements SensorStateMapper<GenericRecord, GenericRecord> {
-  public static ConfluentGenericMapper instance() {
-    return new ConfluentGenericMapper();
-  }
+  @Inject
+  /* package */ ConfluentGenericMapper() {}
 
   @Override
   public @PolyNull SensorState map(@PolyNull GenericRecord sensorState) {

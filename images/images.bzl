@@ -26,3 +26,25 @@ def base_images():
         repository = "distroless/java-debian10",
         tag = "11-debug-nonroot",
     )
+
+    # https://hub.docker.com/r/azul/zulu-openjdk-alpine/tags?name=16-jre
+    container_pull(
+        name = "java16_jre",
+        architecture = "amd64",
+        digest = "sha256:1a23722961def965e840779b7c1c1e07e83ec080089c82befe9cb23ab0fd8655",
+        os = "linux",
+        registry = "registry-1.docker.io",
+        repository = "azul/zulu-openjdk-alpine",
+        tag = "16-jre",
+    )
+
+    # https://hub.docker.com/r/azul/zulu-openjdk-alpine/tags?name=16
+    container_pull(
+        name = "java16_jdk",
+        architecture = "amd64",
+        digest = "sha256:ca49bb1c7391d945c3c21dc18082a9dee70afcc71139e7a486574f5197ca26a6",
+        os = "linux",
+        registry = "registry-1.docker.io",
+        repository = "azul/zulu-openjdk-alpine",
+        tag = "16",
+    )

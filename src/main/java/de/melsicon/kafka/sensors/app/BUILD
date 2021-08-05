@@ -21,7 +21,7 @@ java_library(
         exclude = ["ClassCheck.java"],
     ),
     deps = [
-        "//src/main/java/de/melsicon/kafka/context",
+        "//src/main/java/de/melsicon/kafka/sensors/app/context",
         "//src/main/java/de/melsicon/kafka/lifecycle",
         "//toolchain:checker",
     ] + APP_DEPS,
@@ -43,7 +43,7 @@ java_binary(
 
 java_image(
     name = "kafka_sensors",
-    base = "@java_base//image",
+    base = "//images:java16_nonroot",
     data = ["//conf"],
     jvm_flags = [
         "-Djava.util.logging.config.file=conf/logging.properties",

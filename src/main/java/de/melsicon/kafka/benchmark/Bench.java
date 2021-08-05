@@ -3,7 +3,7 @@ package de.melsicon.kafka.benchmark;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static org.openjdk.jmh.annotations.Mode.AverageTime;
 
-import de.melsicon.kafka.benchmark.serdes.SerDes;
+import de.melsicon.kafka.benchmark.serdes.Constants;
 import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -21,12 +21,12 @@ public class Bench {
   @Benchmark
   @RequiresNonNull({"#1.serializer", "#1.data"})
   public void serialize(ExecutionPlan plan) {
-    plan.serializer.serialize(SerDes.TOPIC, plan.data);
+    plan.serializer.serialize(Constants.TOPIC, plan.data);
   }
 
   @Benchmark
   @RequiresNonNull({"#1.deserializer", "#1.serialized"})
   public void deserialize(ExecutionPlan plan) {
-    plan.deserializer.deserialize(SerDes.TOPIC, plan.serialized);
+    plan.deserializer.deserialize(Constants.TOPIC, plan.serialized);
   }
 }

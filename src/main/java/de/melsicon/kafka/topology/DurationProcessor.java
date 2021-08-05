@@ -6,6 +6,7 @@ import de.melsicon.kafka.model.SensorStateWithDuration;
 import java.time.Duration;
 import java.util.Optional;
 import org.apache.kafka.streams.kstream.ValueTransformer;
+import org.apache.kafka.streams.kstream.ValueTransformerSupplier;
 import org.apache.kafka.streams.processor.ProcessorContext;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -16,6 +17,17 @@ import org.checkerframework.checker.nullness.qual.RequiresNonNull;
   public static final String SENSOR_STATES = "SensorStates";
 
   private @MonotonicNonNull KVStore<String, SensorState> store;
+
+  /* package */ DurationProcessor() {}
+
+  /**
+   * Kafka Streams API
+   *
+   * @return A {@link ValueTransformerSupplier}
+   */
+  public static ValueTransformerSupplier<SensorState, SensorStateWithDuration> supplier() {
+    return DurationProcessor::new;
+  }
 
   /**
    * Wrap the old state with a duration how log it lasted.

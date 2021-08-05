@@ -8,10 +8,10 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public final class JsonSerializer<T> implements Serializer<T> {
+/* package */ final class JsonSerializer<T> implements Serializer<T> {
   private final ObjectWriter objectWriter;
 
-  public JsonSerializer(ObjectMapper objectMapper, Class<T> type) {
+  /* package */ JsonSerializer(ObjectMapper objectMapper, Class<T> type) {
     this.objectWriter = objectMapper.writerFor(type);
   }
 

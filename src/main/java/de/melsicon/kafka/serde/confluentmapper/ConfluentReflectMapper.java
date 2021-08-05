@@ -10,14 +10,10 @@ import org.mapstruct.Mapper;
 
 @Immutable
 @Mapper(config = MapStructConfig.class)
-public abstract class ConfluentReflectMapper
+/* package */ abstract class ConfluentReflectMapper
     implements SensorStateMapper<
         de.melsicon.kafka.sensors.confluent_reflect.SensorState,
         de.melsicon.kafka.sensors.confluent_reflect.SensorStateWithDuration> {
-  public static ConfluentReflectMapper instance() {
-    return new ConfluentReflectMapperImpl();
-  }
-
   @Override
   public abstract @PolyNull SensorState map(
       de.melsicon.kafka.sensors.confluent_reflect.@PolyNull SensorState sensorState);

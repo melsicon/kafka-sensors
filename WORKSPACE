@@ -1,5 +1,7 @@
 workspace(name = "de_melsicon_kafka_sensors")
 
+register_toolchains("//toolchain:toolchain_java16_definition")
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # ---
@@ -37,9 +39,9 @@ http_archive(
 
 http_archive(
     name = "com_google_dagger",
-    sha256 = "f41d043f76062b80c88e3b5611132df7c2c22b3bf372e217fa22f350d3725265",
-    strip_prefix = "dagger-dagger-2.38",
-    urls = ["https://github.com/google/dagger/archive/dagger-2.38.tar.gz"],
+    sha256 = "f763a42e418bcea094c4709e36ab06683b1a0b6edc8521b8f2e908d0c0b0706d",
+    strip_prefix = "dagger-dagger-2.38.1",
+    urls = ["https://github.com/google/dagger/archive/dagger-2.38.1.tar.gz"],
 )
 
 # ---
@@ -126,12 +128,12 @@ maven_install(
         "com.google.auto.service:auto-service-annotations:1.0",
         "com.google.auto.service:auto-service:1.0",
         "com.google.code.gson:gson:2.8.7",
-        "com.google.errorprone:error_prone_annotations:2.7.1",
+        "com.google.errorprone:error_prone_annotations:2.8.1",
         "com.google.flogger:flogger-system-backend:0.6",
         "com.google.flogger:flogger:0.6",
         "com.google.guava:guava:30.1.1-jre",
         "info.picocli:picocli:4.6.1",
-        "io.github.classgraph:classgraph:4.8.110",
+        "io.github.classgraph:classgraph:4.8.111",
         "io.helidon.config:helidon-config-object-mapping:2.3.2",
         "io.helidon.config:helidon-config-yaml:2.3.2",
         "io.helidon.config:helidon-config:2.3.2",
@@ -142,8 +144,8 @@ maven_install(
         "org.apache.kafka:kafka-clients:2.8.0",
         "org.apache.kafka:kafka-streams:2.8.0",
         "org.apache.kafka:kafka_2.13:2.8.0",
-        "org.checkerframework:checker-qual:3.16.0",
-        "org.checkerframework:checker:3.16.0",
+        "org.checkerframework:checker-qual:3.17.0",
+        "org.checkerframework:checker:3.17.0",
         "org.immutables:value-annotations:2.9.0-beta3",
         "org.immutables:value-processor:2.9.0-beta3",
         "org.mapstruct:mapstruct-processor:1.5.0.Beta1",

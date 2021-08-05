@@ -12,8 +12,7 @@ import java.util.concurrent.TimeoutException;
     this.manager = manager;
   }
 
-  /* package */
-  static void installShutdownTask(ServiceManager manager) {
+  /* package */ static void installShutdownTask(ServiceManager manager) {
     var shutdownTask = new ShutdownTask(manager);
     Runtime.getRuntime().addShutdownHook(shutdownTask);
   }
@@ -23,6 +22,7 @@ import java.util.concurrent.TimeoutException;
     shutdownServices();
   }
 
+  @SuppressWarnings("SystemOut") // Logging system might already be flushed / shut down
   private void shutdownServices() {
     try {
       manager.stopAsync().awaitStopped(Duration.ofSeconds(5L));

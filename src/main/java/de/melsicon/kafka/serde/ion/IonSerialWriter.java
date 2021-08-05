@@ -4,8 +4,7 @@ import com.amazon.ion.IonWriter;
 import java.io.IOException;
 
 @FunctionalInterface
-public interface IonSerialWriter<T> {
-
+/* package */ interface IonSerialWriter<T> {
   /**
    * Writes one value.
    *

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.google.errorprone.annotations.DoNotCall;
 import de.melsicon.kafka.model.ImmutableSensorStateWithDuration;
 import de.melsicon.kafka.model.SensorState;
 
@@ -18,6 +19,7 @@ public abstract class SensorStateWithDurationMixIn {
   public abstract static class BuilderMixIn {
     private BuilderMixIn() {}
 
+    @DoNotCall
     @JsonCreator
     public static ImmutableSensorStateWithDuration.Builder builder() {
       throw new UnsupportedOperationException();

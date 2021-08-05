@@ -1,8 +1,5 @@
 ---
-version: v1beta1
-build:
-  roots:
-    - src/main/proto
+version: v1
 lint:
   use:
     - DEFAULT

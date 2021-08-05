@@ -3,12 +3,13 @@ package de.melsicon.kafka.serde.avro;
 import static de.melsicon.kafka.serde.avro.SchemaHelper.RESOLVER;
 import static de.melsicon.kafka.serde.avro.SchemaHelper.RESOLVER_WITH_DURATION;
 
+import dagger.assisted.Assisted;
+import dagger.assisted.AssistedInject;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
 import de.melsicon.kafka.serde.Format;
 import de.melsicon.kafka.serde.SensorStateMapper;
 import de.melsicon.kafka.serde.SensorStateSerdes;
-import javax.inject.Inject;
 import org.apache.avro.specific.SpecificData;
 import org.apache.kafka.common.serialization.Serde;
 
@@ -18,18 +19,14 @@ public final class SpecificSerdes implements SensorStateSerdes {
           de.melsicon.kafka.sensors.avro.SensorStateWithDuration>
       mapper;
 
-  @Inject
+  @AssistedInject
   public SpecificSerdes(
-      SensorStateMapper<
-              de.melsicon.kafka.sensors.avro.SensorState,
-              de.melsicon.kafka.sensors.avro.SensorStateWithDuration>
-          mapper) {
+      @Assisted
+          SensorStateMapper<
+                  de.melsicon.kafka.sensors.avro.SensorState,
+                  de.melsicon.kafka.sensors.avro.SensorStateWithDuration>
+              mapper) {
     this.mapper = mapper;
-  }
-
-  @Override
-  public String name() {
-    return "specific";
   }
 
   @Override

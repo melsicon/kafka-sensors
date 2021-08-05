@@ -11,14 +11,10 @@ import org.mapstruct.Mapping;
 
 @Immutable
 @Mapper(config = MapStructConfig.class, uses = DurationMapper.class)
-public abstract class SpecificMapper
+/* package */ abstract class SpecificMapper
     implements SensorStateMapper<
         de.melsicon.kafka.sensors.avro.SensorState,
         de.melsicon.kafka.sensors.avro.SensorStateWithDuration> {
-  public static SpecificMapper instance() {
-    return new SpecificMapperImpl();
-  }
-
   @Override
   public abstract @PolyNull SensorState map(
       de.melsicon.kafka.sensors.avro.@PolyNull SensorState sensorState);

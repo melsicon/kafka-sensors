@@ -10,3 +10,4 @@
 !/.buildkite/
 /bazel-*
 /bin/
+/user.bazelrc

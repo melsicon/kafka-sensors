@@ -7,7 +7,7 @@ public final class StartUpManager {
   private final ServiceManager manager;
 
   @Inject
-  public StartUpManager(ServiceManager manager) {
+  /* package */ StartUpManager(ServiceManager manager) {
     this.manager = manager;
   }
 

@@ -7,10 +7,10 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public final class ProtoDeserializer<T extends MessageLite> implements Deserializer<T> {
+/* package */ final class ProtoDeserializer<T extends MessageLite> implements Deserializer<T> {
   private final Parser<T> parser;
 
-  public ProtoDeserializer(Parser<T> parser) {
+  /* package */ ProtoDeserializer(Parser<T> parser) {
     this.parser = parser;
   }
 

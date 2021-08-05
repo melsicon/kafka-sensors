@@ -1,4 +1,4 @@
-package de.melsicon.kafka.context;
+package de.melsicon.kafka.sensors.app.context;
 
 import dagger.Module;
 import de.melsicon.kafka.streams.StreamsModule;

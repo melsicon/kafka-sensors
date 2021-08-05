@@ -11,14 +11,11 @@ import javax.inject.Inject;
 import org.apache.kafka.common.serialization.Serde;
 
 public final class JsonSerdes implements SensorStateSerdes {
-  private static final ObjectMapper MAPPER = JsonHelper.mapper();
+  private final ObjectMapper mapper;
 
   @Inject
-  public JsonSerdes() {}
-
-  @Override
-  public String name() {
-    return "json";
+  /* package */ JsonSerdes(ObjectMapper mapper) {
+    this.mapper = mapper;
   }
 
   @Override
@@ -28,16 +25,16 @@ public final class JsonSerdes implements SensorStateSerdes {
 
   @Override
   public Serde<SensorState> createSensorStateSerde() {
-    var serializer = new JsonSerializer<>(MAPPER, SensorState.class);
-    var deserializer = new JsonDeserializer<>(MAPPER, SensorState.class);
+    var serializer = new JsonSerializer<>(mapper, SensorState.class);
+    var deserializer = new JsonDeserializer<>(mapper, SensorState.class);
 
     return serdeFrom(serializer, deserializer);
   }
 
   @Override
   public Serde<SensorStateWithDuration> createSensorStateWithDurationSerde() {
-    var serializer = new JsonSerializer<>(MAPPER, SensorStateWithDuration.class);
-    var deserializer = new JsonDeserializer<>(MAPPER, SensorStateWithDuration.class);
+    var serializer = new JsonSerializer<>(mapper, SensorStateWithDuration.class);
+    var deserializer = new JsonDeserializer<>(mapper, SensorStateWithDuration.class);
 
     return serdeFrom(serializer, deserializer);
   }

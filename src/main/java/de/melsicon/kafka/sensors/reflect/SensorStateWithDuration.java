@@ -1,5 +1,6 @@
 package de.melsicon.kafka.sensors.reflect;
 
+import com.google.common.base.MoreObjects;
 import de.melsicon.kafka.sensors.logicaltypes.DurationMillisConversion;
 import java.time.Duration;
 import java.util.Objects;
@@ -42,5 +43,13 @@ public final class SensorStateWithDuration {
     }
     var that = (SensorStateWithDuration) o;
     return Objects.equals(event, that.event) && Objects.equals(duration, that.duration);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .add("event", event)
+        .add("duration", duration)
+        .toString();
   }
 }

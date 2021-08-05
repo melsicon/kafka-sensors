@@ -1,4 +1,4 @@
-package de.melsicon.kafka.context;
+package de.melsicon.kafka.sensors.app.context;
 
 import dagger.Module;
 import dagger.Provides;
@@ -7,12 +7,14 @@ import de.melsicon.kafka.configuration.ResultSerde;
 import de.melsicon.kafka.configuration.StoreSerde;
 import de.melsicon.kafka.model.SensorState;
 import de.melsicon.kafka.model.SensorStateWithDuration;
+import de.melsicon.kafka.serde.json.JsonModule;
 import de.melsicon.kafka.serde.json.JsonSerdes;
+import de.melsicon.kafka.serde.proto.ProtoModule;
 import de.melsicon.kafka.serde.proto.ProtoSerdes;
 import org.apache.kafka.common.serialization.Serde;
 
 /** Provides bindings for our (de-)serializers. */
-@Module
+@Module(includes = {ProtoModule.class, JsonModule.class})
 /* package */ abstract class SerdesModule {
   private SerdesModule() {}
 

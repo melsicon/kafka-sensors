@@ -7,8 +7,6 @@ import static org.apache.kafka.streams.StreamsConfig.NUM_STREAM_THREADS_CONFIG;
 
 import com.google.common.base.Splitter;
 import de.melsicon.kafka.configuration.KafkaConfiguration;
-import de.melsicon.kafka.serde.SensorStateSerdes;
-import de.melsicon.kafka.serde.avromapper.SpecificMapper;
 import de.melsicon.kafka.testutil.EmbeddedKafkaRule;
 import java.util.Properties;
 import net.mguenther.kafka.junit.EmbeddedKafkaClusterConfig;
@@ -36,17 +34,6 @@ import org.apache.kafka.common.serialization.Serdes;
     var kafkaClusterConfig =
         EmbeddedKafkaClusterConfig.newClusterConfig().configure(kafkaConfig).build();
     return new EmbeddedKafkaRule(kafkaClusterConfig);
-  }
-
-  @SuppressWarnings("UnnecessarilyFullyQualified")
-  /* package */ static SensorStateSerdes[] serdes() {
-    var specificMapper = SpecificMapper.instance();
-    return new SensorStateSerdes[] {
-      new de.melsicon.kafka.serde.json.JsonSerdes(),
-      new de.melsicon.kafka.serde.proto.ProtoSerdes(),
-      new de.melsicon.kafka.serde.avro.SpecificSerdes(specificMapper),
-      new de.melsicon.kafka.serde.confluent.SpecificSerdes(specificMapper)
-    };
   }
 
   /* package */ static Properties settings(EmbeddedKafkaRule kafkaTestResource) {

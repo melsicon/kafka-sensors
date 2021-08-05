@@ -1,5 +1,6 @@
 package de.melsicon.kafka.sensors.confluent_reflect;
 
+import com.google.common.base.MoreObjects;
 import java.time.Instant;
 import java.util.Objects;
 import org.apache.avro.reflect.AvroDoc;
@@ -23,13 +24,19 @@ public final class SensorState {
 
   @Override
   public boolean equals(@Nullable Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof SensorState)) {
-      return false;
-    }
-    var that = (SensorState) o;
-    return Objects.equals(id, that.id) && Objects.equals(time, that.time) && state == that.state;
+    return this == o
+        || (o instanceof SensorState that
+            && Objects.equals(id, that.id)
+            && Objects.equals(time, that.time)
+            && state == that.state);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .add("id", id)
+        .add("time", time)
+        .add("state", state)
+        .toString();
   }
 }

@@ -5,8 +5,6 @@ import de.melsicon.kafka.model.SensorStateWithDuration;
 import org.apache.kafka.common.serialization.Serde;
 
 public interface SensorStateSerdes {
-  String name();
-
   Format format();
 
   Serde<SensorState> createSensorStateSerde();

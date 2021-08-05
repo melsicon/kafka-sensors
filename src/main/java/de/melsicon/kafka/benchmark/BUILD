@@ -3,7 +3,7 @@ load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 java_image(
     name = "benchmark",
     srcs = glob(["*.java"]),
-    base = "@java_base//image",
+    base = "//images:java16_nonroot",
     data = ["//conf"],
     javacopts = [
         "-Xlint:-cast",

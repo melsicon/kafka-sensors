@@ -3,7 +3,7 @@
 @DefaultQualifier(
     value = NonNull.class,
     locations = {TypeUseLocation.PARAMETER, TypeUseLocation.RETURN})
-package de.melsicon.kafka.context;
+package de.melsicon.kafka.sensors.app.context;
 
 import com.google.errorprone.annotations.CheckReturnValue;
 import org.checkerframework.checker.nullness.qual.NonNull;

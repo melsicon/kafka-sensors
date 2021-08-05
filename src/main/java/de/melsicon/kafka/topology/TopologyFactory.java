@@ -36,7 +36,8 @@ import org.apache.kafka.streams.state.Stores;
     var stateStoreNames = new String[] {DurationProcessor.SENSOR_STATES};
 
     builder.stream(configuration.inputTopic(), Consumed.with(Serdes.String(), inputSerde))
-        .transformValues(DurationProcessor::new, Named.as("DURATION-PROCESSOR"), stateStoreNames)
+        .transformValues(
+            DurationProcessor.supplier(), Named.as("DURATION-PROCESSOR"), stateStoreNames)
         .to(configuration.resultTopic(), Produced.with(Serdes.String(), resultSerde));
 
     return builder.build();

@@ -3,13 +3,15 @@ load("@com_google_dagger//:workspace_defs.bzl", "dagger_rules")
 load("@rules_java//java:defs.bzl", "java_library", "java_package_configuration", "java_plugin")
 
 default_java_toolchain(
-    name = "toolchain_java11",
+    name = "toolchain_java16",
+    configuration = dict(),
+    java_runtime = "@bazel_tools//tools/jdk:remotejdk_16",
     package_configuration = [
         ":src_package_configuration",
         ":external_package_configuration",
     ],
-    source_version = "11",
-    target_version = "11",
+    source_version = "16",
+    target_version = "16",
     visibility = ["//visibility:public"],
     xlint = [
         "all",
@@ -33,7 +35,6 @@ java_package_configuration(
         "-Xep:StaticOrDefaultInterfaceMethod:OFF",
         "-Xep:NoFunctionalReturnType:OFF",
         "-Xep:WildcardImport:OFF",
-        "-Xep:ReturnMissingNullable:OFF",  # Removed: https://github.com/google/error-prone/issues/1575
     ],
     packages = [":src_package_group"],
 )

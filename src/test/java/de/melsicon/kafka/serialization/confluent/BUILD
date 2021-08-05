@@ -4,7 +4,7 @@ java_library(
     name = "tests",
     testonly = True,
     srcs = glob(["*.java"]),
-    visibility = ["//visibility:public"],
+    visibility = ["//src/test:__subpackages__"],
     deps = [
         "//src/main/avro/de/melsicon/kafka/sensors/avro",
         "//src/main/java/de/melsicon/kafka/sensors/confluent_reflect",

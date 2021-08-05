@@ -11,15 +11,10 @@ import org.mapstruct.MappingTarget;
 
 @Immutable
 @Mapper(config = MapStructConfig.class, uses = DurationMapper.class)
-public abstract class SpecificDirectMapper
+/* package */ abstract class SpecificDirectMapper
     implements SensorStateMapper<
         de.melsicon.kafka.sensors.avro.SensorState,
         de.melsicon.kafka.sensors.avro.SensorStateWithDuration> {
-
-  public static SpecificDirectMapper instance() {
-    return new SpecificDirectMapperImpl();
-  }
-
   private static de.melsicon.kafka.sensors.avro.SensorState createSensorState() {
     return new de.melsicon.kafka.sensors.avro.SensorState();
   }

@@ -18,13 +18,8 @@ public final class GenericSerdes implements SensorStateSerdes {
   private final SensorStateMapper<GenericRecord, GenericRecord> mapper;
 
   @Inject
-  public GenericSerdes(SensorStateMapper<GenericRecord, GenericRecord> mapper) {
+  /* package */ GenericSerdes(SensorStateMapper<GenericRecord, GenericRecord> mapper) {
     this.mapper = mapper;
-  }
-
-  @Override
-  public String name() {
-    return "generic";
   }
 
   @Override

@@ -5,6 +5,7 @@
 *.json text
 *.patch text
 *.proto text
+*.scala text
 *.yaml text
 BUILD text
 *.bat text eol=crlf

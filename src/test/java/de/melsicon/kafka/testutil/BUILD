@@ -4,7 +4,7 @@ java_library(
     name = "testutil",
     testonly = True,
     srcs = glob(["*.java"]),
-    visibility = ["//visibility:public"],
+    visibility = ["//src/test:__subpackages__"],
     deps = [
         "//toolchain:checker",
         "@confluent_schema_registry//:kafka-schema-registry-client",
