@@ -22,7 +22,7 @@ java_library(
     ),
     deps = [
         "//src/main/java/de/melsicon/kafka/sensors/app/context",
-        "//src/main/java/de/melsicon/kafka/lifecycle",
+        "//src/main/java/de/melsicon/kafka/sensors/lifecycle",
         "//toolchain:checker",
     ] + APP_DEPS,
 )

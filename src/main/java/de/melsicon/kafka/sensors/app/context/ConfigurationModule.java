@@ -2,7 +2,7 @@ package de.melsicon.kafka.sensors.app.context;
 
 import dagger.Module;
 import dagger.Provides;
-import de.melsicon.kafka.configuration.KafkaConfiguration;
+import de.melsicon.kafka.sensors.configuration.KafkaConfiguration;
 import io.helidon.config.Config;
 import javax.inject.Singleton;
 

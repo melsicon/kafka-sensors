@@ -133,7 +133,7 @@ maven_install(
         "com.google.flogger:flogger:0.6",
         "com.google.guava:guava:30.1.1-jre",
         "info.picocli:picocli:4.6.1",
-        "io.github.classgraph:classgraph:4.8.111",
+        "io.github.classgraph:classgraph:4.8.112",
         "io.helidon.config:helidon-config-object-mapping:2.3.2",
         "io.helidon.config:helidon-config-yaml:2.3.2",
         "io.helidon.config:helidon-config:2.3.2",

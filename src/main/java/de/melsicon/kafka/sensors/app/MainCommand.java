@@ -1,7 +1,7 @@
 package de.melsicon.kafka.sensors.app;
 
-import de.melsicon.kafka.lifecycle.StartUpManager;
 import de.melsicon.kafka.sensors.app.context.MainComponent;
+import de.melsicon.kafka.sensors.lifecycle.StartUpManager;
 import io.helidon.config.Config;
 import java.nio.file.Path;
 import java.nio.file.Paths;

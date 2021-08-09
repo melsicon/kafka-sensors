@@ -5,8 +5,8 @@
     "type": "enum",
     "doc": "New state of the sensor",
     "aliases": [
-      "de.melsicon.kafka.sensors.reflect.State",
-      "de.melsicon.kafka.sensors.confluent_reflect.State"
+      "de.melsicon.kafka.sensors.serialization.reflect.SensorState.State",
+      "de.melsicon.kafka.sensors.serialization.confluent_reflect.SensorState.State"
     ],
     "symbols": [
       "OFF",

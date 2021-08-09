@@ -10,5 +10,5 @@ alias(
 
 alias(
     name = "benchmark",
-    actual = "//src/main/java/de/melsicon/kafka/benchmark:benchmark.binary",
+    actual = "//src/main/java/de/melsicon/kafka/sensors/benchmark:benchmark.binary",
 )

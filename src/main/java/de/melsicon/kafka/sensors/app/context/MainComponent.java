@@ -2,7 +2,7 @@ package de.melsicon.kafka.sensors.app.context;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import de.melsicon.kafka.lifecycle.StartUpManager;
+import de.melsicon.kafka.sensors.lifecycle.StartUpManager;
 import io.helidon.config.Config;
 import javax.inject.Singleton;
 
