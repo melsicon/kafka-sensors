@@ -113,7 +113,7 @@ external components.
 Since the business logic is independent of the serialization mechanism, changing it is simple and
 normally does not require retesting. Be aware of subtle pitfalls tough, while our Java code uses
 nanosecond precision, which are correctly handled with protocol buffers and JSON, Avro truncates the
-time stamps to milliseconds. We would not catch these in our tests since we use only second steps
+time stamps to microseconds. We would not catch these in our tests since we use only second steps
 for testing, but this would show up when using real world data and comparing with `equals`.
 
 By refactoring the business logic to depend only on an abstract store, we speed up testing by a

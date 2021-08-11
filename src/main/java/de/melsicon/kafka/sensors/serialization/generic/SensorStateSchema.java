@@ -2,7 +2,7 @@ package de.melsicon.kafka.sensors.serialization.generic;
 
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
-import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
+import org.apache.avro.data.TimeConversions.TimestampMicrosConversion;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericData.EnumSymbol;
 import org.apache.avro.generic.GenericData.StringType;
@@ -21,7 +21,7 @@ public final class SensorStateSchema {
   /* package */ static final String NAMESPACE = SensorStateSchema.class.getPackageName();
 
   static {
-    var timestampConversion = new TimestampMillisConversion();
+    var timestampConversion = new TimestampMicrosConversion();
 
     MODEL = new GenericData();
     MODEL.addLogicalTypeConversion(timestampConversion);

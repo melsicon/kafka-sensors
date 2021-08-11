@@ -27,7 +27,7 @@
         "name": "time",
         "type": {
           "type": "long",
-          "logicalType": "timestamp-millis"
+          "logicalType": "timestamp-micros"
         }
       },
       {
@@ -50,7 +50,7 @@
         "name": "duration",
         "type": {
           "type": "long",
-          "logicalType": "duration-millis"
+          "logicalType": "duration-micros"
         }
       }
     ]

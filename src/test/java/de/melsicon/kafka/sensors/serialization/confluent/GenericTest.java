@@ -8,6 +8,7 @@ import static de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema.
 import static de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema.SCHEMA;
 
 import de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema;
+import de.melsicon.kafka.sensors.serialization.logicaltypes.InstantMicroHelper;
 import de.melsicon.kafka.sensors.testutil.SchemaRegistryRule;
 import io.confluent.kafka.streams.serdes.avro.GenericAvroSerializer;
 import org.apache.avro.generic.GenericRecord;
@@ -54,7 +55,7 @@ public final class GenericTest {
   private static GenericRecord createSensorState() {
     return new GenericRecordBuilder(SCHEMA)
         .set(FIELD_ID, "7331")
-        .set(FIELD_TIME, TestHelper.INSTANT.toEpochMilli())
+        .set(FIELD_TIME, InstantMicroHelper.toLong(TestHelper.INSTANT))
         .set(FIELD_STATE, ENUM_OFF)
         .build();
   }

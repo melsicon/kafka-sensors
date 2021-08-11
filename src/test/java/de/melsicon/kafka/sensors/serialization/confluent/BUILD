@@ -10,6 +10,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/serialization/confluent",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/confluent_reflect",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/generic",
+        "//src/main/java/de/melsicon/kafka/sensors/serialization/logicaltypes",
         "//src/test/java/de/melsicon/kafka/sensors/testutil",
         "//toolchain:checker",
         "//toolchain:truth",

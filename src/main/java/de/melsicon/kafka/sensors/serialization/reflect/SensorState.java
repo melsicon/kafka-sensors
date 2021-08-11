@@ -4,7 +4,7 @@ import com.google.common.base.MoreObjects;
 import java.time.Instant;
 import java.util.Objects;
 import org.apache.avro.Schema;
-import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
+import org.apache.avro.data.TimeConversions.TimestampMicrosConversion;
 import org.apache.avro.reflect.AvroAlias;
 import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.ReflectData;
@@ -18,7 +18,7 @@ public final class SensorState {
 
   static {
     MODEL = new ReflectData();
-    MODEL.addLogicalTypeConversion(new TimestampMillisConversion());
+    MODEL.addLogicalTypeConversion(new TimestampMicrosConversion());
 
     SCHEMA = MODEL.getSchema(SensorState.class);
   }

@@ -15,6 +15,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/serialization/confluent_json",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/confluent_reflect",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/generic",
+        "//src/main/java/de/melsicon/kafka/sensors/serialization/logicaltypes",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/mapping",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/mapping:mapstruct",
         "//toolchain:checker",

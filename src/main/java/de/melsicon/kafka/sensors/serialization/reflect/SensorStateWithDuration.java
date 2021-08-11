@@ -1,11 +1,11 @@
 package de.melsicon.kafka.sensors.serialization.reflect;
 
 import com.google.common.base.MoreObjects;
-import de.melsicon.kafka.sensors.serialization.logicaltypes.DurationMillisConversion;
+import de.melsicon.kafka.sensors.serialization.logicaltypes.DurationMicrosConversion;
 import java.time.Duration;
 import java.util.Objects;
 import org.apache.avro.Schema;
-import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
+import org.apache.avro.data.TimeConversions.TimestampMicrosConversion;
 import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.ReflectData;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -18,8 +18,8 @@ public final class SensorStateWithDuration {
 
   static {
     MODEL = new ReflectData();
-    MODEL.addLogicalTypeConversion(new TimestampMillisConversion());
-    MODEL.addLogicalTypeConversion(new DurationMillisConversion());
+    MODEL.addLogicalTypeConversion(new TimestampMicrosConversion());
+    MODEL.addLogicalTypeConversion(new DurationMicrosConversion());
 
     SCHEMA = MODEL.getSchema(SensorStateWithDuration.class);
   }

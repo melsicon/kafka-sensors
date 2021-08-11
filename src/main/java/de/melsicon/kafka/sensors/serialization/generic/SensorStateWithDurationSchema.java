@@ -1,9 +1,9 @@
 package de.melsicon.kafka.sensors.serialization.generic;
 
-import de.melsicon.kafka.sensors.serialization.logicaltypes.DurationMillisConversion;
+import de.melsicon.kafka.sensors.serialization.logicaltypes.DurationMicrosConversion;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaBuilder;
-import org.apache.avro.data.TimeConversions.TimestampMillisConversion;
+import org.apache.avro.data.TimeConversions.TimestampMicrosConversion;
 import org.apache.avro.generic.GenericData;
 
 public final class SensorStateWithDurationSchema {
@@ -13,8 +13,8 @@ public final class SensorStateWithDurationSchema {
   public static final Schema SCHEMA;
 
   static {
-    var timestampConversion = new TimestampMillisConversion();
-    var durationConversion = new DurationMillisConversion();
+    var timestampConversion = new TimestampMicrosConversion();
+    var durationConversion = new DurationMicrosConversion();
 
     MODEL = new GenericData();
     MODEL.addLogicalTypeConversion(timestampConversion);

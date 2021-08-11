@@ -12,8 +12,8 @@ import de.melsicon.kafka.sensors.serde.SensorStateMapper;
 import de.melsicon.kafka.sensors.serialization.avromapper.GenericMapperHelper;
 import de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema;
 import de.melsicon.kafka.sensors.serialization.generic.SensorStateWithDurationSchema;
-import java.time.Duration;
-import java.time.Instant;
+import de.melsicon.kafka.sensors.serialization.logicaltypes.DurationMicroHelper;
+import de.melsicon.kafka.sensors.serialization.logicaltypes.InstantMicroHelper;
 import java.util.Objects;
 import javax.inject.Inject;
 import org.apache.avro.generic.GenericEnumSymbol;
@@ -33,7 +33,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
     }
     return SensorState.builder()
         .id((String) sensorState.get(FIELD_ID))
-        .time(Instant.ofEpochMilli((Long) sensorState.get(FIELD_TIME)))
+        .time(InstantMicroHelper.fromLong((Long) sensorState.get(FIELD_TIME)))
         .state(GenericMapperHelper.stateMap((GenericEnumSymbol<?>) sensorState.get(FIELD_STATE)))
         .build();
   }
@@ -45,7 +45,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
     }
     return new GenericRecordBuilder(SensorStateSchema.SCHEMA)
         .set(FIELD_ID, sensorState.getId())
-        .set(FIELD_TIME, sensorState.getTime().toEpochMilli())
+        .set(FIELD_TIME, InstantMicroHelper.toLong(sensorState.getTime()))
         .set(FIELD_STATE, GenericMapperHelper.stateUnmap(sensorState.getState()))
         .build();
   }
@@ -58,7 +58,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
     var event = Objects.requireNonNull(map((GenericRecord) sensorState.get(FIELD_EVENT)));
     return SensorStateWithDuration.builder()
         .event(event)
-        .duration(Duration.ofMillis((Long) sensorState.get(FIELD_DURATION)))
+        .duration(DurationMicroHelper.fromLong((Long) sensorState.get(FIELD_DURATION)))
         .build();
   }
 
@@ -70,7 +70,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
     var event = Objects.requireNonNull(unmap(sensorState.getEvent()));
     return new GenericRecordBuilder(SensorStateWithDurationSchema.SCHEMA)
         .set(FIELD_EVENT, event)
-        .set(FIELD_DURATION, sensorState.getDuration().toMillis())
+        .set(FIELD_DURATION, DurationMicroHelper.toLong(sensorState.getDuration()))
         .build();
   }
 }
