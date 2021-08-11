@@ -116,7 +116,7 @@ base_images()
 
 maven_install(
     artifacts = [
-        "com.amazon.ion:ion-java:1.8.2",
+        "com.amazon.ion:ion-java:1.8.3",
         "com.fasterxml.jackson.core:jackson-annotations:2.13.0-rc1",
         "com.fasterxml.jackson.core:jackson-core:2.13.0-rc1",
         "com.fasterxml.jackson.core:jackson-databind:2.13.0-rc1",
@@ -133,7 +133,7 @@ maven_install(
         "com.google.flogger:flogger:0.6",
         "com.google.guava:guava:30.1.1-jre",
         "info.picocli:picocli:4.6.1",
-        "io.github.classgraph:classgraph:4.8.112",
+        "io.github.classgraph:classgraph:4.8.113",
         "io.helidon.config:helidon-config-object-mapping:2.3.2",
         "io.helidon.config:helidon-config-yaml:2.3.2",
         "io.helidon.config:helidon-config:2.3.2",
@@ -150,8 +150,8 @@ maven_install(
         "org.immutables:value-processor:2.9.0-beta3",
         "org.mapstruct:mapstruct-processor:1.5.0.Beta1",
         "org.mapstruct:mapstruct:1.5.0.Beta1",
-        "org.openjdk.jmh:jmh-core:1.32",
-        "org.openjdk.jmh:jmh-generator-annprocess:1.32",
+        "org.openjdk.jmh:jmh-core:1.33",
+        "org.openjdk.jmh:jmh-generator-annprocess:1.33",
         "org.slf4j:slf4j-api:1.8.0-beta4",
         "org.slf4j:slf4j-jdk14:1.8.0-beta4",
         maven.artifact(
