@@ -3,6 +3,7 @@ package de.melsicon.kafka.sensors.configuration;
 import com.google.common.collect.ImmutableList;
 import com.google.errorprone.annotations.Immutable;
 import io.helidon.config.objectmapping.Value;
+import java.util.List;
 import java.util.Optional;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.immutables.value.Value.Style;
@@ -32,7 +33,11 @@ public abstract class KafkaConfiguration implements WithKafkaConfiguration {
 
   public abstract static class Builder {
     @Value(key = "brokers")
-    public abstract Builder bootstrapServers(Iterable<String> bootstrapServers);
+    public final Builder bootstrapServers(List<String> bootstrapServers) {
+      return bootstrapServers((Iterable<String>) bootstrapServers);
+    }
+
+    public abstract Builder bootstrapServers(Iterable<String> elements);
 
     @Value(key = "input-topic")
     public abstract Builder inputTopic(String inputTopic);

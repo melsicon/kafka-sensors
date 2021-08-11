@@ -82,11 +82,11 @@ These are deliberate choices and can easily be changed.
 Care has been taken to keep the business logic independent of implementation details like
 serialization formats.
 
-The data model is in the link:src/main/java/de/melsicon/kafka/model[model directory], the business
-logic in link:src/main/java/de/melsicon/kafka/topology[topology].
+The data model is in the link:src/main/java/de/melsicon/kafka/sensors/model[model directory], the
+business logic in link:src/main/java/de/melsicon/kafka/sensors/topology[topology].
 
-The link:src/test/java/de/melsicon/kafka/topology[tests] test the topology with seven different
-(de-)serializers, https://developers.google.com/protocol-buffers/[protocol buffers],
+The link:src/test/java/de/melsicon/kafka/sensors/topology[tests] test the topology with seven
+different (de-)serializers, https://developers.google.com/protocol-buffers/[protocol buffers],
 https://json.org[JSON], https://avro.apache.org/docs/current/[Apache Avro], the
 https://docs.confluent.io/platform/current/schema-registry/[Confluent variants] of them and
 https://amzn.github.io/ion-docs/[Amazon Ion]. Since the  example needs an input format, a result
@@ -117,9 +117,10 @@ time stamps to milliseconds. We would not catch these in our tests since we use 
 for testing, but this would show up when using real world data and comparing with `equals`.
 
 By refactoring the business logic to depend only on an abstract store, we speed up testing by a
-factor of twenty ([source,shell]`bazel test //src/test/java/de/melsicon/kafka/topology:ProcessorTest`
-vs. `//src/test/java/de/melsicon/kafka/topology:TopologyTest`), which demonstrates a potential for
-improvement in development speed and testability.
+factor of twenty
+([source,shell]`bazel test //src/test/java/de/melsicon/kafka/sensors/topology:ProcessorTest` vs.
+`//src/test/java/de/melsicon/kafka/sensors/topology:TopologyTest`), which demonstrates a potential
+for improvement in development speed and testability.
 
 == Running
 
@@ -138,7 +139,7 @@ bazel test //...
 To run a single test, use
 
 [source,shell]
-bazel test //src/test/java/de/melsicon/kafka/topology:all
+bazel test //src/test/java/de/melsicon/kafka/sensors/topology:all
 
 The tests run with an embedded Kafka and mock schema registry, when necessary.
 
