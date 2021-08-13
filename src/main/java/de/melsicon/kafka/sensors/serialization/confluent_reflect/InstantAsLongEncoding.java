@@ -16,6 +16,7 @@ import org.apache.avro.reflect.CustomEncoding;
  */
 public final class InstantAsLongEncoding extends CustomEncoding<Instant> {
   public InstantAsLongEncoding() {
+    super();
     super.schema = LogicalTypes.timeMicros().addToSchema(Schema.create(Schema.Type.LONG));
   }
 

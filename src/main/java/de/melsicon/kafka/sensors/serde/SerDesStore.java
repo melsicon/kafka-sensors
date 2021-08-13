@@ -19,7 +19,7 @@ public final class SerDesStore {
     if (!serdes.containsKey(name)) {
       logger.atWarning().log("Invalid parameter %s", name);
       logger.atInfo().log("Valid parameters are: %s", String.join(", ", serdes.keySet()));
-      throw new NullPointerException(String.format("No serde for key %s", name));
+      throw new IllegalArgumentException(String.format("No serde for key '%s'", name));
     }
     return serdes.get(name).get();
   }

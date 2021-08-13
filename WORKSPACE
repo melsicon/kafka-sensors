@@ -31,7 +31,7 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    patches = ["//patches:8714.patch"],
+    patches = ["//third_party/patches:8714.patch"],
     sha256 = "c6003e1d2e7fefa78a3039f19f383b4f3a61e81be8c19356f85b6461998ad3db",
     strip_prefix = "protobuf-3.17.3",
     urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.17.3.tar.gz"],
@@ -98,17 +98,29 @@ load("@com_google_dagger//:workspace_defs.bzl", "DAGGER_ARTIFACTS")
 
 # ---
 
-load("//rules_avro:avro_deps.bzl", "AVRO_ARTIFACTS")
+load("//third_party/avro:workspace.bzl", "AVRO_ARTIFACTS")
 
 # ---
 
-load("//rules_confluent:repositories.bzl", "CONFLUENT_ARTIFACTS", "confluent_repositories")
+load("//third_party/confluent:workspace.bzl", "CONFLUENT_ARTIFACTS", "confluent_repositories")
 
 confluent_repositories()
 
 # ---
 
-load("//images:images.bzl", "base_images")
+load("//third_party/jmh:workspace.bzl", "JMH_ARTIFACTS", "jmh_repositories")
+
+jmh_repositories()
+
+# ---
+
+load("//third_party/async_profiler:workspace.bzl", "async_profiler_repositories")
+
+async_profiler_repositories()
+
+# ---
+
+load("//third_party/images:workspace.bzl", "base_images")
 
 base_images()
 
@@ -150,8 +162,6 @@ maven_install(
         "org.immutables:value-processor:2.9.0-beta3",
         "org.mapstruct:mapstruct-processor:1.5.0.Beta1",
         "org.mapstruct:mapstruct:1.5.0.Beta1",
-        "org.openjdk.jmh:jmh-core:1.33",
-        "org.openjdk.jmh:jmh-generator-annprocess:1.33",
         "org.slf4j:slf4j-api:1.8.0-beta4",
         "org.slf4j:slf4j-jdk14:1.8.0-beta4",
         maven.artifact(
@@ -202,7 +212,7 @@ maven_install(
             "9.2",
             testonly = True,
         ),
-    ] + DAGGER_ARTIFACTS + AVRO_ARTIFACTS + CONFLUENT_ARTIFACTS,
+    ] + DAGGER_ARTIFACTS + AVRO_ARTIFACTS + CONFLUENT_ARTIFACTS + JMH_ARTIFACTS,
     fetch_sources = True,
     maven_install_json = "@de_melsicon_kafka_sensors//:maven_install.json",
     override_targets = {

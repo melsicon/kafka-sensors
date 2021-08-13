@@ -1,5 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
+load("//third_party/images:java_base.bzl", "JAVA_BASE")
 
 APP_DEPS = [
     "@maven//:com_google_errorprone_error_prone_annotations",
@@ -12,6 +13,18 @@ RUNTIME_DEPS = [
     "@maven//:com_google_flogger_flogger_system_backend",
     "@maven//:io_helidon_config_helidon_config_yaml",
     "@maven//:org_slf4j_slf4j_jdk14",
+]
+
+DATA = [
+    "//conf",
+    "//conf:logging",
+]
+
+JVM_FLAGS = [
+    "-Djava.util.logging.config.file=$(rootpath //conf:logging)",
+    "-Dorg.apache.avro.fastread=true",  # https://issues.apache.org/jira/browse/AVRO-2247
+    "-Dorg.apache.avro.specific.use_custom_coders=true",  # https://issues.apache.org/jira/browse/AVRO-2090
+    "-XX:+CrashOnOutOfMemoryError",
 ]
 
 java_library(
@@ -29,11 +42,8 @@ java_library(
 
 java_binary(
     name = "app",
-    data = ["//conf"],
-    jvm_flags = [
-        "-Djava.util.logging.config.file=conf/logging.properties",
-        "-XX:+CrashOnOutOfMemoryError",
-    ],
+    data = DATA,
+    jvm_flags = JVM_FLAGS,
     main_class = "de.melsicon.kafka.sensors.app.Main",
     visibility = ["//visibility:public"],
     runtime_deps = [
@@ -43,12 +53,9 @@ java_binary(
 
 java_image(
     name = "kafka_sensors",
-    base = "//images:java16_nonroot",
-    data = ["//conf"],
-    jvm_flags = [
-        "-Djava.util.logging.config.file=conf/logging.properties",
-        "-XX:+CrashOnOutOfMemoryError",
-    ],
+    base = JAVA_BASE,
+    data = DATA,
+    jvm_flags = JVM_FLAGS,
     main_class = "de.melsicon.kafka.sensors.app.Main",
     visibility = ["//visibility:public"],
     runtime_deps = [
@@ -59,8 +66,8 @@ java_image(
 java_binary(
     name = "classcheck",
     srcs = ["ClassCheck.java"],
-    data = ["//conf"],
-    jvm_flags = ["-Djava.util.logging.config.file=conf/logging.properties"],
+    data = ["//conf:logging"],
+    jvm_flags = ["-Djava.util.logging.config.file=$(rootpath //conf:logging)"],
     main_class = "de.melsicon.kafka.sensors.app.ClassCheck",
     visibility = ["//visibility:public"],
     runtime_deps = [

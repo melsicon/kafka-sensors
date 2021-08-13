@@ -24,3 +24,4 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 - Migrate from kafka-junit to Kafka for JUnit
 - Updated to Java 16
 - Use microsecond resolution for Avro types
+- Add async-profiler

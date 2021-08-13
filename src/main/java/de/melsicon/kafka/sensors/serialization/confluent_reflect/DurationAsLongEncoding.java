@@ -15,6 +15,7 @@ import org.apache.avro.reflect.CustomEncoding;
  */
 public final class DurationAsLongEncoding extends CustomEncoding<Duration> {
   public DurationAsLongEncoding() {
+    super();
     super.schema =
         DurationMicrosConversion.durationMicros().addToSchema(Schema.create(Schema.Type.LONG));
   }

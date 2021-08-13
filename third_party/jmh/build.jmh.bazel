@@ -1,0 +1,42 @@
+load("@rules_java//java:defs.bzl", "java_library")
+load("@//third_party/jmh:rules_jmh.bzl", "version")
+
+JMH_VERSION = "1.34-SNAPSHOT"
+
+filegroup(
+    name = "jmh_properties",
+    srcs = ["jmh-core/src/main/resources/jmh.properties"],
+)
+
+version(
+    name = "jmh_core_version",
+    template = ":jmh_properties",
+    version = JMH_VERSION,
+)
+
+java_library(
+    name = "jmh_core",
+    srcs = glob(["jmh-core/src/main/java/**/*.java"]),
+    javacopts = [
+        "-XepDisableAllChecks",
+    ],
+    resources = [":jmh_core_version"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:net_sf_jopt_simple_jopt_simple",
+        "@maven//:org_apache_commons_commons_math3",
+    ],
+)
+
+java_library(
+    name = "jmh_generator_annprocess",
+    srcs = glob(["jmh-generator-annprocess/src/main/java/**/*.java"]),
+    javacopts = [
+        "-XepDisableAllChecks",
+    ],
+    resources = glob(["jmh-generator-annprocess/src/main/resources/META-INF/**"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":jmh_core",
+    ],
+)

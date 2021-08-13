@@ -29,6 +29,7 @@ import org.apache.kafka.streams.errors.LogAndContinueExceptionHandler;
 
   @Inject
   /* package */ MyStreams(Topology topology, KafkaConfiguration configuration) {
+    super();
     var settings = new Properties();
     copySettings(configuration, settings);
 

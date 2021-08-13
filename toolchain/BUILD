@@ -2,6 +2,22 @@ load("@bazel_tools//tools/jdk:default_java_toolchain.bzl", "default_java_toolcha
 load("@com_google_dagger//:workspace_defs.bzl", "dagger_rules")
 load("@rules_java//java:defs.bzl", "java_library", "java_package_configuration", "java_plugin")
 
+config_setting(
+    name = "fastbuild",
+    values = {"compilation_mode": "fastbuild"},
+)
+
+config_setting(
+    name = "debug",
+    values = {"compilation_mode": "dbg"},
+)
+
+config_setting(
+    name = "optimized",
+    values = {"compilation_mode": "opt"},
+)
+
+# ---
 default_java_toolchain(
     name = "toolchain_java16",
     configuration = dict(),
@@ -136,14 +152,14 @@ dagger_rules("@maven")
 java_plugin(
     name = "jmh_processor",
     processor_class = "org.openjdk.jmh.generators.BenchmarkProcessor",
-    deps = ["@maven//:org_openjdk_jmh_jmh_generator_annprocess"],
+    deps = ["@jmh//:jmh_generator_annprocess"],
 )
 
 java_library(
     name = "jmh",
     exported_plugins = ["jmh_processor"],
     visibility = ["//visibility:public"],
-    exports = ["@maven//:org_openjdk_jmh_jmh_core"],
+    exports = ["@jmh//:jmh_core"],
 )
 
 # ---

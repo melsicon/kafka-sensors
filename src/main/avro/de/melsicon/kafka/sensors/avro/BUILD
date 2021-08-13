@@ -1,4 +1,4 @@
-load("//rules_avro:avro.bzl", "avro_java_library")
+load("//third_party/avro:rules_avro.bzl", "avro_java_library")
 
 avro_java_library(
     name = "avro",

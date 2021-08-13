@@ -1,0 +1,16 @@
+filegroup(
+    name = "async_profiler",
+    srcs = ["build/libasyncProfiler.so"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "async_profiler_ext",
+    srcs = select(
+        {
+            "@platforms//os:macos": ["build/libasyncProfiler.dylib"],
+            "//conditions:default": [],
+        },
+    ),
+    visibility = ["//visibility:public"],
+)
