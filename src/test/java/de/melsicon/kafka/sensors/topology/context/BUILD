@@ -14,8 +14,6 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/topology",
         "//toolchain:checker",
         "//toolchain:dagger",
-        "@maven//:javax_inject_javax_inject",
-        "@maven//:org_apache_kafka_kafka_clients",
         "@maven//:org_apache_kafka_kafka_streams",
     ],
 )

@@ -11,9 +11,9 @@ java_library(
         "//src/test/java/de/melsicon/kafka/sensors/serde/context",
         "//src/test/java/de/melsicon/kafka/sensors/testutil",
         "//toolchain:checker",
-        "//toolchain:dagger",
         "//toolchain:truth",
         "@maven//:com_google_guava_guava",
+        "@maven//:javax_inject_javax_inject",
         "@maven//:org_apache_kafka_kafka_clients",
     ],
 )

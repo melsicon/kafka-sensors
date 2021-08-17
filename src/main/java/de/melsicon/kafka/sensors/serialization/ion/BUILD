@@ -14,7 +14,6 @@ java_library(
         "//toolchain:dagger",
         "@maven//:com_amazon_ion_ion_java",
         "@maven//:com_google_errorprone_error_prone_annotations",
-        "@maven//:javax_inject_javax_inject",
         "@maven//:org_apache_kafka_kafka_clients",
     ],
 )

@@ -2,7 +2,7 @@ load("@rules_java//java:defs.bzl", "java_library")
 
 java_library(
     name = "context",
-    srcs = glob(["SerDesModule.java"]),
+    srcs = ["SerDesModule.java"],
     javacopts = ["-AskipDefs=\\.Dagger"],
     visibility = ["//visibility:public"],
     deps = [
@@ -15,13 +15,12 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/serialization/proto",
         "//toolchain:checker",
         "//toolchain:dagger",
-        "@maven//:com_google_errorprone_error_prone_annotations",
     ],
 )
 
 java_library(
     name = "app_context",
-    srcs = glob(["AppSerDesModule.java"]),
+    srcs = ["AppSerDesModule.java"],
     javacopts = ["-AskipDefs=\\.Dagger"],
     visibility = ["//visibility:public"],
     deps = [
@@ -31,6 +30,5 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/serialization/proto",
         "//toolchain:checker",
         "//toolchain:dagger",
-        "@maven//:com_google_errorprone_error_prone_annotations",
     ],
 )
