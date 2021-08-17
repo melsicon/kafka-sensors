@@ -27,15 +27,6 @@ java_library(
 )
 
 java_test(
-    name = "ProcessorTest",
-    size = "small",
-    runtime_deps = [
-        ":tests",
-        "@maven//:org_slf4j_slf4j_jdk14",
-    ],
-)
-
-java_test(
     name = "TopologyTest",
     size = "medium",
     runtime_deps = [

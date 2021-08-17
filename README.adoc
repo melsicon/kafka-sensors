@@ -118,8 +118,8 @@ for testing, but this would show up when using real world data and comparing wit
 
 By refactoring the business logic to depend only on an abstract store, we speed up testing by a
 factor of twenty
-([source,shell]`bazel test //src/test/java/de/melsicon/kafka/sensors/topology:ProcessorTest` vs.
-`//src/test/java/de/melsicon/kafka/sensors/topology:TopologyTest`), which demonstrates a potential
+([source,shell]`bazel test //src/test/java/de/melsicon/kafka/sensors/logic:all` vs.
+`//src/test/java/de/melsicon/kafka/sensors/topology:all`), which demonstrates a potential
 for improvement in development speed and testability.
 
 == Running

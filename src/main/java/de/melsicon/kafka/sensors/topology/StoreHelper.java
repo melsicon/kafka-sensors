@@ -1,5 +1,6 @@
 package de.melsicon.kafka.sensors.topology;
 
+import de.melsicon.kafka.sensors.logic.KVStore;
 import org.apache.kafka.streams.errors.StreamsException;
 import org.apache.kafka.streams.processor.ProcessorContext;
 import org.apache.kafka.streams.state.KeyValueStore;
@@ -31,13 +32,19 @@ import org.checkerframework.checker.nullness.qual.Nullable;
   /**
    * Wrap a {@link KeyValueStore} in a {@link KVStore}.
    *
+   * @param store The underlying {@link KeyValueStore} implementation
    * @param <K> the type of keys maintained by this store
    * @param <V> the type of stored values
+   * @return The wrapped store
    */
-  /* package */ static final class MappedStore<K, V> implements KVStore<K, V> {
+  /* package */ static <K, V> KVStore<K, V> mapStore(KeyValueStore<K, V> store) {
+    return new StoreAdapter<>(store);
+  }
+
+  private static final class StoreAdapter<K, V> implements KVStore<K, V> {
     private final KeyValueStore<K, V> store;
 
-    /* package */ MappedStore(KeyValueStore<K, V> store) {
+    /* package */ StoreAdapter(KeyValueStore<K, V> store) {
       this.store = store;
     }
 
@@ -49,6 +56,11 @@ import org.checkerframework.checker.nullness.qual.Nullable;
     @Override
     public void put(K key, V value) {
       store.put(key, value);
+    }
+
+    @Override
+    public void close() {
+      store.close();
     }
   }
 }

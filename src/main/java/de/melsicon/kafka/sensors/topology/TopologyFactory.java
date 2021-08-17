@@ -3,6 +3,7 @@ package de.melsicon.kafka.sensors.topology;
 import de.melsicon.kafka.sensors.configuration.KafkaConfiguration;
 import de.melsicon.kafka.sensors.model.SensorState;
 import de.melsicon.kafka.sensors.model.SensorStateWithDuration;
+import javax.inject.Provider;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -19,7 +20,8 @@ import org.apache.kafka.streams.state.Stores;
       KafkaConfiguration configuration,
       Serde<SensorState> inputSerde,
       Serde<SensorState> storeSerde,
-      Serde<SensorStateWithDuration> resultSerde) {
+      Serde<SensorStateWithDuration> resultSerde,
+      Provider<DurationProcessor> processorProvider) {
     // Create a builder for our state store
     var storeBuilder =
         Stores.keyValueStoreBuilder(
@@ -36,8 +38,7 @@ import org.apache.kafka.streams.state.Stores;
     var stateStoreNames = new String[] {DurationProcessor.SENSOR_STATES};
 
     builder.stream(configuration.inputTopic(), Consumed.with(Serdes.String(), inputSerde))
-        .transformValues(
-            DurationProcessor.supplier(), Named.as("DURATION-PROCESSOR"), stateStoreNames)
+        .transformValues(processorProvider::get, Named.as("DURATION-PROCESSOR"), stateStoreNames)
         .to(configuration.resultTopic(), Produced.with(Serdes.String(), resultSerde));
 
     return builder.build();

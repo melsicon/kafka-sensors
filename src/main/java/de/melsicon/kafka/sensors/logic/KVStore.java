@@ -1,5 +1,6 @@
-package de.melsicon.kafka.sensors.topology;
+package de.melsicon.kafka.sensors.logic;
 
+import java.io.Closeable;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
@@ -9,7 +10,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * @param <K> the type of keys maintained by this store
  * @param <V> the type of stored values
  */
-public interface KVStore<K, V> {
+public interface KVStore<K, V> extends Closeable {
   @Nullable
   V get(K key);
 

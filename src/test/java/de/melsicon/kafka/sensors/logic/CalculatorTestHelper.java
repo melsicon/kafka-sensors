@@ -1,4 +1,4 @@
-package de.melsicon.kafka.sensors.topology;
+package de.melsicon.kafka.sensors.logic;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -9,26 +9,20 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/* package */ final class ProcessorTestHelper {
+/* package */ final class CalculatorTestHelper {
   private static final String SENSOR_ID = "7331";
 
-  private ProcessorTestHelper() {}
+  private CalculatorTestHelper() {}
 
-  /* package */ static DurationProcessor createProcessor() {
-    var store = new HashMap<String, SensorState>();
-    var kvStore = new MapStore<>(store);
-
-    var processor = new DurationProcessor();
-    processor.initStore(kvStore);
-    return processor;
+  /* package */ static DurationCalculator createCalculator() {
+    var store = new TestKVStore();
+    return new DurationCalculator(store);
   }
 
   static SensorState initial(State state) {
     var instant = Instant.ofEpochSecond(443634300L);
-
     return SensorState.builder().id(SENSOR_ID).time(instant).state(state).build();
   }
 
@@ -68,21 +62,20 @@ import org.checkerframework.checker.nullness.qual.Nullable;
     }
   }
 
-  /* package */ static final class MapStore<K, V> implements KVStore<@NonNull K, V> {
-    private final Map<K, V> store;
+  private static class TestKVStore implements KVStore<String, SensorState> {
+    private final Map<String, SensorState> map = new HashMap<>();
 
-    /* package */ MapStore(Map<K, V> store) {
-      this.store = store;
+    @Override
+    public @Nullable SensorState get(String key) {
+      return map.get(key);
     }
 
     @Override
-    public @Nullable V get(@NonNull K key) {
-      return store.get(key);
+    public void put(String key, SensorState value) {
+      map.put(key, value);
     }
 
     @Override
-    public void put(K key, V value) {
-      store.put(key, value);
-    }
+    public void close() {}
   }
 }

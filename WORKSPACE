@@ -17,9 +17,9 @@ http_archive(
 
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "59d5b42ac315e7eadffa944e86e90c2990110a1c8075f1cd145f487e999d22b3",
-    strip_prefix = "rules_docker-0.17.0",
-    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.17.0/rules_docker-v0.17.0.tar.gz"],
+    sha256 = "5d31ad261b9582515ff52126bf53b954526547a3e26f6c25a9d64c48a31e45ac",
+    strip_prefix = "rules_docker-0.18.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.18.0/rules_docker-v0.18.0.tar.gz"],
 )
 
 http_archive(
@@ -145,7 +145,7 @@ maven_install(
         "com.google.flogger:flogger:0.6",
         "com.google.guava:guava:30.1.1-jre",
         "info.picocli:picocli:4.6.1",
-        "io.github.classgraph:classgraph:4.8.113",
+        "io.github.classgraph:classgraph:4.8.115",
         "io.helidon.config:helidon-config-object-mapping:2.3.2",
         "io.helidon.config:helidon-config-yaml:2.3.2",
         "io.helidon.config:helidon-config:2.3.2",

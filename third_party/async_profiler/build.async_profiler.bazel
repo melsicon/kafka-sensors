@@ -8,7 +8,7 @@ filegroup(
     name = "async_profiler_ext",
     srcs = select(
         {
-            "@platforms//os:macos": ["build/libasyncProfiler.dylib"],
+            "@bazel_tools//src/conditions:darwin": ["build/libasyncProfiler.dylib"],
             "//conditions:default": [],
         },
     ),
