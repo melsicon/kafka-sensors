@@ -39,6 +39,8 @@ def _new_generator_command(ctx, src_dir, gen_dir):
     return gen_command
 
 def _impl(ctx):
+    java_home = ctx.attr._jdk[java_common.JavaRuntimeInfo].java_home
+    jar_tool = ctx.attr.jar
     src_dir = _commonprefix(
         [f.dirname for f in ctx.files.srcs],
     )
@@ -52,8 +54,9 @@ def _impl(ctx):
         "find {gen_dir} -exec touch -t 198001010000 {{}} \\;".format(
             gen_dir = gen_dir,
         ),
-        "{jar} cMf {output} -C {gen_dir} .".format(
-            jar = "%s/bin/jar" % ctx.attr._jdk[java_common.JavaRuntimeInfo].java_home,
+        "{java_home}/{jar_tool} cMf {output} -C {gen_dir} .".format(
+            java_home = java_home,
+            jar_tool = jar_tool,
             output = ctx.outputs.codegen.path,
             gen_dir = gen_dir,
         ),
@@ -77,6 +80,7 @@ def _impl(ctx):
 
 avro_gen = rule(
     attrs = {
+        "jar": attr.string(),
         "srcs": attr.label_list(
             allow_files = [".avsc"],
         ),
@@ -107,6 +111,10 @@ def avro_java_library(
         visibility = None):
     avro_gen(
         name = name + "_srcjar",
+        jar = select({
+            "@bazel_tools//src/conditions:windows": "bin/jar.exe",
+            "//conditions:default": "bin/jar",
+        }),
         srcs = srcs,
         strings = strings,
         encoding = encoding,
