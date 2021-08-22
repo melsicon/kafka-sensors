@@ -9,7 +9,9 @@ CONFLUENT_ARTIFACTS = [
     "com.squareup.wire:wire-schema:3.7.0",
     "commons-validator:commons-validator:1.7",
     "io.swagger:swagger-annotations:1.6.2",
+    "org.jetbrains.kotlin:kotlin-stdlib:1.5.20",
     "org.json:json:20210307",
+    "com.squareup.wire:wire-runtime:3.7.0",
 ]
 
 def confluent_repositories_common():

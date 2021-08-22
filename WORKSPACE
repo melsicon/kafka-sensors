@@ -31,10 +31,9 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    patches = ["//third_party/patches:8714.patch"],
-    sha256 = "c6003e1d2e7fefa78a3039f19f383b4f3a61e81be8c19356f85b6461998ad3db",
-    strip_prefix = "protobuf-3.17.3",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.17.3.tar.gz"],
+    sha256 = "37269d2b9d207afa38ec74ffb9acced530b56eeaa1db6cb8313afc5f65e07eec",
+    strip_prefix = "protobuf-3.18.0-rc1",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.18.0-rc1.tar.gz"],
 )
 
 http_archive(
@@ -139,8 +138,9 @@ maven_install(
         "com.fasterxml.jackson.module:jackson-module-parameter-names:2.13.0-rc1",
         "com.google.auto.service:auto-service-annotations:1.0",
         "com.google.auto.service:auto-service:1.0",
-        "com.google.code.gson:gson:2.8.7",
-        "com.google.errorprone:error_prone_annotations:2.8.1",
+        "com.google.code.findbugs:jsr305:3.0.2",
+        "com.google.code.gson:gson:2.8.8",
+        "com.google.errorprone:error_prone_annotations:2.9.0",
         "com.google.flogger:flogger-system-backend:0.6",
         "com.google.flogger:flogger:0.6",
         "com.google.guava:guava:30.1.1-jre",
@@ -153,15 +153,18 @@ maven_install(
         "jakarta.servlet:jakarta.servlet-api:4.0.4",
         "jakarta.validation:jakarta.validation-api:2.0.2",
         "jakarta.ws.rs:jakarta.ws.rs-api:2.1.6",
+        "javax.inject:javax.inject:1",
         "org.apache.kafka:kafka-clients:2.8.0",
         "org.apache.kafka:kafka-streams:2.8.0",
         "org.apache.kafka:kafka_2.13:2.8.0",
         "org.checkerframework:checker-qual:3.17.0",
         "org.checkerframework:checker:3.17.0",
+        "org.immutables:gson:2.9.0-beta3",
         "org.immutables:value-annotations:2.9.0-beta3",
         "org.immutables:value-processor:2.9.0-beta3",
         "org.mapstruct:mapstruct-processor:1.5.0.Beta1",
         "org.mapstruct:mapstruct:1.5.0.Beta1",
+        "org.scala-lang:scala-library:2.13.5",
         "org.slf4j:slf4j-api:1.8.0-beta4",
         "org.slf4j:slf4j-jdk14:1.8.0-beta4",
         maven.artifact(
@@ -228,6 +231,7 @@ maven_install(
         "https://maven-central-eu.storage-download.googleapis.com/maven2",
         "https://maven.google.com/",
     ],
+    strict_visibility = True,
 )
 
 # ---
