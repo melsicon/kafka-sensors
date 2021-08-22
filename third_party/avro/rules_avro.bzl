@@ -17,6 +17,7 @@ def _commonprefix(m):
 
 def _new_generator_command(ctx, src_dir, gen_dir):
     java_path = ctx.attr._jdk[java_common.JavaRuntimeInfo].java_executable_exec_path
+
     gen_command = "{java} -cp {tool} {main} compile ".format(
         java = java_path,
         main = "org.apache.avro.tool.Main",  # should be -jar
@@ -41,12 +42,15 @@ def _new_generator_command(ctx, src_dir, gen_dir):
 def _impl(ctx):
     java_home = ctx.attr._jdk[java_common.JavaRuntimeInfo].java_home
     jar_tool = ctx.attr.jar
+
     src_dir = _commonprefix(
         [f.dirname for f in ctx.files.srcs],
     )
+
     gen_dir = "{out}-tmp".format(
         out = ctx.outputs.codegen.path,
     )
+
     commands = [
         "mkdir -p {gen_dir}".format(gen_dir = gen_dir),
         _new_generator_command(ctx, src_dir, gen_dir),
@@ -80,20 +84,20 @@ def _impl(ctx):
 
 avro_gen = rule(
     attrs = {
+        "encoding": attr.string(),
         "jar": attr.string(),
         "srcs": attr.label_list(
             allow_files = [".avsc"],
         ),
         "strings": attr.bool(),
-        "encoding": attr.string(),
-        "_jdk": attr.label(
-            default = "@bazel_tools//tools/jdk:current_java_runtime",
-            providers = [java_common.JavaRuntimeInfo],
-        ),
         "_avro_tools": attr.label(
             cfg = "host",
             default = "@maven//:org_apache_avro_avro_tools",
             allow_single_file = True,
+        ),
+        "_jdk": attr.label(
+            default = "@bazel_tools//tools/jdk:current_java_runtime",
+            providers = [java_common.JavaRuntimeInfo],
         ),
     },
     outputs = {

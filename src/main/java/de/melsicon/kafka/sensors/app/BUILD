@@ -1,5 +1,5 @@
-load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//third_party/images:java_base.bzl", "JAVA_BASE")
 
 APP_DEPS = [
