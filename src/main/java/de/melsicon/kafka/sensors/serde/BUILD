@@ -3,7 +3,7 @@ load("@rules_java//java:defs.bzl", "java_library")
 java_library(
     name = "serde",
     srcs = glob(["*.java"]),
-    javacopts = ["-AskipDefs=\\.(Immutable|With)[A-Z][A-Za-z0-9]*(\\.Builder)?$$"],
+    javacopts = ["-AskipDefs=\\.Immutable[A-Z][A-Za-z0-9]*$$"],
     visibility = ["//visibility:public"],
     exports = [
         "//src/main/java/de/melsicon/kafka/sensors/model",

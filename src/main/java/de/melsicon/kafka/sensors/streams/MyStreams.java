@@ -12,7 +12,7 @@ import de.melsicon.kafka.sensors.configuration.KafkaConfiguration;
 import java.util.Properties;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.serialization.Serdes.StringSerde;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.errors.LogAndContinueExceptionHandler;
@@ -51,7 +51,7 @@ import org.apache.kafka.streams.errors.LogAndContinueExceptionHandler;
 
     settings.setProperty(APPLICATION_ID_CONFIG, clientID);
     settings.setProperty(BOOTSTRAP_SERVERS_CONFIG, brokers);
-    settings.setProperty(DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde.class.getName());
+    settings.setProperty(DEFAULT_KEY_SERDE_CLASS_CONFIG, StringSerde.class.getName());
     settings.setProperty(KEY_SERIALIZER_ENCODING, US_ASCII.name());
     settings.setProperty(KEY_DESERIALIZER_ENCODING, US_ASCII.name());
   }

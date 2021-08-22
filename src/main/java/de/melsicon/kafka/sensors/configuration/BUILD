@@ -3,7 +3,7 @@ load("@rules_java//java:defs.bzl", "java_library")
 java_library(
     name = "configuration",
     srcs = glob(["*.java"]),
-    javacopts = ["-AskipDefs=\\.(Immutable|With)[A-Z][A-Za-z0-9]*(\\.Builder)?$$"],
+    javacopts = ["-AskipDefs=\\.(Immutable|With)[A-Z][A-Za-z0-9]*$$"],
     visibility = ["//visibility:public"],
     deps = [
         "//toolchain:checker",
