@@ -1,3 +1,5 @@
+""" JMH dependencies. """
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 JMH_ARTIFACTS = [
@@ -8,7 +10,7 @@ JMH_ARTIFACTS = [
 def jmh_repositories():
     http_archive(
         name = "jmh",
-        build_file = "//third_party/jmh:build.jmh.bazel",
+        build_file = "//third_party/jmh:BUILD.jmh.bazel",
         sha256 = "8246708df59eac9b815cd3540404338ddadd8272103d2985eee546d1115a861a",
         strip_prefix = "jmh-267d5869884378fa19a126732bbdfcc9516533c1",
         urls = ["https://github.com/eikemeier/jmh/archive/267d5869884378fa19a126732bbdfcc9516533c1.tar.gz"],

@@ -144,7 +144,7 @@ java_library(
 # ---
 # https://dagger.dev/dev-guide/
 
-dagger_rules("@maven")
+dagger_rules(repo_name = "@maven")
 
 # ---
 # https://github.com/openjdk/jmh

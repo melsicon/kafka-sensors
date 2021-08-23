@@ -1,3 +1,5 @@
+""" Select container image with an appropriate JRE. """
+
 JAVA_BASE = select({
     "//toolchain:debug": "//third_party/images:java16_debug_base",
     "//toolchain:fastbuild": "//third_party/images:java16_base",

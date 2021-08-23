@@ -16,6 +16,28 @@ http_archive(
 )
 
 http_archive(
+    name = "bazel_gazelle",
+    sha256 = "62ca106be173579c0a167deb23358fdfe71ffa1e4cfdddf5582af26520f1c66f",
+    urls = [
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.23.0/bazel-gazelle-v0.23.0.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.23.0/bazel-gazelle-v0.23.0.tar.gz",
+    ],
+)
+
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = "37269d2b9d207afa38ec74ffb9acced530b56eeaa1db6cb8313afc5f65e07eec",
+    strip_prefix = "protobuf-3.18.0-rc1",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.18.0-rc1.tar.gz"],
+)
+
+http_archive(
+    name = "com_github_bazelbuild_buildtools",
+    strip_prefix = "buildtools-master",
+    url = "https://github.com/bazelbuild/buildtools/archive/master.zip",
+)
+
+http_archive(
     name = "io_bazel_rules_docker",
     sha256 = "5d31ad261b9582515ff52126bf53b954526547a3e26f6c25a9d64c48a31e45ac",
     strip_prefix = "rules_docker-0.18.0",
@@ -30,13 +52,6 @@ http_archive(
 )
 
 http_archive(
-    name = "com_google_protobuf",
-    sha256 = "37269d2b9d207afa38ec74ffb9acced530b56eeaa1db6cb8313afc5f65e07eec",
-    strip_prefix = "protobuf-3.18.0-rc1",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.18.0-rc1.tar.gz"],
-)
-
-http_archive(
     name = "com_google_dagger",
     sha256 = "f763a42e418bcea094c4709e36ab06683b1a0b6edc8521b8f2e908d0c0b0706d",
     strip_prefix = "dagger-dagger-2.38.1",
@@ -47,28 +62,11 @@ http_archive(
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
-go_register_toolchains(go_version = "1.16.6")
+go_register_toolchains(go_version = "1.17")
 
 go_rules_dependencies()
 
 # ---
-
-load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories")
-
-container_repositories()
-
-load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
-
-container_deps()
-
-load("@io_bazel_rules_docker//go:image.bzl", go_repositories = "repositories")
-
-go_repositories()
-
-# ---
-
-load("@rules_jvm_external//:defs.bzl", "maven_install")
-load("@rules_jvm_external//:specs.bzl", "maven")
 
 # ---
 
@@ -93,33 +91,52 @@ bind(
 
 # ---
 
+load("@io_bazel_rules_docker//repositories:repositories.bzl", container_repositories = "repositories")
+
+container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+container_deps()
+
+load("@io_bazel_rules_docker//go:image.bzl", go_repositories = "repositories")
+
+go_repositories()
+
+# ---
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:specs.bzl", "maven")
+
+# ---
+
 load("@com_google_dagger//:workspace_defs.bzl", "DAGGER_ARTIFACTS")
 
 # ---
 
-load("//third_party/avro:workspace.bzl", "AVRO_ARTIFACTS")
+load("//third_party/avro:defs.bzl", "AVRO_ARTIFACTS")
 
 # ---
 
-load("//third_party/confluent:workspace.bzl", "CONFLUENT_ARTIFACTS", "confluent_repositories")
+load("//third_party/confluent:defs.bzl", "CONFLUENT_ARTIFACTS", "confluent_repositories")
 
 confluent_repositories()
 
 # ---
 
-load("//third_party/jmh:workspace.bzl", "JMH_ARTIFACTS", "jmh_repositories")
+load("//third_party/jmh:defs.bzl", "JMH_ARTIFACTS", "jmh_repositories")
 
 jmh_repositories()
 
 # ---
 
-load("//third_party/async_profiler:workspace.bzl", "async_profiler_repositories")
+load("//third_party/async_profiler:defs.bzl", "async_profiler_repositories")
 
 async_profiler_repositories()
 
 # ---
 
-load("//third_party/images:workspace.bzl", "base_images")
+load("//third_party/images:defs.bzl", "base_images")
 
 base_images()
 

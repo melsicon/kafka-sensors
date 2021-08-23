@@ -1,3 +1,5 @@
+""" Manage JMH version file. """
+
 def _version_impl(ctx):
     ctx.actions.expand_template(
         template = ctx.file.template,

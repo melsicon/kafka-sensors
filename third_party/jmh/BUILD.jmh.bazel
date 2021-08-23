@@ -1,5 +1,5 @@
-load("@rules_java//java:defs.bzl", "java_library")
 load("@//third_party/jmh:rules_jmh.bzl", "version")
+load("@rules_java//java:defs.bzl", "java_library")
 
 JMH_VERSION = "1.34-SNAPSHOT"
 

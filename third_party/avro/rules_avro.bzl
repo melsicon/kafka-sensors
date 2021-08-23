@@ -1,3 +1,5 @@
+""" Generate Java source from Avro files. """
+
 load("@rules_java//java:defs.bzl", "java_library")
 
 # Loosely based on https://github.com/meetup/rules_avro
