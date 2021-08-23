@@ -2,6 +2,7 @@
 !/.bazelignore
 !/.bazelrc
 !/.bazelversion
+!/.bazelci/
 !/.envrc
 !/.gitattributes
 !/.gitignore
