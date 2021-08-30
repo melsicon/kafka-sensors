@@ -17,8 +17,5 @@ java_library(
 java_test(
     name = "CalculatorTest",
     size = "small",
-    runtime_deps = [
-        ":tests",
-        "@maven//:org_slf4j_slf4j_jdk14",
-    ],
+    runtime_deps = [":tests"],
 )

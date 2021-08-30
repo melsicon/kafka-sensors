@@ -10,42 +10,49 @@ import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 public final class SchemaRegistryRule implements TestRule {
+  private static final String REGISTRY_SCOPE = "test";
+
   private final String registryScope;
+  private final Map<String, String> configs;
 
   private @MonotonicNonNull SchemaRegistryClient registryClient;
 
+  public SchemaRegistryRule() {
+    this(REGISTRY_SCOPE);
+  }
+
   public SchemaRegistryRule(String registryScope) {
     this.registryScope = registryScope;
+    var registryUrl = "mock://" + this.registryScope;
+    this.configs = Map.of(SCHEMA_REGISTRY_URL_CONFIG, registryUrl);
   }
 
-  public String registryUrl() {
-    return "mock://" + registryScope;
-  }
-
-  private Map<String, String> configs() {
-    return Map.of(SCHEMA_REGISTRY_URL_CONFIG, registryUrl());
+  public Map<String, String> configs() {
+    return configs;
   }
 
   public void configureSerializer(Serializer<?> serializer) {
-    serializer.configure(configs(), /* isKey= */ false);
+    serializer.configure(configs, /* isKey= */ false);
   }
 
   public void configureDeserializer(Deserializer<?> deserializer) {
-    deserializer.configure(configs(), /* isKey= */ false);
+    deserializer.configure(configs, /* isKey= */ false);
   }
 
+  @RequiresNonNull("registryClient")
   public SchemaRegistryClient client() {
-    assert registryClient != null : "@AssumeAssertion(nullness): before not called";
+    // assert registryClient != null : "@AssumeAssertion(nullness): before not called";
     return registryClient;
   }
 
   public void configureSerde(Serde<?> serde) {
-    serde.configure(configs(), /* isKey= */ false);
+    serde.configure(configs, /* isKey= */ false);
   }
 
   @EnsuresNonNull("registryClient")
@@ -53,8 +60,9 @@ public final class SchemaRegistryRule implements TestRule {
     registryClient = MockSchemaRegistry.getClientForScope(registryScope);
   }
 
+  @RequiresNonNull("registryClient")
   private void after() {
-    assert registryClient != null : "@AssumeAssertion(nullness): before() not called";
+    // assert registryClient != null : "@AssumeAssertion(nullness): before() not called";
     registryClient.reset();
     MockSchemaRegistry.dropScope(registryScope);
   }

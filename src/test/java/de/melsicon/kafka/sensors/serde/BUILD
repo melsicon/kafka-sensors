@@ -21,6 +21,8 @@ java_library(
 java_test(
     name = "SerdeTest",
     size = "small",
+    data = ["//conf:logging"],
+    jvm_flags = ["-Djava.util.logging.config.file=$(rootpath //conf:logging)"],
     runtime_deps = [
         ":tests",
         "@maven//:org_slf4j_slf4j_jdk14",
@@ -30,6 +32,8 @@ java_test(
 java_test(
     name = "SerdeWithDurationTest",
     size = "small",
+    data = ["//conf:logging"],
+    jvm_flags = ["-Djava.util.logging.config.file=$(rootpath //conf:logging)"],
     runtime_deps = [
         ":tests",
         "@maven//:org_slf4j_slf4j_jdk14",

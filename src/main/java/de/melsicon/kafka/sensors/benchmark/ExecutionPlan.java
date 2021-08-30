@@ -22,7 +22,7 @@ import org.openjdk.jmh.annotations.TearDown;
 
 @State(Scope.Benchmark)
 public class ExecutionPlan {
-  private static final String REGISTRY_SCOPE = "test";
+  private static final String REGISTRY_SCOPE = "benchmark";
   private static final String REGISTRY_URL = "mock://" + REGISTRY_SCOPE;
 
   private final BenchComponent benchComponent;

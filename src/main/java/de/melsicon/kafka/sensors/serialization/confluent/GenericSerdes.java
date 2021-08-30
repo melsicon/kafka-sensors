@@ -7,10 +7,10 @@ import de.melsicon.kafka.sensors.model.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.serde.Format;
 import de.melsicon.kafka.sensors.serde.SensorStateMapper;
 import de.melsicon.kafka.sensors.serde.SensorStateSerdes;
-import de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema;
-import de.melsicon.kafka.sensors.serialization.generic.SensorStateWithDurationSchema;
 import de.melsicon.kafka.sensors.serialization.mapping.MappedDeserializer;
 import de.melsicon.kafka.sensors.serialization.mapping.MappedSerializer;
+import de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper;
+import de.melsicon.kafka.sensors.type.confluent.generic.GenericAvroDeserializer;
 import io.confluent.kafka.streams.serdes.avro.GenericAvroSerializer;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,7 +36,7 @@ public final class GenericSerdes implements SensorStateSerdes {
     var serializer = new GenericAvroSerializer();
     var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap);
 
-    var deserializer = new GenericAvroDeserializer(SensorStateSchema.SCHEMA);
+    var deserializer = new GenericAvroDeserializer(SchemaHelper.SENSOR_STATE_SCHEMA);
     var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map);
 
     return serdeFrom(mappedSerializer, mappedDeserializer);
@@ -47,7 +47,7 @@ public final class GenericSerdes implements SensorStateSerdes {
     var serializer = new GenericAvroSerializer();
     var mappedSerializer = new MappedSerializer<>(serializer, mapper::unmap2);
 
-    var deserializer = new GenericAvroDeserializer(SensorStateWithDurationSchema.SCHEMA);
+    var deserializer = new GenericAvroDeserializer(SchemaHelper.SENSOR_STATE_WITH_DURATION_SCHEMA);
     var mappedDeserializer = new MappedDeserializer<>(deserializer, mapper::map2);
 
     return serdeFrom(mappedSerializer, mappedDeserializer);

@@ -33,8 +33,9 @@ http_archive(
 
 http_archive(
     name = "com_github_bazelbuild_buildtools",
-    strip_prefix = "buildtools-master",
-    url = "https://github.com/bazelbuild/buildtools/archive/master.zip",
+    sha256 = "a73e3a0f274f946094db0e662d6b46b72630c7a3e1257def3e19a86a53adcf02",
+    strip_prefix = "buildtools-0a897f9af678e891af2db8f912f365f9a4e9cb60",
+    url = "https://github.com/bazelbuild/buildtools/archive/0a897f9af678e891af2db8f912f365f9a4e9cb60.tar.gz",
 )
 
 http_archive(
@@ -65,8 +66,6 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_depe
 go_register_toolchains(go_version = "1.17")
 
 go_rules_dependencies()
-
-# ---
 
 # ---
 
@@ -145,18 +144,19 @@ base_images()
 maven_install(
     artifacts = [
         "com.amazon.ion:ion-java:1.8.3",
-        "com.fasterxml.jackson.core:jackson-annotations:2.13.0-rc1",
-        "com.fasterxml.jackson.core:jackson-core:2.13.0-rc1",
-        "com.fasterxml.jackson.core:jackson-databind:2.13.0-rc1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.13.0-rc1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.0-rc1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.13.0-rc1",
-        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0-rc1",
-        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.13.0-rc1",
+        "com.fasterxml.jackson.core:jackson-annotations:2.13.0-rc2",
+        "com.fasterxml.jackson.core:jackson-core:2.13.0-rc2",
+        "com.fasterxml.jackson.core:jackson-databind:2.13.0-rc2",
+        "com.fasterxml.jackson.datatype:jackson-datatype-guava:2.13.0-rc2",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.0-rc2",
+        "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.13.0-rc2",
+        "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0-rc2",
+        "com.fasterxml.jackson.module:jackson-module-parameter-names:2.13.0-rc2",
         "com.google.auto.service:auto-service-annotations:1.0",
         "com.google.auto.service:auto-service:1.0",
         "com.google.code.findbugs:jsr305:3.0.2",
         "com.google.code.gson:gson:2.8.8",
+        "com.google.devtools.ksp:symbol-processing-api:1.5.30-1.0.0-beta08",
         "com.google.errorprone:error_prone_annotations:2.9.0",
         "com.google.flogger:flogger-system-backend:0.6",
         "com.google.flogger:flogger:0.6",
@@ -246,7 +246,6 @@ maven_install(
         "https://repo1.maven.org/maven2",
         "https://repo.maven.apache.org/maven2",
         "https://maven-central-eu.storage-download.googleapis.com/maven2",
-        "https://maven.google.com/",
     ],
     strict_visibility = True,
 )

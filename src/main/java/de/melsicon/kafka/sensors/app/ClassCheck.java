@@ -1,8 +1,10 @@
 package de.melsicon.kafka.sensors.app;
 
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.flogger.FluentLogger;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ResourceList.ResourceFilter;
+import java.io.File;
 
 public final class ClassCheck {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -27,12 +29,20 @@ public final class ClassCheck {
     var classGraph = new ClassGraph();
     try (var scan = classGraph.scan();
         var resourceList = scan.getAllResources().filter(MY_FILTER)) {
+      var builder = ImmutableMultimap.<File, String>builder();
       for (var duplicate : resourceList.findDuplicatePaths()) {
-        logger.atWarning().log("Duplicate resource: %s", duplicate.getKey());
         try (var duplicates = duplicate.getValue()) {
           for (var resource : duplicates) {
-            logger.atWarning().log(" -> %s", resource.getClasspathElementFile());
+            builder.put(resource.getClasspathElementFile(), duplicate.getKey());
           }
+        }
+      }
+      var map = builder.build();
+
+      for (var file : map.keySet()) {
+        logger.atWarning().log("Duplicate resource in %s:", file);
+        for (String resource : map.get(file)) {
+          logger.atWarning().log(" -> %s", resource);
         }
       }
     }

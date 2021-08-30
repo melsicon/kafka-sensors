@@ -1,31 +1,43 @@
 package de.melsicon.kafka.sensors.schema;
 
-import com.google.common.collect.ImmutableCollection;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaValidationException;
+import org.apache.avro.SchemaValidator;
 import org.apache.avro.SchemaValidatorBuilder;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public final class SchemaTest {
-  private final Schema schema;
-  private final Iterable<Schema> schemas;
+  private static @MonotonicNonNull SchemaValidator validator;
 
-  public SchemaTest(Schema schema, Iterable<Schema> schemas) {
+  private final Schema schema;
+  private final Iterable<Schema> schemata;
+
+  public SchemaTest(Schema schema, Iterable<Schema> schemata) {
     this.schema = schema;
-    this.schemas = schemas;
+    this.schemata = schemata;
   }
 
-  @Parameters()
-  public static ImmutableCollection<?> parameters() {
+  @BeforeClass
+  @EnsuresNonNull("validator")
+  public static void before() {
+    validator = new SchemaValidatorBuilder().canReadStrategy().validateAll();
+  }
+
+  @Parameterized.Parameters
+  public static Iterable<?> parameters() {
     return TestHelper.createParameters();
   }
 
   @Test
+  @RequiresNonNull("validator")
   public void canReadAll() throws SchemaValidationException {
-    new SchemaValidatorBuilder().canReadStrategy().validateAll().validate(schema, schemas);
+    validator.validate(schema, schemata);
   }
 }

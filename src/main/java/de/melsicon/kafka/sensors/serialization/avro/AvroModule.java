@@ -10,11 +10,25 @@ import de.melsicon.kafka.sensors.avro.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.serde.Name;
 import de.melsicon.kafka.sensors.serde.SensorStateMapper;
 import de.melsicon.kafka.sensors.serde.SensorStateSerdes;
+import de.melsicon.kafka.sensors.type.avro.generic.GenericModule;
+import de.melsicon.kafka.sensors.type.avro.reflect.ReflectModule;
+import de.melsicon.kafka.sensors.type.avro.specific.SpecificModule;
+import java.util.Set;
 import javax.inject.Named;
+import org.apache.avro.Schema;
+import org.apache.avro.message.SchemaStore;
+import org.apache.avro.message.SchemaStore.Cache;
 
-@Module
+@Module(includes = {SpecificModule.class, GenericModule.class, ReflectModule.class})
 public abstract class AvroModule {
   private AvroModule() {}
+
+  @Provides
+  /* package */ static SchemaStore schemaStore(Set<Schema> schemata) {
+    var resolver = new Cache();
+    schemata.forEach(resolver::addSchema);
+    return resolver;
+  }
 
   @Provides
   @IntoMap

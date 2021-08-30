@@ -38,9 +38,11 @@ default_java_toolchain(
 java_package_configuration(
     name = "src_package_configuration",
     javacopts = [
+        "-AinvariantArrays",
         "-ArequirePrefixInWarningSuppressions",
         "-AwarnUnneededSuppressions",
         "-AshowSuppressWarningsStrings",
+        "-AsuppressWarnings=allcheckers:type.checking.not.run",
         "-Werror",
         "-Xpkginfo:nonempty",
         "-XepExcludedPaths:.*/_javac/.*",
@@ -174,6 +176,5 @@ java_library(
         "@maven//:com_google_truth_extensions_truth_proto_extension",
         "@maven//:com_google_truth_truth",
         "@maven//:junit_junit",
-        "@maven//:org_ow2_asm_asm",
     ],
 )

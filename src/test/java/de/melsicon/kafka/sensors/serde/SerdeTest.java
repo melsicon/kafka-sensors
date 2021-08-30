@@ -2,7 +2,6 @@ package de.melsicon.kafka.sensors.serde;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.TruthJUnit.assume;
-import static de.melsicon.kafka.sensors.serde.TestHelper.REGISTRY_SCOPE;
 
 import com.google.common.collect.ImmutableCollection;
 import de.melsicon.kafka.sensors.model.SensorState;
@@ -41,7 +40,7 @@ public final class SerdeTest {
     this.description = description;
     this.inputSerdes = Objects.requireNonNull(inputSerdes, "input serde supplier missing");
     this.resultSerdes = Objects.requireNonNull(resultSerdes, "result serde supplier missing");
-    this.registryTestResource = new SchemaRegistryRule(REGISTRY_SCOPE);
+    this.registryTestResource = new SchemaRegistryRule();
   }
 
   @Parameters(name = "{index}: {0}")

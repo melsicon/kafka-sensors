@@ -10,6 +10,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/serialization/avromapper",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/confluent",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/confluentmapper",
+        "//src/main/java/de/melsicon/kafka/sensors/serialization/gson",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/ion",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/json",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/proto",

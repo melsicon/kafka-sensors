@@ -2,21 +2,18 @@ package de.melsicon.kafka.sensors.topology;
 
 import static com.google.common.truth.Truth.assertThat;
 import static de.melsicon.kafka.sensors.topology.TopologyTestHelper.INPUT_TOPIC;
-import static de.melsicon.kafka.sensors.topology.TopologyTestHelper.REGISTRY_SCOPE;
 import static de.melsicon.kafka.sensors.topology.TopologyTestHelper.RESULT_TOPIC;
 import static de.melsicon.kafka.sensors.topology.TopologyTestHelper.newKafkaTestResource;
 
 import de.melsicon.kafka.sensors.model.SensorState;
 import de.melsicon.kafka.sensors.model.SensorState.State;
 import de.melsicon.kafka.sensors.model.SensorStateWithDuration;
-import de.melsicon.kafka.sensors.testutil.EmbeddedKafkaRule;
 import de.melsicon.kafka.sensors.testutil.SchemaRegistryRule;
 import de.melsicon.kafka.sensors.topology.context.ParameterComponent;
 import de.melsicon.kafka.sensors.topology.context.TopologyComponent;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.function.Supplier;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -57,24 +54,25 @@ public final class TopologyTest {
     this.storeSerdes = storeSerdes;
     this.resultSerdes = resultSerdes;
 
-    this.registryTestResource = new SchemaRegistryRule(REGISTRY_SCOPE);
+    this.registryTestResource = new SchemaRegistryRule();
   }
 
   @Parameters(name = "{index}: {0}")
-  public static Collection<?> parameters() {
+  public static Iterable<?> parameters() {
     var testComponent = ParameterComponent.create();
     var serdes = testComponent.serdes();
     var combinations = new ArrayList<Object[]>(serdes.size() * serdes.size() * serdes.size());
     for (var inputSerdes : serdes) {
       for (var storeSerdes : serdes) {
         for (var resultSerdes : serdes) {
-          var o = new Object[4];
-          o[0] = inputSerdes.name() + " - " + storeSerdes.name() + " - " + resultSerdes.name();
-          o[1] = (Supplier<Serde<SensorState>>) inputSerdes.serdes()::createSensorStateSerde;
-          o[2] = (Supplier<Serde<SensorState>>) storeSerdes.serdes()::createSensorStateSerde;
-          o[3] =
-              (Supplier<Serde<SensorStateWithDuration>>)
-                  resultSerdes.serdes()::createSensorStateWithDurationSerde;
+          var o =
+              new Object[] {
+                inputSerdes.name() + " - " + storeSerdes.name() + " - " + resultSerdes.name(),
+                (Supplier<Serde<SensorState>>) inputSerdes.serdes()::createSensorStateSerde,
+                (Supplier<Serde<SensorState>>) storeSerdes.serdes()::createSensorStateSerde,
+                (Supplier<Serde<SensorStateWithDuration>>)
+                    resultSerdes.serdes()::createSensorStateWithDurationSerde,
+              };
           combinations.add(o);
         }
       }

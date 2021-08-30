@@ -14,7 +14,5 @@ java_library(
 java_test(
     name = "SensorStateTest",
     size = "small",
-    runtime_deps = [
-        ":tests",
-    ],
+    runtime_deps = [":tests"],
 )

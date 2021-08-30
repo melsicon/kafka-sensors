@@ -1,29 +1,24 @@
 package de.melsicon.kafka.sensors.serialization.avro;
 
-import static de.melsicon.kafka.sensors.serialization.avro.SchemaHelper.RESOLVER;
-import static de.melsicon.kafka.sensors.serialization.avro.SchemaHelper.RESOLVER_WITH_DURATION;
-
-import de.melsicon.kafka.sensors.model.SensorState;
-import de.melsicon.kafka.sensors.model.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.serde.Format;
 import de.melsicon.kafka.sensors.serde.SensorStateMapper;
 import de.melsicon.kafka.sensors.serde.SensorStateSerdes;
+import de.melsicon.kafka.sensors.type.avro.reflect.SchemaHelper;
+import de.melsicon.kafka.sensors.type.avro.reflect.SensorState;
+import de.melsicon.kafka.sensors.type.avro.reflect.SensorStateWithDuration;
 import javax.inject.Inject;
+import org.apache.avro.message.SchemaStore;
 import org.apache.kafka.common.serialization.Serde;
 
 public final class ReflectSerdes implements SensorStateSerdes {
-  private final SensorStateMapper<
-          de.melsicon.kafka.sensors.serialization.reflect.SensorState,
-          de.melsicon.kafka.sensors.serialization.reflect.SensorStateWithDuration>
-      mapper;
+  private final SensorStateMapper<SensorState, SensorStateWithDuration> mapper;
+  private final SchemaStore resolver;
 
   @Inject
   /* package */ ReflectSerdes(
-      SensorStateMapper<
-              de.melsicon.kafka.sensors.serialization.reflect.SensorState,
-              de.melsicon.kafka.sensors.serialization.reflect.SensorStateWithDuration>
-          mapper) {
+      SensorStateMapper<SensorState, SensorStateWithDuration> mapper, SchemaStore resolver) {
     this.mapper = mapper;
+    this.resolver = resolver;
   }
 
   @Override
@@ -32,22 +27,19 @@ public final class ReflectSerdes implements SensorStateSerdes {
   }
 
   @Override
-  public Serde<SensorState> createSensorStateSerde() {
-    return SerdeHelper.createSerde(
-        de.melsicon.kafka.sensors.serialization.reflect.SensorState.MODEL,
-        de.melsicon.kafka.sensors.serialization.reflect.SensorState.SCHEMA,
-        mapper::unmap,
-        mapper::map,
-        RESOLVER);
+  public Serde<de.melsicon.kafka.sensors.model.SensorState> createSensorStateSerde() {
+    var encoder = SchemaHelper.SENSOR_STATE_ENCODER;
+    var decoder = SchemaHelper.createSensorStateDecoder(resolver);
+
+    return SerdeHelper.createSerde(encoder, decoder, mapper::unmap, mapper::map, resolver);
   }
 
   @Override
-  public Serde<SensorStateWithDuration> createSensorStateWithDurationSerde() {
-    return SerdeHelper.createSerde(
-        de.melsicon.kafka.sensors.serialization.reflect.SensorStateWithDuration.MODEL,
-        de.melsicon.kafka.sensors.serialization.reflect.SensorStateWithDuration.SCHEMA,
-        mapper::unmap2,
-        mapper::map2,
-        RESOLVER_WITH_DURATION);
+  public Serde<de.melsicon.kafka.sensors.model.SensorStateWithDuration>
+      createSensorStateWithDurationSerde() {
+    var encoder = SchemaHelper.SENSOR_STATE_WITH_DURATION_ENCODER;
+    var decoder = SchemaHelper.createSensorStateWithDurationDecoder(resolver);
+
+    return SerdeHelper.createSerde(encoder, decoder, mapper::unmap2, mapper::map2, resolver);
   }
 }

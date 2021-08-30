@@ -75,6 +75,7 @@ java_binary(
     ] + RUNTIME_DEPS,
     deps = [
         "@maven//:com_google_flogger_flogger",
+        "@maven//:com_google_guava_guava",
         "@maven//:io_github_classgraph_classgraph",
     ],
 )

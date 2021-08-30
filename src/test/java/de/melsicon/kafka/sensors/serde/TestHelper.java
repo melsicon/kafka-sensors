@@ -13,7 +13,6 @@ import java.util.function.Supplier;
 import org.apache.kafka.common.serialization.Serde;
 
 /* package */ final class TestHelper {
-  /* package */ static final String REGISTRY_SCOPE = "test";
   /* package */ static final String KAFKA_TOPIC = "topic";
 
   private TestHelper() {}
@@ -63,10 +62,12 @@ import org.apache.kafka.common.serialization.Serde;
       for (var inputSerdes : serdes) {
         for (var resultSerdes : serdes) {
           assert inputSerdes.serdes.format() == resultSerdes.serdes.format();
-          var o = new Object[3];
-          o[0] = inputSerdes.name + " - " + resultSerdes.name;
-          o[1] = create.apply(inputSerdes.serdes);
-          o[2] = create.apply(resultSerdes.serdes);
+          var o =
+              new Object[] {
+                inputSerdes.name + " - " + resultSerdes.name,
+                create.apply(inputSerdes.serdes),
+                create.apply(resultSerdes.serdes),
+              };
           combinations.add(o);
         }
       }

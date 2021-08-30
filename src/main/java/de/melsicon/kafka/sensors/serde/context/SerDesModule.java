@@ -5,6 +5,7 @@ import de.melsicon.kafka.sensors.serialization.avro.AvroModule;
 import de.melsicon.kafka.sensors.serialization.avromapper.AvroMapperModule;
 import de.melsicon.kafka.sensors.serialization.confluent.ConfluentModule;
 import de.melsicon.kafka.sensors.serialization.confluentmapper.ConfluentMapperModule;
+import de.melsicon.kafka.sensors.serialization.gson.GsonModule;
 import de.melsicon.kafka.sensors.serialization.ion.IonModule;
 import de.melsicon.kafka.sensors.serialization.json.JsonModule;
 import de.melsicon.kafka.sensors.serialization.proto.ProtoModule;
@@ -17,7 +18,8 @@ import de.melsicon.kafka.sensors.serialization.proto.ProtoModule;
       ConfluentMapperModule.class,
       IonModule.class,
       JsonModule.class,
-      ProtoModule.class
+      ProtoModule.class,
+      GsonModule.class
     })
 public abstract class SerDesModule {
   private SerDesModule() {}

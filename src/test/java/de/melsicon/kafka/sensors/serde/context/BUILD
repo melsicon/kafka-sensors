@@ -11,5 +11,6 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/serde/context",
         "//toolchain:checker",
         "//toolchain:dagger",
+        "@maven//:org_apache_avro_avro",
     ],
 )

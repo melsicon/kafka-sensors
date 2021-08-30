@@ -1,5 +1,8 @@
 package de.melsicon.kafka.sensors.logic;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
+
 import de.melsicon.kafka.sensors.logic.CalculatorTestHelper.Advancement;
 import de.melsicon.kafka.sensors.model.SensorState.State;
 import java.io.IOException;
@@ -67,8 +70,21 @@ public final class CalculatorTest {
 
   @Test
   @RequiresNonNull("calculator")
+  public void outOfOrder() {
+    var initialState = CalculatorTestHelper.initial(State.OFF);
+    var advancement1 = new Advancement(Duration.ofSeconds(-10), State.ON);
+
+    var newState1 = CalculatorTestHelper.advance(initialState, advancement1);
+
+    calculator.transform(initialState);
+    var calc = calculator; // effectively final (JLS §4.12.4)
+    assertThrows(IllegalStateException.class, () -> calc.transform(newState1));
+  }
+
+  @Test
+  @RequiresNonNull("calculator")
   public void nullHandling() {
     var result = calculator.transform(null);
-    CalculatorTestHelper.assertStateWithDuration(result, null, Duration.ZERO);
+    assertThat(result).isNull();
   }
 }

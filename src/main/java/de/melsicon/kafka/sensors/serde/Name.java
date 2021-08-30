@@ -14,7 +14,9 @@ public final class Name {
   public static final String ION_BINARY = "ion-binary";
   public static final String ION_TEXT = "ion-text";
   public static final String JSON = "json";
+  public static final String MIXIN = "mixin";
   public static final String PROTO = "proto";
+  public static final String GSON = "gson";
 
   private Name() {}
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Module(includes = SerDesModule.class)
 /* package */ abstract class ParameterModule {
   private static final String[] SERDES = {
-    Name.PROTO, Name.JSON, Name.AVRO_SPECIFIC, Name.CONFLUENT_SPECIFIC
+    Name.PROTO, Name.JSON, Name.AVRO_DIRECT, Name.CONFLUENT_DIRECT
   };
 
   private ParameterModule() {}

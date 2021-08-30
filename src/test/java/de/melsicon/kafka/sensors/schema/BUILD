@@ -5,9 +5,9 @@ java_library(
     testonly = True,
     srcs = glob(["*.java"]),
     deps = [
-        "//src/main/avro/de/melsicon/kafka/sensors/avro",
-        "//src/main/java/de/melsicon/kafka/sensors/serialization/generic",
-        "//src/main/java/de/melsicon/kafka/sensors/serialization/reflect",
+        "//src/main/java/de/melsicon/kafka/sensors/type/avro/generic",
+        "//src/main/java/de/melsicon/kafka/sensors/type/avro/reflect",
+        "//src/main/java/de/melsicon/kafka/sensors/type/avro/specific",
         "//toolchain:checker",
         "//toolchain:truth",
         "@maven//:com_google_guava_guava",

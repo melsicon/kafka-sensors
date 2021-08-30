@@ -1,8 +1,10 @@
 package de.melsicon.kafka.sensors.serialization.avromapper;
 
-import de.melsicon.kafka.sensors.serialization.logicaltypes.DurationMicroHelper;
+import com.google.errorprone.annotations.Immutable;
+import de.melsicon.kafka.sensors.type.avro.logicaltypes.DurationMicroHelper;
 import java.time.Duration;
 
+@Immutable
 /* package */ final class DurationMapper {
   private DurationMapper() {}
 

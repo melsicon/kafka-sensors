@@ -22,7 +22,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
     }
     try (var buffer = new ByteArrayOutputStream()) {
       encoder.encode(data, buffer);
-      return buffer.toByteArray();
+      return buffer.size() == 0 ? null : buffer.toByteArray();
     } catch (IOException e) {
       throw new SerializationException("Can't write record to topic " + topic, e);
     }

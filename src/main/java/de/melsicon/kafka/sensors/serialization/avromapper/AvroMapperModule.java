@@ -4,8 +4,6 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import de.melsicon.kafka.sensors.serde.SensorStateMapper;
-import de.melsicon.kafka.sensors.serialization.reflect.SensorState;
-import de.melsicon.kafka.sensors.serialization.reflect.SensorStateWithDuration;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import org.apache.avro.generic.GenericRecord;
@@ -16,7 +14,10 @@ public abstract class AvroMapperModule {
 
   @Provides
   @Singleton
-  /* package */ static SensorStateMapper<SensorState, SensorStateWithDuration> reflectMapper() {
+  /* package */ static SensorStateMapper<
+          de.melsicon.kafka.sensors.type.avro.reflect.SensorState,
+          de.melsicon.kafka.sensors.type.avro.reflect.SensorStateWithDuration>
+      reflectMapper() {
     return new ReflectMapperImpl();
   }
 

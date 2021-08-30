@@ -1,9 +1,9 @@
 package de.melsicon.kafka.sensors.serialization.avromapper;
 
-import static de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema.ENUM_OFF;
-import static de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema.ENUM_ON;
-import static de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema.STATE_OFF;
-import static de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema.STATE_ON;
+import static de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper.ENUM_OFF;
+import static de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper.ENUM_ON;
+import static de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper.STATE_OFF;
+import static de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper.STATE_ON;
 
 import de.melsicon.kafka.sensors.model.SensorState.State;
 import org.apache.avro.generic.GenericEnumSymbol;

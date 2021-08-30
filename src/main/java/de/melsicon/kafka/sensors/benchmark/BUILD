@@ -59,9 +59,7 @@ java_binary(
     jvm_flags = JVM_FLAGS + PROFILER_PATH,
     main_class = "org.openjdk.jmh.Main",
     visibility = ["//visibility:public"],
-    runtime_deps = [
-        ":benchmark_library",
-    ],
+    runtime_deps = [":benchmark_library"],
 )
 
 java_image(
@@ -71,7 +69,5 @@ java_image(
     jvm_flags = JVM_FLAGS,
     main_class = "org.openjdk.jmh.Main",
     visibility = ["//visibility:public"],
-    runtime_deps = [
-        ":benchmark_library",
-    ],
+    runtime_deps = [":benchmark_library"],
 )

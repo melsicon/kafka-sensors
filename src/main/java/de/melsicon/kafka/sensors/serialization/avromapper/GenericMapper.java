@@ -1,16 +1,16 @@
 package de.melsicon.kafka.sensors.serialization.avromapper;
 
-import static de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema.FIELD_ID;
-import static de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema.FIELD_STATE;
-import static de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema.FIELD_TIME;
-import static de.melsicon.kafka.sensors.serialization.generic.SensorStateWithDurationSchema.FIELD_DURATION;
-import static de.melsicon.kafka.sensors.serialization.generic.SensorStateWithDurationSchema.FIELD_EVENT;
+import static de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper.FIELD_DURATION;
+import static de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper.FIELD_EVENT;
+import static de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper.FIELD_ID;
+import static de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper.FIELD_STATE;
+import static de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper.FIELD_TIME;
 
+import com.google.errorprone.annotations.Immutable;
 import de.melsicon.kafka.sensors.model.SensorState;
 import de.melsicon.kafka.sensors.model.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.serde.SensorStateMapper;
-import de.melsicon.kafka.sensors.serialization.generic.SensorStateSchema;
-import de.melsicon.kafka.sensors.serialization.generic.SensorStateWithDurationSchema;
+import de.melsicon.kafka.sensors.type.avro.generic.SchemaHelper;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
@@ -20,6 +20,7 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.generic.GenericRecordBuilder;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 
+@Immutable
 /* package */ final class GenericMapper implements SensorStateMapper<GenericRecord, GenericRecord> {
   @Inject
   /* package */ GenericMapper() {}
@@ -41,7 +42,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
     if (sensorState == null) {
       return null;
     }
-    return new GenericRecordBuilder(SensorStateSchema.SCHEMA)
+    return new GenericRecordBuilder(SchemaHelper.SENSOR_STATE_SCHEMA)
         .set(FIELD_ID, sensorState.getId())
         .set(FIELD_TIME, sensorState.getTime())
         .set(FIELD_STATE, GenericMapperHelper.stateUnmap(sensorState.getState()))
@@ -66,7 +67,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
       return null;
     }
     var event = Objects.requireNonNull(unmap(sensorState.getEvent()));
-    return new GenericRecordBuilder(SensorStateWithDurationSchema.SCHEMA)
+    return new GenericRecordBuilder(SchemaHelper.SENSOR_STATE_WITH_DURATION_SCHEMA)
         .set(FIELD_EVENT, event)
         .set(FIELD_DURATION, sensorState.getDuration())
         .build();

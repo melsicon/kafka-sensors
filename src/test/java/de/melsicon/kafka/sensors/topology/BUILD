@@ -4,10 +4,6 @@ java_library(
     name = "tests",
     testonly = True,
     srcs = glob(["*.java"]),
-    runtime_deps = [
-        "@maven//:com_fasterxml_jackson_core_jackson_databind",
-        "@maven//:org_apache_kafka_kafka_2_13",
-    ],
     deps = [
         "//src/main/java/de/melsicon/kafka/sensors/configuration",
         "//src/main/java/de/melsicon/kafka/sensors/model",
@@ -29,6 +25,8 @@ java_library(
 java_test(
     name = "TopologyTest",
     size = "medium",
+    data = ["//conf:logging"],
+    jvm_flags = ["-Djava.util.logging.config.file=$(rootpath //conf:logging)"],
     runtime_deps = [
         ":tests",
         "@maven//:com_google_flogger_flogger_system_backend",
