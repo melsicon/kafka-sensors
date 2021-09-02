@@ -1,4 +1,4 @@
-package de.melsicon.kafka.sensors.serialization.gson;
+package de.melsicon.kafka.sensors.type.gson;
 
 import com.google.gson.TypeAdapter;
 import java.io.IOException;
@@ -7,10 +7,10 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/* package */ final class GsonDeserializer<T> implements Deserializer<T> {
+public final class GsonDeserializer<T> implements Deserializer<T> {
   private final TypeAdapter<T> adapter;
 
-  /* package */ GsonDeserializer(TypeAdapter<T> adapter) {
+  public GsonDeserializer(TypeAdapter<T> adapter) {
     this.adapter = adapter;
   }
 

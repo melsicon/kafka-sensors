@@ -1,17 +1,17 @@
-package de.melsicon.kafka.sensors.serialization.proto;
+package de.melsicon.kafka.sensors.type.json;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.MessageLite;
-import com.google.protobuf.Parser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import java.io.IOException;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/* package */ final class ProtoDeserializer<T extends MessageLite> implements Deserializer<T> {
-  private final Parser<T> parser;
+public final class JsonDeserializer<T> implements Deserializer<T> {
+  private final ObjectReader objectReader;
 
-  /* package */ ProtoDeserializer(Parser<T> parser) {
-    this.parser = parser;
+  public JsonDeserializer(ObjectMapper objectMapper, Class<T> type) {
+    this.objectReader = objectMapper.readerFor(type);
   }
 
   @Override
@@ -21,8 +21,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
       return null;
     }
     try {
-      return parser.parseFrom(data);
-    } catch (InvalidProtocolBufferException e) {
+      return objectReader.readValue(data);
+    } catch (IOException e) {
       var message = String.format("Error while parsing message from topic %s", topic);
       throw new SerializationException(message, e);
     }

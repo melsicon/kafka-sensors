@@ -1,4 +1,4 @@
-package de.melsicon.kafka.sensors.serialization.json;
+package de.melsicon.kafka.sensors.type.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -8,10 +8,10 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/* package */ final class JsonSerializer<T> implements Serializer<T> {
+public final class JsonSerializer<T> implements Serializer<T> {
   private final ObjectWriter objectWriter;
 
-  /* package */ JsonSerializer(ObjectMapper objectMapper, Class<T> type) {
+  public JsonSerializer(ObjectMapper objectMapper, Class<T> type) {
     this.objectWriter = objectMapper.writerFor(type);
   }
 

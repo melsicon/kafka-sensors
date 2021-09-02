@@ -17,6 +17,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/serialization/mapping",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/mapping/protobuf",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/mapping/protobuf:mapstruct",
+        "//src/main/java/de/melsicon/kafka/sensors/type/proto",
         "//src/main/proto/melsicon/kafka/sensors/v1:sensorsv1_java_proto",
         "//toolchain:checker",
         "//toolchain:dagger",

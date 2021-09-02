@@ -9,11 +9,11 @@ public final class DurationMicroHelper {
 
   private DurationMicroHelper() {}
 
-  public static Duration fromLong(long micros) {
+  public static Duration micros2Duraion(long micros) {
     return Duration.of(micros, ChronoUnit.MICROS);
   }
 
-  public static Long toLong(Duration duration) {
+  public static long duration2Micros(Duration duration) {
     var seconds = duration.getSeconds();
     var nanos = duration.getNano();
     if (seconds < 0 && nanos > 0) {

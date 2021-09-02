@@ -12,6 +12,7 @@ java_library(
         "//src/main/java/de/melsicon/kafka/sensors/model",
         "//src/main/java/de/melsicon/kafka/sensors/serde",
         "//src/main/java/de/melsicon/kafka/sensors/serialization/mapping",
+        "//src/main/java/de/melsicon/kafka/sensors/type/avro",
         "//src/main/java/de/melsicon/kafka/sensors/type/avro/generic",
         "//src/main/java/de/melsicon/kafka/sensors/type/avro/reflect",
         "//src/main/java/de/melsicon/kafka/sensors/type/avro/specific",

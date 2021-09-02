@@ -1,9 +1,9 @@
-package de.melsicon.kafka.sensors.serialization.ion;
+package de.melsicon.kafka.sensors.type.ion;
 
 import com.amazon.ion.IonReader;
 
 @FunctionalInterface
-/* package */ interface IonSerialReader<T> {
+public interface IonSerialReader<T> {
   /**
    * Reads one value.
    *

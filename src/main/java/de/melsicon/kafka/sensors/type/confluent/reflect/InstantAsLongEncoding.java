@@ -22,13 +22,13 @@ public final class InstantAsLongEncoding extends CustomEncoding<Instant> {
 
   @Override
   protected void write(Object datum, Encoder out) throws IOException {
-    var value = InstantMicroHelper.toLong((Instant) datum);
+    var value = InstantMicroHelper.instant2Micros((Instant) datum);
     out.writeLong(value);
   }
 
   @Override
   protected Instant read(Object reuse, Decoder in) throws IOException {
     var value = in.readLong();
-    return InstantMicroHelper.fromLong(value);
+    return InstantMicroHelper.micros2Instant(value);
   }
 }

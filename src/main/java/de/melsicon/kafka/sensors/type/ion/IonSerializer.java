@@ -1,4 +1,4 @@
-package de.melsicon.kafka.sensors.serialization.ion;
+package de.melsicon.kafka.sensors.type.ion;
 
 import com.amazon.ion.system.IonWriterBuilder;
 import java.io.ByteArrayOutputStream;
@@ -8,11 +8,11 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/* package */ final class IonSerializer<T> implements Serializer<T> {
+public final class IonSerializer<T> implements Serializer<T> {
   private final IonWriterBuilder builder;
   private final IonSerialWriter<T> serializer;
 
-  /* package */ IonSerializer(IonWriterBuilder builder, IonSerialWriter<T> serializer) {
+  public IonSerializer(IonWriterBuilder builder, IonSerialWriter<T> serializer) {
     this.builder = builder;
     this.serializer = serializer;
   }

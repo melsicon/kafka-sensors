@@ -35,7 +35,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
     }
     return SensorState.builder()
         .id((String) sensorState.get(FIELD_ID))
-        .time(InstantMicroHelper.fromLong((Long) sensorState.get(FIELD_TIME)))
+        .time(InstantMicroHelper.micros2Instant((Long) sensorState.get(FIELD_TIME)))
         .state(GenericMapperHelper.stateMap((GenericEnumSymbol<?>) sensorState.get(FIELD_STATE)))
         .build();
   }
@@ -47,7 +47,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
     }
     return new GenericRecordBuilder(SENSOR_STATE_SCHEMA)
         .set(FIELD_ID, sensorState.getId())
-        .set(FIELD_TIME, InstantMicroHelper.toLong(sensorState.getTime()))
+        .set(FIELD_TIME, InstantMicroHelper.instant2Micros(sensorState.getTime()))
         .set(FIELD_STATE, GenericMapperHelper.stateUnmap(sensorState.getState()))
         .build();
   }
@@ -60,7 +60,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
     var event = Objects.requireNonNull(map((GenericRecord) sensorState.get(FIELD_EVENT)));
     return SensorStateWithDuration.builder()
         .event(event)
-        .duration(DurationMicroHelper.fromLong((Long) sensorState.get(FIELD_DURATION)))
+        .duration(DurationMicroHelper.micros2Duraion((Long) sensorState.get(FIELD_DURATION)))
         .build();
   }
 
@@ -73,7 +73,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
     assert event != null : "@AssumeAssertion(nullness): error in unmap";
     return new GenericRecordBuilder(SENSOR_STATE_WITH_DURATION_SCHEMA)
         .set(FIELD_EVENT, event)
-        .set(FIELD_DURATION, DurationMicroHelper.toLong(sensorState.getDuration()))
+        .set(FIELD_DURATION, DurationMicroHelper.duration2Micros(sensorState.getDuration()))
         .build();
   }
 }

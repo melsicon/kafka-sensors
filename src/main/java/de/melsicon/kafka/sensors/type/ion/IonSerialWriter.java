@@ -1,10 +1,10 @@
-package de.melsicon.kafka.sensors.serialization.ion;
+package de.melsicon.kafka.sensors.type.ion;
 
 import com.amazon.ion.IonWriter;
 import java.io.IOException;
 
 @FunctionalInterface
-/* package */ interface IonSerialWriter<T> {
+public interface IonSerialWriter<T> {
   /**
    * Writes one value.
    *

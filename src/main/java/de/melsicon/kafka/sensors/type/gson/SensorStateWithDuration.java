@@ -7,14 +7,13 @@ import org.immutables.value.Value;
 @Immutable
 @Value.Style(passAnnotations = {Immutable.class})
 @Value.Immutable
-public abstract class SensorStateWithDuration implements WithSensorStateWithDuration {
+public abstract class SensorStateWithDuration
+    implements SensorStateBase, WithSensorStateWithDuration {
   /* package */ SensorStateWithDuration() {}
 
   public static ImmutableSensorStateWithDuration.Builder builder() {
     return ImmutableSensorStateWithDuration.builder();
   }
-
-  public abstract SensorState getEvent();
 
   public abstract Duration getDuration();
 }

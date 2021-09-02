@@ -8,5 +8,4 @@ public enum Format {
   CONFLUENT_JSON,
   CONFLUENT_PROTO,
   ION,
-  GSON_JSON,
 }

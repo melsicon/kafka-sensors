@@ -9,10 +9,10 @@ import java.time.Duration;
   private DurationMapper() {}
 
   /* package */ static Duration milcros2Duration(long micros) {
-    return DurationMicroHelper.fromLong(micros);
+    return DurationMicroHelper.micros2Duraion(micros);
   }
 
   /* package */ static long duration2Micros(Duration duration) {
-    return DurationMicroHelper.toLong(duration);
+    return DurationMicroHelper.duration2Micros(duration);
   }
 }

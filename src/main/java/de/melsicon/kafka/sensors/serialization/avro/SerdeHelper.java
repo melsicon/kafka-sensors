@@ -5,6 +5,8 @@ import static org.apache.kafka.common.serialization.Serdes.serdeFrom;
 import de.melsicon.kafka.sensors.serialization.mapping.MapFunction;
 import de.melsicon.kafka.sensors.serialization.mapping.MappedDeserializer;
 import de.melsicon.kafka.sensors.serialization.mapping.MappedSerializer;
+import de.melsicon.kafka.sensors.type.avro.AvroDeserializer;
+import de.melsicon.kafka.sensors.type.avro.AvroSerializer;
 import org.apache.avro.message.MessageDecoder;
 import org.apache.avro.message.MessageEncoder;
 import org.apache.avro.message.SchemaStore;

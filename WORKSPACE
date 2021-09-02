@@ -26,9 +26,9 @@ http_archive(
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "37269d2b9d207afa38ec74ffb9acced530b56eeaa1db6cb8313afc5f65e07eec",
-    strip_prefix = "protobuf-3.18.0-rc1",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.18.0-rc1.tar.gz"],
+    sha256 = "7040ca8311c49847affb00040c104e118c7600f523fa859228847fc8fb618d6d",
+    strip_prefix = "protobuf-3.18.0-rc2",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.18.0-rc2.tar.gz"],
 )
 
 http_archive(
@@ -104,8 +104,13 @@ go_repositories()
 
 # ---
 
-load("@rules_jvm_external//:defs.bzl", "maven_install")
-load("@rules_jvm_external//:specs.bzl", "maven")
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+
+rules_jvm_external_deps()
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+
+rules_jvm_external_setup()
 
 # ---
 
@@ -141,6 +146,9 @@ base_images()
 
 # ---
 
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:specs.bzl", "maven")
+
 maven_install(
     artifacts = [
         "com.amazon.ion:ion-java:1.8.3",
@@ -156,7 +164,7 @@ maven_install(
         "com.google.auto.service:auto-service:1.0",
         "com.google.code.findbugs:jsr305:3.0.2",
         "com.google.code.gson:gson:2.8.8",
-        "com.google.devtools.ksp:symbol-processing-api:1.5.30-1.0.0-beta08",
+        "com.google.devtools.ksp:symbol-processing-api:1.5.30-1.0.0-beta09",
         "com.google.errorprone:error_prone_annotations:2.9.0",
         "com.google.flogger:flogger-system-backend:0.6",
         "com.google.flogger:flogger:0.6",
@@ -174,8 +182,8 @@ maven_install(
         "org.apache.kafka:kafka-clients:2.8.0",
         "org.apache.kafka:kafka-streams:2.8.0",
         "org.apache.kafka:kafka_2.13:2.8.0",
-        "org.checkerframework:checker-qual:3.17.0",
-        "org.checkerframework:checker:3.17.0",
+        "org.checkerframework:checker-qual:3.18.0",
+        "org.checkerframework:checker:3.18.0",
         "org.immutables:gson:2.9.0-beta3",
         "org.immutables:value-annotations:2.9.0-beta3",
         "org.immutables:value-processor:2.9.0-beta3",

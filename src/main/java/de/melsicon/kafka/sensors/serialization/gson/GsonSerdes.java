@@ -8,6 +8,8 @@ import de.melsicon.kafka.sensors.serde.SensorStateMapper;
 import de.melsicon.kafka.sensors.serde.SensorStateSerdes;
 import de.melsicon.kafka.sensors.serialization.mapping.MappedDeserializer;
 import de.melsicon.kafka.sensors.serialization.mapping.MappedSerializer;
+import de.melsicon.kafka.sensors.type.gson.GsonDeserializer;
+import de.melsicon.kafka.sensors.type.gson.GsonSerializer;
 import de.melsicon.kafka.sensors.type.gson.SensorState;
 import de.melsicon.kafka.sensors.type.gson.SensorStateWithDuration;
 import javax.inject.Inject;
@@ -26,7 +28,7 @@ public final class GsonSerdes implements SensorStateSerdes {
 
   @Override
   public Format format() {
-    return Format.GSON_JSON;
+    return Format.JSON;
   }
 
   @Override

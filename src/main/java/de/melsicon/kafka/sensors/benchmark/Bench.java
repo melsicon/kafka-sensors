@@ -16,7 +16,7 @@ import org.openjdk.jmh.annotations.Warmup;
 @Fork(1)
 @Warmup(iterations = 3, time = 5)
 @Measurement(iterations = 5, time = 5)
-public class Bench {
+public /* open */ class Bench {
   @Benchmark
   @RequiresNonNull({"#1.serializer", "#1.data"})
   public void serialize(ExecutionPlan plan) {

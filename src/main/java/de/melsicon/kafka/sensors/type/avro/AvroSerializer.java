@@ -1,4 +1,4 @@
-package de.melsicon.kafka.sensors.serialization.avro;
+package de.melsicon.kafka.sensors.type.avro;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,10 +7,10 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/* package */ final class AvroSerializer<T> implements Serializer<T> {
+public final class AvroSerializer<T> implements Serializer<T> {
   private final MessageEncoder<T> encoder;
 
-  /* package */ AvroSerializer(MessageEncoder<T> encoder) {
+  public AvroSerializer(MessageEncoder<T> encoder) {
     this.encoder = encoder;
   }
 

@@ -10,6 +10,7 @@ java_library(
     deps = [
         "//src/main/java/de/melsicon/kafka/sensors/model",
         "//src/main/java/de/melsicon/kafka/sensors/serde",
+        "//src/main/java/de/melsicon/kafka/sensors/type/ion",
         "//toolchain:checker",
         "//toolchain:dagger",
         "@maven//:com_amazon_ion_ion_java",

@@ -18,7 +18,7 @@ import org.apache.kafka.common.serialization.Serde;
   private TestHelper() {}
 
   /* package */ static SensorState standardSensorState() {
-    var instant = Instant.ofEpochSecond(443634300L);
+    var instant = Instant.ofEpochSecond(443634300L, 1_000L);
 
     return SensorState.builder().id("7331").time(instant).state(State.ON).build();
   }
@@ -26,7 +26,10 @@ import org.apache.kafka.common.serialization.Serde;
   /* package */ static SensorStateWithDuration standardSensorStateWithDuration() {
     var event = standardSensorState();
 
-    return SensorStateWithDuration.builder().event(event).duration(Duration.ofSeconds(15)).build();
+    return SensorStateWithDuration.builder()
+        .event(event)
+        .duration(Duration.ofSeconds(15, 999_999_000L))
+        .build();
   }
 
   private static ImmutableMultimap<Format, NamedSerDes> serdesByFormat() {

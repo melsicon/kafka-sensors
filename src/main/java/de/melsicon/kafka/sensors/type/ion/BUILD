@@ -1,22 +1,21 @@
 load("@rules_java//java:defs.bzl", "java_library")
 
 java_library(
-    name = "gson",
+    name = "ion",
     srcs = glob(["*.java"]),
-    javacopts = ["-AskipDefs=\\.(Immutable|GsonAdapters)[A-Z][A-Za-z0-9]*$$"],
     visibility = [
         "//src/main/java/de/melsicon/kafka/sensors/serialization:__subpackages__",
         "//src/test:__subpackages__",
     ],
+    exports = [
+        "@maven//:org_apache_kafka_kafka_clients",
+    ],
     deps = [
+        "//src/main/java/de/melsicon/kafka/sensors/model",
         "//src/main/java/de/melsicon/kafka/sensors/type/helper",
         "//toolchain:checker",
-        "//toolchain:immutables",
-        "@maven//:com_google_code_gson_gson",
+        "@maven//:com_amazon_ion_ion_java",
         "@maven//:com_google_errorprone_error_prone_annotations",
-        "@maven//:com_google_flogger_flogger",
-        "@maven//:com_google_guava_guava",
         "@maven//:org_apache_kafka_kafka_clients",
-        "@maven//:org_immutables_gson",
     ],
 )

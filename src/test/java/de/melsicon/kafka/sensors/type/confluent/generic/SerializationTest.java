@@ -48,7 +48,7 @@ public final class SerializationTest {
   private static GenericRecord createSensorState() {
     return new GenericRecordBuilder(SchemaHelper.SENSOR_STATE_SCHEMA)
         .set(SchemaHelper.FIELD_ID, "7331")
-        .set(SchemaHelper.FIELD_TIME, InstantMicroHelper.toLong(INSTANT))
+        .set(SchemaHelper.FIELD_TIME, InstantMicroHelper.instant2Micros(INSTANT))
         .set(SchemaHelper.FIELD_STATE, SchemaHelper.ENUM_OFF)
         .build();
   }

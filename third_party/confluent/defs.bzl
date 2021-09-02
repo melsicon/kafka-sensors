@@ -5,7 +5,7 @@ load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
 
 CONFLUENT_ARTIFACTS = [
     "com.damnhandy:handy-uri-templates:2.1.8",
-    "com.google.api.grpc:proto-google-common-protos:2.4.1",
+    "com.google.api.grpc:proto-google-common-protos:2.5.0",
     "com.google.re2j:re2j:1.6",
     "com.kjetland:mbknor-jackson-jsonschema_2.13:1.0.39",
     "com.squareup.wire:wire-schema:3.7.0",

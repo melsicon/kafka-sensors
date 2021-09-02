@@ -33,6 +33,7 @@ java_library(
         ["*.java"],
         exclude = ["ClassCheck.java"],
     ),
+    runtime_deps = RUNTIME_DEPS,
     deps = [
         "//src/main/java/de/melsicon/kafka/sensors/app/context",
         "//src/main/java/de/melsicon/kafka/sensors/lifecycle",
@@ -48,7 +49,7 @@ java_binary(
     visibility = ["//visibility:public"],
     runtime_deps = [
         ":app_library",
-    ] + RUNTIME_DEPS,
+    ],
 )
 
 java_image(

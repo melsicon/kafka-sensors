@@ -22,13 +22,13 @@ public final class DurationAsLongEncoding extends CustomEncoding<Duration> {
 
   @Override
   protected void write(Object datum, Encoder out) throws IOException {
-    var value = DurationMicroHelper.toLong((Duration) datum);
+    var value = DurationMicroHelper.duration2Micros((Duration) datum);
     out.writeLong(value);
   }
 
   @Override
   protected Duration read(Object reuse, Decoder in) throws IOException {
     var value = in.readLong();
-    return DurationMicroHelper.fromLong(value);
+    return DurationMicroHelper.micros2Duraion(value);
   }
 }

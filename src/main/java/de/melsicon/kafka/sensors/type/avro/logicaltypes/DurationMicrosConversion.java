@@ -35,12 +35,12 @@ public final class DurationMicrosConversion extends Conversion<Duration> {
 
   @Override
   public Duration fromLong(Long micros, Schema schema, LogicalType type) {
-    return DurationMicroHelper.fromLong(micros);
+    return DurationMicroHelper.micros2Duraion(micros);
   }
 
   @Override
   public Long toLong(Duration duration, Schema schema, LogicalType type) {
-    return DurationMicroHelper.toLong(duration);
+    return DurationMicroHelper.duration2Micros(duration);
   }
 
   public static final class DurationMicros extends LogicalType {

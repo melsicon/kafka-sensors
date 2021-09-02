@@ -1,5 +1,6 @@
 package de.melsicon.kafka.sensors.logic;
 
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import dagger.assisted.Assisted;
 import dagger.assisted.AssistedInject;
 import de.melsicon.kafka.sensors.model.SensorState;
@@ -45,6 +46,7 @@ public final class DurationCalculator implements Closeable {
     return oldState == null || oldState.getState() != sensorState.getState();
   }
 
+  @CanIgnoreReturnValue
   public @Nullable SensorStateWithDuration transform(@Nullable SensorState sensorState) {
     if (sensorState == null) {
       // Nothing to do

@@ -27,11 +27,11 @@ public final class IonTextSerdes implements SensorStateSerdes {
 
   @Override
   public Serde<SensorState> createSensorStateSerde() {
-    return IonSerializerHelper.createSensorStateSerde(writerBuilder, readerBuilder);
+    return IonSerDesHelper.createSensorStateSerde(writerBuilder, readerBuilder);
   }
 
   @Override
   public Serde<SensorStateWithDuration> createSensorStateWithDurationSerde() {
-    return IonSerializerHelper.createSensorStateWithDurationSerde(writerBuilder, readerBuilder);
+    return IonSerDesHelper.createSensorStateWithDurationSerde(writerBuilder, readerBuilder);
   }
 }

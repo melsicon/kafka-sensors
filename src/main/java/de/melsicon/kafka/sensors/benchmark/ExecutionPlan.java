@@ -21,7 +21,7 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
 
 @State(Scope.Benchmark)
-public class ExecutionPlan {
+public /* open */ class ExecutionPlan {
   private static final String REGISTRY_SCOPE = "benchmark";
   private static final String REGISTRY_URL = "mock://" + REGISTRY_SCOPE;
 

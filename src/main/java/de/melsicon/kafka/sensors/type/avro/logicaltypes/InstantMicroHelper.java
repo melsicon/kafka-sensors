@@ -8,14 +8,14 @@ public final class InstantMicroHelper {
 
   private InstantMicroHelper() {}
 
-  public static Instant fromLong(long microsFromEpoch) {
+  public static Instant micros2Instant(long microsFromEpoch) {
     var epochSecond = microsFromEpoch / MICROS_PER_SECOND;
     var nanoAdjustment = microsFromEpoch % MICROS_PER_SECOND * NANOS_PER_MICROS;
 
     return Instant.ofEpochSecond(epochSecond, nanoAdjustment);
   }
 
-  public static Long toLong(Instant instant) {
+  public static Long instant2Micros(Instant instant) {
     var seconds = instant.getEpochSecond();
     var nanos = instant.getNano();
 

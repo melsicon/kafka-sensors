@@ -7,6 +7,8 @@ import de.melsicon.kafka.sensors.model.SensorState;
 import de.melsicon.kafka.sensors.model.SensorStateWithDuration;
 import de.melsicon.kafka.sensors.serde.Format;
 import de.melsicon.kafka.sensors.serde.SensorStateSerdes;
+import de.melsicon.kafka.sensors.type.json.JsonDeserializer;
+import de.melsicon.kafka.sensors.type.json.JsonSerializer;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.kafka.common.serialization.Serde;

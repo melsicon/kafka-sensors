@@ -1,4 +1,4 @@
-package de.melsicon.kafka.sensors.serialization.ion;
+package de.melsicon.kafka.sensors.type.ion;
 
 import com.amazon.ion.IonException;
 import com.amazon.ion.system.IonReaderBuilder;
@@ -7,11 +7,11 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-/* package */ final class IonDeserializer<T> implements Deserializer<T> {
+public final class IonDeserializer<T> implements Deserializer<T> {
   private final IonReaderBuilder builder;
   private final IonSerialReader<T> deserializer;
 
-  /* package */ IonDeserializer(IonReaderBuilder builder, IonSerialReader<T> deserializer) {
+  public IonDeserializer(IonReaderBuilder builder, IonSerialReader<T> deserializer) {
     this.builder = builder;
     this.deserializer = deserializer;
   }

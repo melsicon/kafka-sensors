@@ -7,6 +7,8 @@ import de.melsicon.kafka.sensors.serde.SensorStateMapper;
 import de.melsicon.kafka.sensors.serde.SensorStateSerdes;
 import de.melsicon.kafka.sensors.serialization.mapping.MappedDeserializer;
 import de.melsicon.kafka.sensors.serialization.mapping.MappedSerializer;
+import de.melsicon.kafka.sensors.type.proto.ProtoDeserializer;
+import de.melsicon.kafka.sensors.type.proto.ProtoSerializer;
 import de.melsicon.kafka.sensors.v1.SensorState;
 import de.melsicon.kafka.sensors.v1.SensorStateWithDuration;
 import javax.inject.Inject;

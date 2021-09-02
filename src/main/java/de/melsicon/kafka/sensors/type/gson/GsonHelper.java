@@ -12,6 +12,7 @@ public final class GsonHelper {
     var gsonBuilder = new GsonBuilder();
     gsonBuilder.registerTypeAdapter(Instant.class, new InstantTypeConverter());
     gsonBuilder.registerTypeAdapter(Duration.class, new DurationTypeConverter());
+    gsonBuilder.registerTypeAdapter(SensorStateBase.State.class, new StateTypeConverter());
     gsonBuilder.registerTypeAdapterFactory(new GsonAdaptersGson());
     return gsonBuilder.create();
   }
