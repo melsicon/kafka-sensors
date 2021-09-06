@@ -18,6 +18,7 @@ config_setting(
 )
 
 # ---
+
 default_java_toolchain(
     name = "toolchain_java16",
     configuration = dict(),
